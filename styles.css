@@ -1226,6 +1226,7 @@ h2 {
   }
   .nav-links.is-open {
     display: flex;
+    max-height: 220px;
   }
 }
 
