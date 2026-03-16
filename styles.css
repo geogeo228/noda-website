@@ -1224,6 +1224,9 @@ h2 {
   .nav-links {
     display: none;
   }
+  .nav-links.is-open {
+    display: flex;
+  }
 }
 
 
