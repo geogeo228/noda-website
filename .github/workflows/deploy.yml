@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to server
 
 on:
   push:
@@ -9,8 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.1
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy . --project-name noda-website
+          switches: -avz --delete --exclude='.git' --exclude='.github' --exclude='.wrangler' --exclude='Новый_раздел.txt'
+          path: ./
+          remote_path: /var/www/html/
+          remote_host: 217.18.62.12
+          remote_user: root
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
