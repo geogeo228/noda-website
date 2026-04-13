@@ -677,16 +677,10 @@ h2 {
   width: 120px;
   height: 120px;
   margin: 0 auto 24px;
-  background: linear-gradient(135deg, var(--accent) 0%, rgba(16, 185, 129, 0.6) 100%);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 48px;
-  font-weight: 600;
-  color: var(--bg);
-  letter-spacing: -0.02em;
+  background-image: url('assets/avatar.jpg');
+  background-size: 150%;
+  background-position: center top;
   box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
 }
 
@@ -799,7 +793,6 @@ h2 {
   .about-avatar {
     width: 100px;
     height: 100px;
-    font-size: 40px;
   }
 
   .about-name {
