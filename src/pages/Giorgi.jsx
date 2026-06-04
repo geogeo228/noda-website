@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 
 function track(event) {
   if (typeof window !== 'undefined' && window.umami) {
@@ -8,12 +8,24 @@ function track(event) {
 }
 
 export default function Giorgi() {
-  useEffect(() => {
-    document.title = 'Георгий Кучава — Основатель NODA'
-  }, [])
-
   return (
     <div className="giorgi-root">
+      <Helmet>
+        <title>Георгий Кучава — Основатель NODA</title>
+        <meta name="description" content="Георгий Кучава — основатель NODA. Автоматизация бизнесов с помощью ИИ, Telegram-боты, консультации." />
+        <link rel="canonical" href="https://noda.auto/giorgi" />
+        <meta property="og:title" content="Георгий Кучава — Основатель NODA" />
+        <meta property="og:description" content="Автоматизация бизнесов с помощью ИИ, Telegram-боты, консультации." />
+        <meta property="og:url" content="https://noda.auto/giorgi" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Георгий Кучава",
+          "jobTitle": "Основатель NODA",
+          "url": "https://noda.auto/giorgi",
+          "sameAs": ["https://t.me/giorgikuchava"]
+        })}</script>
+      </Helmet>
       <div className="giorgi-card">
         <div className="giorgi-avatar">
           <img src="/assets/avatar.jpg" alt="Георгий Кучава" />
