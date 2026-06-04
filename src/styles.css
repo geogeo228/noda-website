@@ -136,6 +136,14 @@ body {
   overflow-x: hidden;
   isolation: isolate;
 }
+.v1-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+  pointer-events: none;
+}
 .v1-root > *:not(.matrix-rain):not(.v1-drawer) {
   position: relative; z-index: 2;
 }

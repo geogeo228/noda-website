@@ -42,7 +42,7 @@ export default function useMatrixRain(canvasRef) {
       ctx.font = fontSize + "px 'JetBrains Mono', monospace"
       ctx.textBaseline = 'top'
       ctx.fillStyle = '#00ff41'
-      ctx.globalAlpha = 0.46
+      ctx.globalAlpha = 0.3
 
       const drops = dropsRef.current
       for (let i = 0; i < cols; i++) {
