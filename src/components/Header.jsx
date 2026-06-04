@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 
 function scrollToHash(hash) {
   const el = document.querySelector(hash)
@@ -34,6 +35,7 @@ export default function Header() {
             <a href="#products" onClick={(e) => handleNav(e, '#products')}>Продукты</a>
             <a href="#cases" onClick={(e) => handleNav(e, '#cases')}>Кейсы</a>
             <a href="#cta" onClick={(e) => handleNav(e, '#cta')}>Контакт</a>
+            <Link to="/blog" className="v1-nav-blog">Блог</Link>
           </nav>
           <a className="m-btn v1-header-cta" href="#cta" onClick={(e) => handleNav(e, '#cta')}>Обсудить задачу</a>
           <button
@@ -57,6 +59,7 @@ export default function Header() {
             <a href="#products" onClick={(e) => handleNav(e, '#products')}><span>02</span> Продукты</a>
             <a href="#cases" onClick={(e) => handleNav(e, '#cases')}><span>03</span> Кейсы</a>
             <a href="#cta" onClick={(e) => handleNav(e, '#cta')}><span>04</span> Контакт</a>
+            <Link to="/blog" onClick={() => toggle(false)}><span>05</span> Блог</Link>
           </nav>
           <a className="m-btn" href="#cta" onClick={(e) => handleNav(e, '#cta')}>Обсудить задачу</a>
           <div className="v1-drawer-foot">

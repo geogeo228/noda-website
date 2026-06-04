@@ -620,6 +620,181 @@ body {
 }
 
 /* ============================================
+   BLOG
+   ============================================ */
+.blog-root {
+  min-height: 100vh;
+  background: var(--m-bg);
+  color: var(--m-text);
+}
+.blog-header {
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid var(--m-border-faint);
+}
+.blog-logo { text-decoration: none; }
+.blog-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+.blog-head { margin-bottom: 3rem; }
+.blog-title {
+  font-family: var(--f-mono);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--m-green);
+  margin: 0.5rem 0 0.8rem;
+}
+.blog-subtitle {
+  color: var(--m-text-dim);
+  font-size: 1.05rem;
+  margin: 0;
+}
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--m-text);
+  background: var(--m-green-ghost);
+  transition: background 0.2s, border-color 0.2s;
+}
+.blog-card:hover {
+  background: var(--m-green-faint);
+}
+.blog-card-tags { margin-bottom: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.blog-tag {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  color: var(--m-green-dim);
+  border: 1px solid var(--m-green-deep);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+}
+.blog-card-title {
+  font-family: var(--f-mono);
+  font-size: 1.05rem;
+  color: var(--m-green);
+  margin: 0 0 0.6rem;
+  line-height: 1.4;
+}
+.blog-card-desc {
+  color: var(--m-text-dim);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  flex: 1;
+}
+.blog-card-link {
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+  color: var(--m-green);
+}
+.blog-footer {
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid var(--m-border-faint);
+}
+.blog-footer a {
+  color: var(--m-green-dim);
+  text-decoration: none;
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+}
+
+/* Article page */
+.article-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+.article-back {
+  display: inline-block;
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+  color: var(--m-green-dim);
+  text-decoration: none;
+  margin-bottom: 2rem;
+}
+.article-back:hover { color: var(--m-green); }
+.article-tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.article-title {
+  font-family: var(--f-mono);
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: var(--m-green);
+  margin: 0 0 1rem;
+  line-height: 1.3;
+}
+.article-desc {
+  color: var(--m-text-dim);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 2.5rem;
+  border-left: 2px solid var(--m-green-deep);
+  padding-left: 1rem;
+}
+.article-body { margin-bottom: 3rem; }
+.article-section { margin-bottom: 2.5rem; }
+.article-section p {
+  color: var(--m-text);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0 0 1rem;
+}
+.article-h2 {
+  font-family: var(--f-mono);
+  font-size: 1.15rem;
+  color: var(--m-green);
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+.article-h2-marker {
+  color: var(--m-green-deep);
+  margin-right: 0.4rem;
+}
+.article-cta {
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  background: var(--m-green-ghost);
+}
+.article-cta p {
+  font-family: var(--f-mono);
+  color: var(--m-text-dim);
+  margin: 0 0 1rem;
+}
+.article-related { margin-bottom: 2.5rem; }
+.article-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--m-border-faint);
+}
+.article-nav a {
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+  color: var(--m-green-dim);
+  text-decoration: none;
+}
+.article-nav a:hover { color: var(--m-green); }
+
+@media (max-width: 600px) {
+  .blog-main, .article-main { padding-left: 1rem; padding-right: 1rem; }
+  .blog-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
    REDUCE MOTION
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
