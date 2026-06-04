@@ -1,16 +1,20 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Landing from './pages/Landing'
-import Giorgi from './pages/Giorgi'
-import Blog from './pages/Blog'
-import Article from './pages/Article'
+
+const Landing = lazy(() => import('./pages/Landing'))
+const Giorgi = lazy(() => import('./pages/Giorgi'))
+const Blog = lazy(() => import('./pages/Blog'))
+const Article = lazy(() => import('./pages/Article'))
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/giorgi" element={<Giorgi />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:slug" element={<Article />} />
-    </Routes>
+    <Suspense fallback={<div />}>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/giorgi" element={<Giorgi />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<Article />} />
+      </Routes>
+    </Suspense>
   )
 }

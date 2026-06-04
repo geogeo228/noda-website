@@ -67,7 +67,7 @@ export const cases = [
       'Автоматизация рутины',
       'Все задачи под контролем',
     ],
-    media: { type: 'image', src: '/assets/wedding-ai.png' },
+    media: { type: 'image', src: '/assets/wedding-ai.webp' },
   },
   {
     id: 'order-bot',
@@ -78,7 +78,7 @@ export const cases = [
       'Заявки обрабатываются мгновенно',
       'Без участия менеджера',
     ],
-    media: { type: 'image', src: '/assets/order-bot.png' },
+    media: { type: 'image', src: '/assets/order-bot.webp' },
   },
   {
     id: 'anb-monitor',
@@ -89,6 +89,6 @@ export const cases = [
       'Лиды приходят сами',
       'Без постоянного контроля чатов',
     ],
-    media: { type: 'image', src: '/assets/anb-screen.png' },
+    media: { type: 'image', src: '/assets/anb-screen.webp' },
   },
 ]

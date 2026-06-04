@@ -28,7 +28,7 @@ export default function Giorgi() {
       </Helmet>
       <div className="giorgi-card">
         <div className="giorgi-avatar">
-          <img src="/assets/avatar.jpg" alt="Георгий Кучава" />
+          <img src="/assets/avatar.jpg" alt="Георгий Кучава" loading="lazy" />
         </div>
         <h1 className="giorgi-name">Георгий Кучава</h1>
         <p className="giorgi-role">Основатель NODA</p>
