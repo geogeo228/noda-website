@@ -13,16 +13,16 @@ export default function Giorgi() {
       <Helmet>
         <title>Георгий Кучава — Основатель NODA</title>
         <meta name="description" content="Георгий Кучава — основатель NODA. Автоматизация бизнесов с помощью ИИ, Telegram-боты, консультации." />
-        <link rel="canonical" href="https://noda.auto/giorgi" />
+        <link rel="canonical" href="https://noda-auto.com/giorgi" />
         <meta property="og:title" content="Георгий Кучава — Основатель NODA" />
         <meta property="og:description" content="Автоматизация бизнесов с помощью ИИ, Telegram-боты, консультации." />
-        <meta property="og:url" content="https://noda.auto/giorgi" />
+        <meta property="og:url" content="https://noda-auto.com/giorgi" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
           "name": "Георгий Кучава",
           "jobTitle": "Основатель NODA",
-          "url": "https://noda.auto/giorgi",
+          "url": "https://noda-auto.com/giorgi",
           "sameAs": ["https://t.me/giorgikuchava"]
         })}</script>
       </Helmet>

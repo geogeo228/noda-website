@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://noda.auto/sitemap.xml
+Sitemap: https://noda-auto.com/sitemap.xml
