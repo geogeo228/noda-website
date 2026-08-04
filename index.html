@@ -3,15 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NODA — Комплексные IT и ИИ-решения для бизнеса</title>
-    <meta name="description" content="Комплексные IT и ИИ-решения для бизнеса. Колдун-Бот для ивентов, мониторинг чатов, кастомные решения." />
-    <link rel="canonical" href="https://noda-auto.com" />
+    <!--
+      Дефолтные SEO-теги: нужны для краулеров, которые не выполняют JS
+      (Telegram, WhatsApp и прочие превьюшки ссылок).
+      На клиенте их снимает src/seo-defaults.js, чтобы после гидрации
+      в head не осталось дублей рядом с тегами от Helmet.
+      Канонический URL сюда не кладём: статический canonical на главную
+      делал все внутренние страницы её дублями и выбивал их из индекса.
+    -->
+    <title data-default-seo>NODA — Комплексные IT и ИИ-решения для бизнеса</title>
+    <meta data-default-seo name="description" content="Комплексные IT и ИИ-решения для бизнеса. Колдун-Бот для ивентов, мониторинг чатов, кастомные решения." />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
-    <meta property="og:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
-    <meta property="og:url" content="https://noda-auto.com" />
+    <meta data-default-seo property="og:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
+    <meta data-default-seo property="og:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
+    <meta data-default-seo property="og:url" content="https://noda-auto.com" />
     <meta property="og:image" content="https://noda-auto.com/assets/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -19,8 +26,8 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
-    <meta name="twitter:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
+    <meta data-default-seo name="twitter:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
+    <meta data-default-seo name="twitter:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
     <meta name="twitter:image" content="https://noda-auto.com/assets/og-image.jpg" />
 
     <!-- Favicon -->
@@ -31,8 +38,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Umami Analytics -->
-    <script defer src="https://umami-production-a40c.up.railway.app/script.js" data-website-id="61a4692e-4ad5-4801-b807-aee74ec67e85"></script>
   </head>
   <body>
     <div id="root"></div>

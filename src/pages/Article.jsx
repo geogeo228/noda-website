@@ -15,7 +15,7 @@ export default function Article() {
   return (
     <div className="blog-root">
       <Helmet>
-        <title>{article.title} — NODA</title>
+        <title>{`${article.title} — NODA`}</title>
         <meta name="description" content={article.desc} />
         <link rel="canonical" href={`https://noda-auto.com/blog/${article.slug}`} />
         <meta property="og:title" content={`${article.title} — NODA`} />
