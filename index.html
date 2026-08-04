@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="%%HTML_LANG%%">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,25 +10,27 @@
       в head не осталось дублей рядом с тегами от Helmet.
       Канонический URL сюда не кладём: статический canonical на главную
       делал все внутренние страницы её дублями и выбивал их из индекса.
+
+      %%...%% подставляет htmlLocalePlugin из vite.config.js по языку сборки.
     -->
-    <title data-default-seo>NODA — Комплексные IT и ИИ-решения для бизнеса</title>
-    <meta data-default-seo name="description" content="Комплексные IT и ИИ-решения для бизнеса. Колдун-Бот для ивентов, мониторинг чатов, кастомные решения." />
+    <title data-default-seo>%%SITE_TITLE%%</title>
+    <meta data-default-seo name="description" content="%%SITE_DESC%%" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta data-default-seo property="og:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
-    <meta data-default-seo property="og:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
-    <meta data-default-seo property="og:url" content="https://noda-auto.com" />
-    <meta property="og:image" content="https://noda-auto.com/assets/og-image.jpg" />
+    <meta data-default-seo property="og:title" content="%%SITE_TITLE%%" />
+    <meta data-default-seo property="og:description" content="%%OG_DESC%%" />
+    <meta data-default-seo property="og:url" content="%%ORIGIN%%" />
+    <meta property="og:image" content="%%ORIGIN%%/assets/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:locale" content="%%OG_LOCALE%%" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta data-default-seo name="twitter:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
-    <meta data-default-seo name="twitter:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
-    <meta name="twitter:image" content="https://noda-auto.com/assets/og-image.jpg" />
+    <meta data-default-seo name="twitter:title" content="%%SITE_TITLE%%" />
+    <meta data-default-seo name="twitter:description" content="%%OG_DESC%%" />
+    <meta name="twitter:image" content="%%ORIGIN%%/assets/og-image.jpg" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23000' width='100' height='100' rx='20'/><text y='.9em' x='50%' text-anchor='middle' font-size='70'>⚡</text></svg>" />

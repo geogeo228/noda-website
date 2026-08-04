@@ -1,6 +1,105 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import ru from './src/i18n/ru.js'
+import en from './src/i18n/en.js'
+import { origins, enIsLive } from './src/i18n/config.js'
+import articles from './src/data/articles.js'
 
-export default defineConfig({
-  plugins: [react()],
+const dictionaries = { ru, en }
+
+const ogLocales = {
+  ru: 'ru_RU',
+  en: 'en_US',
+}
+
+// Подставляет языковые значения в index.html. Дефолтные SEO-теги там нужны
+// краулерам, которые не выполняют JS (превью ссылок в мессенджерах), поэтому
+// они должны быть на языке сборки, а не всегда на русском.
+function htmlLocalePlugin(lang) {
+  const t = dictionaries[lang]
+  const values = {
+    '%%HTML_LANG%%': t.htmlLang,
+    '%%SITE_TITLE%%': t.meta.siteTitle,
+    '%%SITE_DESC%%': t.meta.siteDesc,
+    '%%OG_DESC%%': t.meta.ogDesc,
+    '%%ORIGIN%%': origins[lang],
+    '%%OG_LOCALE%%': ogLocales[lang],
+  }
+
+  return {
+    name: 'noda-html-locale',
+    transformIndexHtml(html) {
+      return Object.entries(values).reduce(
+        (acc, [token, value]) => acc.replaceAll(token, value),
+        html,
+      )
+    },
+  }
+}
+
+// Генерирует sitemap.xml и robots.txt под язык сборки. Раньше оба файла
+// лежали в public/ статикой и правились руками — при добавлении статьи про
+// sitemap легко забыть, а в английскую сборку он попадал бы с русскими URL.
+function sitemapPlugin(lang) {
+  const origin = origins[lang]
+
+  // Слаги у языковых версий общие — по ним же связываются hreflang.
+  const routes = [
+    { path: '/', changefreq: 'weekly', priority: '1.0' },
+    { path: '/blog', changefreq: 'weekly', priority: '0.9' },
+    ...articles.map((a) => ({ path: `/blog/${a.slug}`, changefreq: 'monthly', priority: '0.8' })),
+    { path: '/giorgi', changefreq: 'monthly', priority: '0.5' },
+  ]
+
+  function alternates(path) {
+    if (!enIsLive) return ''
+    return (
+      `\n    <xhtml:link rel="alternate" hreflang="ru" href="${origins.ru}${path}" />` +
+      `\n    <xhtml:link rel="alternate" hreflang="en" href="${origins.en}${path}" />` +
+      `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${origins.en}${path}" />`
+    )
+  }
+
+  const xmlns =
+    'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' +
+    (enIsLive ? ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' : '')
+
+  const sitemap =
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    `<urlset ${xmlns}>\n` +
+    routes
+      .map(
+        (r) =>
+          `  <url>\n    <loc>${origin}${r.path}</loc>${alternates(r.path)}\n` +
+          `    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`,
+      )
+      .join('\n') +
+    '\n</urlset>\n'
+
+  const robots = `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`
+
+  return {
+    name: 'noda-sitemap',
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap })
+      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robots })
+    },
+  }
+}
+
+export default defineConfig(() => {
+  const lang = process.env.VITE_LANG === 'en' ? 'en' : 'ru'
+
+  return {
+    plugins: [react(), htmlLocalePlugin(lang), sitemapPlugin(lang)],
+    define: {
+      // Прокидываем явно, чтобы язык не зависел от того, подхватит ли Vite
+      // переменную окружения из shell.
+      'import.meta.env.VITE_LANG': JSON.stringify(lang),
+    },
+    build: {
+      // Русская и английская сборки не должны затирать друг друга.
+      outDir: lang === 'en' ? 'dist-en' : 'dist',
+    },
+  }
 })

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Helmet } from 'react-helmet-async'
+import { t } from '../i18n'
+import Seo from '../components/Seo'
 
 function track(event) {
   if (typeof window !== 'undefined' && window.umami) {
@@ -10,31 +11,26 @@ function track(event) {
 export default function Giorgi() {
   return (
     <div className="giorgi-root">
-      <Helmet>
-        <title>Георгий Кучава — Основатель NODA</title>
-        <meta name="description" content="Георгий Кучава — основатель NODA. Автоматизация бизнесов с помощью ИИ, Telegram-боты, консультации." />
-        <link rel="canonical" href="https://noda-auto.com/giorgi" />
-        <meta property="og:title" content="Георгий Кучава — Основатель NODA" />
-        <meta property="og:description" content="Автоматизация бизнесов с помощью ИИ, Telegram-боты, консультации." />
-        <meta property="og:url" content="https://noda-auto.com/giorgi" />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "name": "Георгий Кучава",
-          "jobTitle": "Основатель NODA",
-          "url": "https://noda-auto.com/giorgi",
-          "sameAs": ["https://t.me/giorgikuchava"]
-        })}</script>
-      </Helmet>
+      <Seo
+        path="/giorgi"
+        title={t.meta.giorgiTitle}
+        description={t.meta.giorgiDesc}
+        ogDescription={t.meta.giorgiOgDesc}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: t.giorgi.name,
+          jobTitle: t.giorgi.jobTitle,
+          sameAs: ['https://t.me/giorgikuchava'],
+        }}
+      />
       <div className="giorgi-card">
         <div className="giorgi-avatar">
-          <img src="/assets/avatar.jpg" alt="Георгий Кучава" loading="lazy" />
+          <img src="/assets/avatar.jpg" alt={t.giorgi.name} loading="lazy" />
         </div>
-        <h1 className="giorgi-name">Георгий Кучава</h1>
-        <p className="giorgi-role">Основатель NODA</p>
-        <p className="giorgi-bio">
-          Автоматизирую бизнесы с помощью ИИ. Пишу боты в Telegram, делаю процессы умнее, объясняю сложное простым языком.
-        </p>
+        <h1 className="giorgi-name">{t.giorgi.name}</h1>
+        <p className="giorgi-role">{t.giorgi.role}</p>
+        <p className="giorgi-bio">{t.giorgi.bio}</p>
         <div className="giorgi-links">
           <a
             className="m-btn giorgi-btn"
@@ -43,7 +39,7 @@ export default function Giorgi() {
             rel="noopener noreferrer"
             onClick={() => track('giorgi-telegram')}
           >
-            Telegram
+            {t.giorgi.linkTelegram}
           </a>
           <a
             className="m-btn giorgi-btn"
@@ -52,7 +48,7 @@ export default function Giorgi() {
             rel="noopener noreferrer"
             onClick={() => track('giorgi-write')}
           >
-            Написать мне
+            {t.giorgi.linkWrite}
           </a>
           <a
             className="m-btn giorgi-btn"
@@ -61,11 +57,11 @@ export default function Giorgi() {
             rel="noopener noreferrer"
             onClick={() => track('giorgi-consult')}
           >
-            Записаться на консультацию
+            {t.giorgi.linkConsult}
           </a>
         </div>
         <Link to="/" className="giorgi-back" onClick={() => track('giorgi-site')}>
-          &larr; Сайт NODA
+          {t.giorgi.back}
         </Link>
       </div>
     </div>

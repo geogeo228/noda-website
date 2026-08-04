@@ -1,4 +1,5 @@
-import { Helmet } from 'react-helmet-async'
+import Seo from '../components/Seo'
+import { t, origins } from '../i18n'
 import MatrixRain from '../components/MatrixRain'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
@@ -14,22 +15,20 @@ import Footer from '../components/Footer'
 export default function Landing() {
   return (
     <div className="v1-root">
-      <Helmet>
-        <title>NODA — Комплексные IT и ИИ-решения для бизнеса</title>
-        <meta name="description" content="Комплексные IT и ИИ-решения для бизнеса. Колдун-Бот для ивентов, мониторинг чатов, кастомные решения." />
-        <link rel="canonical" href="https://noda-auto.com/" />
-        <meta property="og:title" content="NODA — Комплексные IT и ИИ-решения для бизнеса" />
-        <meta property="og:description" content="IT и ИИ-решения. Колдун-Бот, мониторинг чатов, кастомные решения." />
-        <meta property="og:url" content="https://noda-auto.com/" />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "NODA",
-          "url": "https://noda-auto.com",
-          "description": "Комплексные IT и ИИ-решения для бизнеса",
-          "contactPoint": { "@type": "ContactPoint", "url": "https://t.me/BlueFaceBaby99", "contactType": "customer service" }
-        })}</script>
-      </Helmet>
+      <Seo
+        path="/"
+        title={t.meta.siteTitle}
+        description={t.meta.siteDesc}
+        ogDescription={t.meta.ogDesc}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'NODA',
+          url: origins.ru,
+          description: t.meta.orgDesc,
+          contactPoint: { '@type': 'ContactPoint', url: 'https://t.me/BlueFaceBaby99', contactType: 'customer service' },
+        }}
+      />
       <MatrixRain />
       <Header />
       <main className="v1-main">

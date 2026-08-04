@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { cases } from '../data/cases'
+import { cases } from '../data'
+import { t } from '../i18n'
 import CaseCard from './CaseCard'
 
 export default function Cases() {
@@ -41,9 +42,9 @@ export default function Cases() {
   return (
     <section className="v1-section" id="cases">
       <div className="v1-sec-head">
-        <span className="v1-sec-tag">// 05 &middot; cases</span>
-        <h2 className="v1-sec-title">Кейсы</h2>
-        <p className="v1-sec-sub">&rarr; Листайте вправо</p>
+        <span className="v1-sec-tag">{t.cases.tag}</span>
+        <h2 className="v1-sec-title">{t.cases.title}</h2>
+        <p className="v1-sec-sub">{t.cases.sub}</p>
       </div>
       <div className="v1-cases-wrap">
         <div className="v1-cases" ref={trackRef}>
@@ -55,7 +56,7 @@ export default function Cases() {
               key={c.id}
               className={`v1-cases-dot${i === active ? ' on' : ''}`}
               onClick={() => goTo(i)}
-              aria-label={`Кейс ${i + 1}`}
+              aria-label={`${t.cases.dotLabel} ${i + 1}`}
             />
           ))}
         </div>

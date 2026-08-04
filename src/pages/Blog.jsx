@@ -1,18 +1,17 @@
-import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import articles from '../data/articles'
+import { articles } from '../data'
+import { t } from '../i18n'
+import Seo from '../components/Seo'
 
 export default function Blog() {
   return (
     <div className="blog-root">
-      <Helmet>
-        <title>Кейсы — NODA</title>
-        <meta name="description" content="Кейсы и статьи о проектах NODA: ИИ-решения, Telegram-боты, веб-приложения, автоматизация бизнеса." />
-        <link rel="canonical" href="https://noda-auto.com/blog" />
-        <meta property="og:title" content="Кейсы — NODA" />
-        <meta property="og:description" content="Кейсы и статьи о проектах NODA: ИИ-решения, Telegram-боты, веб-приложения." />
-        <meta property="og:url" content="https://noda-auto.com/blog" />
-      </Helmet>
+      <Seo
+        path="/blog"
+        title={t.meta.blogTitle}
+        description={t.meta.blogDesc}
+        ogDescription={t.meta.blogOgDesc}
+      />
 
       <header className="blog-header">
         <Link to="/" className="blog-logo">
@@ -24,9 +23,9 @@ export default function Blog() {
 
       <main className="blog-main">
         <div className="blog-head">
-          <span className="v1-sec-tag">// cases</span>
-          <h1 className="blog-title">Кейсы</h1>
-          <p className="blog-subtitle">Реальные проекты. Без воды — только задача, решение и результат.</p>
+          <span className="v1-sec-tag">{t.blog.tag}</span>
+          <h1 className="blog-title">{t.blog.title}</h1>
+          <p className="blog-subtitle">{t.blog.subtitle}</p>
         </div>
 
         <div className="blog-grid">
@@ -34,20 +33,20 @@ export default function Blog() {
             <Link key={a.slug} to={`/blog/${a.slug}`} className="blog-card tframe corners">
               <span className="cnr-tl"></span><span className="cnr-br"></span>
               <div className="blog-card-tags">
-                {a.tags.map((t) => (
-                  <span key={t} className="blog-tag">{t}</span>
+                {a.tags.map((tag) => (
+                  <span key={tag} className="blog-tag">{tag}</span>
                 ))}
               </div>
               <h2 className="blog-card-title">{a.title}</h2>
               <p className="blog-card-desc">{a.desc}</p>
-              <span className="blog-card-link">&rarr; Читать кейс</span>
+              <span className="blog-card-link">{t.blog.readCase}</span>
             </Link>
           ))}
         </div>
       </main>
 
       <footer className="blog-footer">
-        <Link to="/">&larr; На главную</Link>
+        <Link to="/">{t.blog.backHome}</Link>
       </footer>
     </div>
   )

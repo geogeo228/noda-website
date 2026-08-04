@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import ScrambleText from './ScrambleText'
 import useIntersectionObserver from '../hooks/useIntersectionObserver'
+import { t } from '../i18n'
 
 function CountUp({ to, suffix = '' }) {
   const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2 })
@@ -24,7 +25,7 @@ function CountUp({ to, suffix = '' }) {
 
   return (
     <span ref={ref} className="v1-stat-num">
-      {value.toLocaleString('ru-RU')}{suffix}
+      {value.toLocaleString(t.locale)}{suffix}
     </span>
   )
 }
@@ -63,29 +64,23 @@ export default function Hero() {
       </div>
       <div>
         <h1 className="v1-hero-title">
-          <span>Комплексные IT и ИИ-решения</span><br />
-          <span className="v1-hero-title-dim">для <ScrambleText text="бизнеса" />.</span>
+          <span>{t.hero.titleMain}</span><br />
+          <span className="v1-hero-title-dim">{t.hero.titleDimPrefix}<ScrambleText text={t.hero.titleScramble} />.</span>
         </h1>
         <p className="v1-hero-sub">
-          <span className="v1-hero-sub-mark">&gt;</span> Готовые продукты и решения под ключ.
+          <span className="v1-hero-sub-mark">&gt;</span> {t.hero.sub}
         </p>
         <div className="v1-hero-actions">
-          <a className="m-btn" href="#cta" onClick={(e) => handleNav(e, '#cta')}>Обсудить задачу бесплатно</a>
-          <a className="m-btn ghost" href="#products" onClick={(e) => handleNav(e, '#products')}>./products</a>
+          <a className="m-btn" href="#cta" onClick={(e) => handleNav(e, '#cta')}>{t.hero.ctaPrimary}</a>
+          <a className="m-btn ghost" href="#products" onClick={(e) => handleNav(e, '#products')}>{t.hero.ctaSecondary}</a>
         </div>
         <div className="v1-hero-stats">
-          <div className="v1-stat">
-            <CountUp to={1000} suffix="+" />
-            <span className="v1-stat-lbl">фото за вечер</span>
-          </div>
-          <div className="v1-stat">
-            <CountUp to={24} suffix="/7" />
-            <span className="v1-stat-lbl">мониторинг чатов</span>
-          </div>
-          <div className="v1-stat">
-            <CountUp to={0} />
-            <span className="v1-stat-lbl">ручной работы</span>
-          </div>
+          {t.hero.stats.map((s) => (
+            <div className="v1-stat" key={s.label}>
+              <CountUp to={s.to} suffix={s.suffix} />
+              <span className="v1-stat-lbl">{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

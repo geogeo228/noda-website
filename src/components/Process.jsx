@@ -1,23 +1,17 @@
 import { Fragment } from 'react'
-
-const steps = [
-  { num: '01', time: '\u23F1 1-2 дня', cmd: '$ ./discuss()', title: 'Обсуждаем задачу', desc: 'Вы рассказываете, что болит. Я предлагаю решение.', bullets: ['созвон 30-60 мин', 'поиск узких мест', 'оценка задачи'] },
-  { num: '02', time: '\u23F1 2-3 дня', cmd: '$ ./plan()', title: 'Согласуем план', desc: 'Показываю, как будет работать, до начала разработки.', bullets: ['схема процесса', 'стек и инструменты', 'сроки и стоимость'] },
-  { num: '03', time: '\u23F1 1-3 недели', cmd: '$ ./build()', title: 'Делаем и тестируем', desc: 'Разработка + проверка на реальных сценариях.', bullets: ['прототип за неделю', 'промежуточные демо', 'правки на ходу'] },
-  { num: '04', time: '\u23F1 1 день', cmd: '$ ./deploy()', title: 'Передаём вам', desc: 'Готовое решение + инструкция + поддержка.', bullets: ['запуск в проде', 'видео-инструкция', '30 дней поддержки'] },
-]
+import { t } from '../i18n'
 
 export default function Process() {
   return (
     <section className="v1-section" id="process">
       <div className="v1-sec-head">
-        <span className="v1-sec-tag">// 04 &middot; process</span>
-        <h2 className="v1-sec-title">Как мы работаем?</h2>
+        <span className="v1-sec-tag">{t.process.tag}</span>
+        <h2 className="v1-sec-title">{t.process.title}</h2>
       </div>
       <div className="v1-process tframe corners">
         <span className="cnr-tl"></span><span className="cnr-br"></span>
         <div className="v1-proc-grid">
-          {steps.map((s, i) => (
+          {t.process.steps.map((s, i) => (
             <Fragment key={s.num}>
               {i > 0 && (
                 <div className="v1-proc-arrow" aria-hidden="true"><span>&mdash;&gt;</span></div>
@@ -41,8 +35,8 @@ export default function Process() {
         </div>
         <div className="v1-proc-foot">
           <span className="v1-proc-foot-prompt">noda@matrix:~$</span>
-          <span className="v1-proc-foot-cmd">echo "сроки зависят от сложности"</span>
-          <span className="v1-proc-foot-out">&rarr; типичный проект: 2-4 недели</span>
+          <span className="v1-proc-foot-cmd">{t.process.footCmd}</span>
+          <span className="v1-proc-foot-out">{t.process.footOut}</span>
         </div>
       </div>
     </section>

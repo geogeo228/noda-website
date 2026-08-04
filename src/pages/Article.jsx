@@ -1,6 +1,7 @@
-import { Helmet } from 'react-helmet-async'
 import { Link, useParams, Navigate } from 'react-router-dom'
-import articles from '../data/articles'
+import { articles } from '../data'
+import { t } from '../i18n'
+import Seo from '../components/Seo'
 
 export default function Article() {
   const { slug } = useParams()
@@ -14,23 +15,19 @@ export default function Article() {
 
   return (
     <div className="blog-root">
-      <Helmet>
-        <title>{`${article.title} — NODA`}</title>
-        <meta name="description" content={article.desc} />
-        <link rel="canonical" href={`https://noda-auto.com/blog/${article.slug}`} />
-        <meta property="og:title" content={`${article.title} — NODA`} />
-        <meta property="og:description" content={article.desc} />
-        <meta property="og:url" content={`https://noda-auto.com/blog/${article.slug}`} />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "headline": article.title,
-          "description": article.desc,
-          "author": { "@type": "Organization", "name": "NODA" },
-          "publisher": { "@type": "Organization", "name": "NODA" },
-          "url": `https://noda-auto.com/blog/${article.slug}`
-        })}</script>
-      </Helmet>
+      <Seo
+        path={`/blog/${article.slug}`}
+        title={`${article.title} — NODA`}
+        description={article.desc}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: article.title,
+          description: article.desc,
+          author: { '@type': 'Organization', name: 'NODA' },
+          publisher: { '@type': 'Organization', name: 'NODA' },
+        }}
+      />
 
       <header className="blog-header">
         <Link to="/" className="blog-logo">
@@ -41,11 +38,11 @@ export default function Article() {
       </header>
 
       <main className="article-main">
-        <Link to="/blog" className="article-back">&larr; Все кейсы</Link>
+        <Link to="/blog" className="article-back">{t.article.backToBlog}</Link>
 
         <div className="article-tags">
-          {article.tags.map((t) => (
-            <span key={t} className="blog-tag">{t}</span>
+          {article.tags.map((tag) => (
+            <span key={tag} className="blog-tag">{tag}</span>
           ))}
         </div>
 
@@ -67,19 +64,19 @@ export default function Article() {
 
         <div className="article-cta tframe corners">
           <span className="cnr-tl"></span><span className="cnr-br"></span>
-          <p>Хотите похожее решение для своего бизнеса?</p>
-          <a className="m-btn" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">Обсудить задачу</a>
+          <p>{t.article.ctaText}</p>
+          <a className="m-btn" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">{t.article.ctaButton}</a>
         </div>
 
         {related.length > 0 && (
           <div className="article-related">
-            <h2 className="article-h2"><span className="article-h2-marker">//</span> Похожие кейсы</h2>
+            <h2 className="article-h2"><span className="article-h2-marker">//</span> {t.article.related}</h2>
             <div className="article-related-grid">
               {related.map((r) => (
                 <Link key={r.slug} to={`/blog/${r.slug}`} className="blog-card tframe corners">
                   <span className="cnr-tl"></span><span className="cnr-br"></span>
                   <h3 className="blog-card-title">{r.title}</h3>
-                  <span className="blog-card-link">&rarr; Читать</span>
+                  <span className="blog-card-link">{t.article.read}</span>
                 </Link>
               ))}
             </div>
@@ -87,13 +84,13 @@ export default function Article() {
         )}
 
         <div className="article-nav">
-          <Link to="/blog">&larr; Все кейсы</Link>
-          <Link to="/">На главную</Link>
+          <Link to="/blog">{t.article.backToBlog}</Link>
+          <Link to="/">{t.article.home}</Link>
         </div>
       </main>
 
       <footer className="blog-footer">
-        <Link to="/">&larr; На главную</Link>
+        <Link to="/">{t.blog.backHome}</Link>
       </footer>
     </div>
   )

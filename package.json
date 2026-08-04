@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:en": "VITE_LANG=en vite",
+    "build:en": "VITE_LANG=en vite build",
+    "preview:en": "VITE_LANG=en vite preview --outDir dist-en"
   },
   "dependencies": {
     "react": "^19.1.0",
