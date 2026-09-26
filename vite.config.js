@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import ru from './src/i18n/ru.js'
 import en from './src/i18n/en.js'
 import { origins, enIsLive } from './src/i18n/config.js'
-import articles from './src/data/articles.js'
+import { getRoutes } from './src/routes.js'
 
 const dictionaries = { ru, en }
 
@@ -44,12 +44,9 @@ function sitemapPlugin(lang) {
   const origin = origins[lang]
 
   // Слаги у языковых версий общие — по ним же связываются hreflang.
-  const routes = [
-    { path: '/', changefreq: 'weekly', priority: '1.0' },
-    { path: '/blog', changefreq: 'weekly', priority: '0.9' },
-    ...articles.map((a) => ({ path: `/blog/${a.slug}`, changefreq: 'monthly', priority: '0.8' })),
-    { path: '/giorgi', changefreq: 'monthly', priority: '0.5' },
-  ]
+  // Список маршрутов живёт в src/routes.js: его читают также пререндер
+  // и проверка сборки, и добавленная страница должна попасть во все три.
+  const routes = getRoutes(lang)
 
   function alternates(path) {
     if (!enIsLive) return ''
