@@ -70,6 +70,30 @@ function stripHoistedTags(appHtml) {
     .replace(/<script[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/g, '')
 }
 
+// Заголовок, который React поднял из src/components/Seo.jsx. Нужен, чтобы
+// сверить его с src/routes.js: это два РАЗНЫХ источника одних и тех же
+// метатегов, и сравнение сгенерированного HTML с routes.js их разъезд
+// не поймало бы — оно сравнивает источник сам с собой.
+export function hoistedTitleOf(appHtml) {
+  const match = appHtml.match(/<title[^>]*>([\s\S]*?)<\/title>/)
+  return match ? match[1].trim() : null
+}
+
+export function assertNoTitleDrift(appHtml, expectedTitle, path) {
+  if (expectedTitle === null) return
+
+  const rendered = hoistedTitleOf(appHtml)
+  if (rendered === null) return
+
+  if (rendered !== expectedTitle) {
+    throw new Error(
+      `${path}: заголовок разъехался. src/components/Seo.jsx рисует ` +
+        `"${rendered}", src/routes.js объявляет "${expectedTitle}". ` +
+        'Клиент и поисковик увидят разные заголовки — поправьте оба места.',
+    )
+  }
+}
+
 function buildPage(template, appHtml, headHtml) {
   return template
     .replace(/\s*<title data-default-seo>[\s\S]*?<\/title>/g, '')
@@ -85,6 +109,7 @@ async function main() {
 
   for (const route of routes) {
     const appHtml = await render(route.path)
+    assertNoTitleDrift(appHtml, route.title, route.path)
     const page = buildPage(template, appHtml, renderHead(route, origin))
     const file = route.path === '/'
       ? join(outDir, 'index.html')
