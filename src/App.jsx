@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import NotFound from './components/NotFound'
 
 const Landing = lazy(() => import('./pages/Landing'))
 const Giorgi = lazy(() => import('./pages/Giorgi'))
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/giorgi" element={<Giorgi />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<Article />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   )

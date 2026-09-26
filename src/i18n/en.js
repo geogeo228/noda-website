@@ -15,6 +15,13 @@ export default {
     orgDesc: 'IT and AI solutions for business',
   },
 
+  notFound: {
+    title: 'Page not found',
+    text: 'There is no such page. The link may be out of date.',
+    home: 'Home',
+    blog: 'Blog',
+  },
+
   nav: {
     about: 'About',
     products: 'Products',

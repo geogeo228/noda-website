@@ -1,13 +1,14 @@
-import { Link, useParams, Navigate } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
+import NotFound from '../components/NotFound'
 
 export default function Article() {
   const { slug } = useParams()
   const article = articles.find((a) => a.slug === slug)
 
-  if (!article) return <Navigate to="/blog" replace />
+  if (!article) return <NotFound />
 
   const related = (article.related || [])
     .map((s) => articles.find((a) => a.slug === s))
