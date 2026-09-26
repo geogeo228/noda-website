@@ -26,7 +26,7 @@ export function escapeAttr(value) {
 export function renderHead(route, origin, options = {}) {
   // enIsLive параметризован ради тестируемости: проверить поведение при
   // поднятой английской версии иначе нельзя, она константа модуля.
-  const alternatesLive = options.enIsLive ?? enIsLive
+  const isEnLive = options.enIsLive ?? enIsLive
   const url = origin + route.path
   const tags = [
     `<title data-default-seo>${escapeAttr(route.title)}</title>`,
@@ -37,9 +37,7 @@ export function renderHead(route, origin, options = {}) {
     `<meta data-default-seo property="og:url" content="${escapeAttr(url)}" />`,
   ]
 
-  // alternates: false — у страницы нет языковой пары (страницы кейсов есть
-  // только по-русски). hreflang на несуществующую страницу — битая разметка.
-  if (alternatesLive && route.alternates !== false) {
+  if (isEnLive) {
     for (const [hreflang, target] of [
       ['ru', origins.ru],
       ['en', origins.en],
