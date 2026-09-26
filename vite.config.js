@@ -84,19 +84,29 @@ function sitemapPlugin(lang) {
   }
 }
 
-export default defineConfig(() => {
+export default defineConfig(({ isSsrBuild }) => {
   const lang = process.env.VITE_LANG === 'en' ? 'en' : 'ru'
 
+  // При серверной сборке sitemap и robots не нужны: они уже сгенерированы
+  // клиентским проходом, второй экземпляр только запутал бы проверку.
+  const plugins = isSsrBuild
+    ? [react()]
+    : [react(), htmlLocalePlugin(lang), sitemapPlugin(lang)]
+
+  const clientOutDir = lang === 'en' ? 'dist-en' : 'dist'
+  const ssrOutDir = lang === 'en' ? 'dist-ssr-en' : 'dist-ssr'
+
   return {
-    plugins: [react(), htmlLocalePlugin(lang), sitemapPlugin(lang)],
+    plugins,
     define: {
       // Прокидываем явно, чтобы язык не зависел от того, подхватит ли Vite
       // переменную окружения из shell.
       'import.meta.env.VITE_LANG': JSON.stringify(lang),
     },
     build: {
-      // Русская и английская сборки не должны затирать друг друга.
-      outDir: lang === 'en' ? 'dist-en' : 'dist',
+      // Русская и английская сборки не должны затирать друг друга,
+      // клиентская и серверная — тем более.
+      outDir: isSsrBuild ? ssrOutDir : clientOutDir,
     },
   }
 })
