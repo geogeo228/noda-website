@@ -110,6 +110,9 @@ export default {
     labelTask: 'task:',
     labelSolution: 'sol:',
     labelResult: 'res:',
+    labelBefore: 'было',
+    labelAfter: 'стало',
+    readFull: '→ Как это сделано',
   },
 
   why: {

@@ -486,6 +486,67 @@ body {
 .v1-case-lbl.on { color: var(--m-text-dim); }
 .v1-case-row span:last-child { color: var(--m-text); font-family: var(--f-body); font-size: 14px; }
 .v1-case-res { display: grid; gap: 6px; font-family: var(--f-body); font-size: 14px; color: var(--m-white); font-weight: 400; }
+
+/* Новая раскладка карточки: метрика крупно, под ней «было / стало», затем
+   строка с другими осями и контекст. Порядок кеглей задаёт порядок чтения —
+   сначала цифра, потом разница, потом детали. */
+.v1-case-metric {
+  margin: 2px 0 0;
+  font-family: var(--f-mono);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--m-green);
+  font-variant-numeric: tabular-nums;
+  text-wrap: balance;
+}
+.v1-case-ba {
+  margin: 14px 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  align-items: baseline;
+  font-size: 14px;
+}
+.v1-case-ba dt {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--m-text-faint);
+}
+.v1-case-ba dd { margin: 0; font-family: var(--f-body); }
+.v1-case-ba dd.was { color: var(--m-text-dim); }
+.v1-case-ba dd.now { color: var(--m-white); }
+.v1-case-extra {
+  margin: 14px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--m-border-faint);
+  font-family: var(--f-body);
+  font-size: 13px;
+  color: var(--m-text-dim);
+}
+.v1-case-task {
+  margin: 10px 0 0;
+  font-family: var(--f-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--m-text-faint);
+}
+.v1-case-more {
+  margin-top: auto;
+  padding-top: 12px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--m-green-dim);
+  text-decoration: none;
+  align-self: flex-start;
+}
+.v1-case-more:hover { color: var(--m-green); }
+.v1-case-more:focus-visible { outline: 1px solid var(--m-green); outline-offset: 3px; }
+
 .v1-cases-dots { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
 .v1-cases-dot { width: 24px; height: 3px; background: var(--m-text-faint); border: none; padding: 0; cursor: pointer; transition: background 0.2s; }
 .v1-cases-dot.on { background: var(--m-white); }
