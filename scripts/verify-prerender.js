@@ -97,6 +97,31 @@ for (const route of routes) {
   }
 }
 
+// 6. Каждый SEO-тег в head помечен data-default-seo. Иначе seo-defaults.js
+// его не снимет, а React после гидрации создаст свой — и на странице
+// окажется два title или два canonical, то есть ровно августовский баг.
+for (const route of routes) {
+  const file = fileFor(route.path)
+  if (!existsSync(file)) continue
+
+  const html = readFileSync(file, 'utf8')
+  const head = html.slice(0, html.indexOf('</head>'))
+  const seoTags = [
+    ...head.matchAll(/<title\b[^>]*>/g),
+    ...head.matchAll(/<meta\b[^>]*name="description"[^>]*>/g),
+    ...head.matchAll(/<link\b[^>]*rel="canonical"[^>]*>/g),
+    // Только те og-свойства, которые рендерит src/components/Seo.jsx:
+    // og:type и og:image стоят в шаблоне статически, Helmet их не повторяет.
+    ...head.matchAll(/<meta\b[^>]*property="og:(?:title|description|url)"[^>]*>/g),
+  ].map((m) => m[0])
+
+  for (const tag of seoTags) {
+    if (!tag.includes('data-default-seo')) {
+      fail(route.path, `SEO-тег без data-default-seo, после гидрации станет дублем: ${tag}`)
+    }
+  }
+}
+
 // 5. Число страниц совпадает с sitemap
 const sitemapPath = join(outDir, 'sitemap.xml')
 if (!existsSync(sitemapPath)) {
