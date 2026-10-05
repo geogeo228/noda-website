@@ -15,7 +15,8 @@ function clean(value) {
 
 export function normalizeLead(raw) {
   const r = raw || {}
-  return { name: clean(r.name), contact: clean(r.contact), task: clean(r.task) }
+  // Согласие на обработку персональных данных (152-ФЗ) — только явное true
+  return { name: clean(r.name), contact: clean(r.contact), task: clean(r.task), consent: r.consent === true }
 }
 
 const PHONE_CHARS = /^[+\d\s().-]+$/
@@ -49,5 +50,7 @@ export function validateLead(lead) {
   else if (!contactKind(lead.contact)) errors.contact = 'format'
 
   if (lead.task.length > LIMITS.task) errors.task = 'long'
+
+  if (lead.consent !== true) errors.consent = 'required'
   return errors
 }

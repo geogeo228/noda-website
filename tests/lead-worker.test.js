@@ -31,7 +31,7 @@ function post(body, { origin = ORIGIN, headers = {} } = {}) {
   })
 }
 
-const good = { name: 'Иван', contact: '@ivan_p', task: 'отчёты вручную', website: '', elapsed: 9000, page: '/' }
+const good = { name: 'Иван', contact: '@ivan_p', task: 'отчёты вручную', consent: true, website: '', elapsed: 9000, page: '/' }
 
 test('валидная заявка уходит в Telegram и отвечает ok', async () => {
   const { env, sent } = makeEnv()
@@ -44,6 +44,7 @@ test('валидная заявка уходит в Telegram и отвечает
   assert.equal(sent[0].body.chat_id, '42')
   assert.ok(sent[0].body.text.includes('Иван'))
   assert.ok(sent[0].body.text.includes('@ivan_p'))
+  assert.ok(sent[0].body.text.includes('Согласие на обработку данных: да'))
   assert.equal(sent[0].body.parse_mode, undefined, 'ввод не экранируется — значит, никакой разметки')
 })
 
@@ -90,6 +91,15 @@ test('невалидная заявка — 400 с ошибками полей',
   const res = await worker.fetch(post({ ...good, contact: 'позвоните' }), env)
   assert.equal(res.status, 400)
   assert.deepEqual(await res.json(), { ok: false, errors: { contact: 'format' } })
+  assert.equal(sent.length, 0)
+})
+
+test('без согласия на обработку данных — 400, в Telegram ничего', async () => {
+  const { env, sent } = makeEnv()
+  const { consent, ...noConsent } = good
+  const res = await worker.fetch(post(noConsent), env)
+  assert.equal(res.status, 400)
+  assert.deepEqual(await res.json(), { ok: false, errors: { consent: 'required' } })
   assert.equal(sent.length, 0)
 })
 

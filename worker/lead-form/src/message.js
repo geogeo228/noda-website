@@ -17,5 +17,7 @@ export function formatLeadMessage(lead, { page } = {}) {
   ]
   if (lead.task) lines.push(`Задача: ${lead.task}`)
   if (page) lines.push(`Страница: ${page}`)
+  // Фиксируем в самой заявке: Telegram — единственное место, где она хранится
+  if (lead.consent) lines.push('Согласие на обработку данных: да')
   return lines.join('\n')
 }
