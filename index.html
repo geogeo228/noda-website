@@ -40,6 +40,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+    <!-- Аналитика: Umami, self-hosted. Тег целиком подставляет
+         htmlLocalePlugin из vite.config.js: у русской и английской версий
+         разные ID сайтов, а если ID нет — тега не будет вовсе. -->
+    %%UMAMI_SCRIPT%%
+
   </head>
   <body>
     <div id="root"></div>

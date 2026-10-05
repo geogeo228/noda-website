@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import ru from './src/i18n/ru.js'
 import en from './src/i18n/en.js'
-import { origins, enIsLive } from './src/i18n/config.js'
+import { origins, enIsLive, umamiWebsiteIds, umamiHost } from './src/i18n/config.js'
 import { getRoutes } from './src/routes.js'
 
 const dictionaries = { ru, en }
@@ -17,8 +17,14 @@ const ogLocales = {
 // они должны быть на языке сборки, а не всегда на русском.
 function htmlLocalePlugin(lang) {
   const t = dictionaries[lang]
+  const websiteId = umamiWebsiteIds[lang]
+  const umamiScript = websiteId
+    ? `<script defer src="${umamiHost}/script.js" data-website-id="${websiteId}"></script>`
+    : '<!-- Umami: для этой языковой версии сайт ещё не создан -->'
+
   const values = {
     '%%HTML_LANG%%': t.htmlLang,
+    '%%UMAMI_SCRIPT%%': umamiScript,
     '%%SITE_TITLE%%': t.meta.siteTitle,
     '%%SITE_DESC%%': t.meta.siteDesc,
     '%%OG_DESC%%': t.meta.ogDesc,
