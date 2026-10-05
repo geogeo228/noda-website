@@ -12,38 +12,71 @@ import { t } from '../i18n'
 // Прежняя (metric нет): task / sol / res списком. Нужна, потому что английская
 // версия живёт на своих данных и в этот заход не переписывается — cases.en.js
 // остаётся в старой структуре, и ломать его нельзя.
-// Значок типа метрики. Читается раньше текста и сразу говорит, про что цифра:
-// время, деньги, ноль потерь или охват. Рисуем инлайном, чтобы не тянуть
-// иконочный пакет ради четырёх картинок.
-const METRIC_ICONS = {
-  time: (
+// Значок продукта в подписи карточки. У каждого кейса свой, по смыслу продукта:
+// одинаковые значки на всех карточках ничего не различают. Рисуем инлайном,
+// чтобы не тянуть иконочный пакет ради десятка картинок.
+const PRODUCT_ICONS = {
+  camera: (
     <>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
+      <path d="M4 8h3l2-3h6l2 3h3v11H4z" />
+      <circle cx="12" cy="13" r="3.5" />
     </>
   ),
-  money: (
-    <>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M10 17V7h3.5a2.5 2.5 0 0 1 0 5H9M9 14.5h5" />
-    </>
-  ),
-  zero: (
+  shield: (
     <>
       <path d="M12 3l7 3v6c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6z" />
       <path d="M9 12l2 2 4-4" />
     </>
   ),
-  reach: (
+  passport: (
     <>
-      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" />
-      <circle cx="12" cy="12" r="2.5" />
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <circle cx="12" cy="10" r="3" />
+      <path d="M9 17h6" />
+    </>
+  ),
+  search: (
+    <>
+      <circle cx="11" cy="11" r="6" />
+      <path d="M20 20l-4.5-4.5" />
+    </>
+  ),
+  phone: (
+    <>
+      <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+      <path d="M11 18.5h2" />
+    </>
+  ),
+  board: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M9 4v16M15 4v16" />
+    </>
+  ),
+  form: (
+    <>
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <path d="M9 8h6M9 12h6M9 16h3" />
+    </>
+  ),
+  image: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 16l5-5 4 4 3-3 6 6" />
+    </>
+  ),
+  qr: (
+    <>
+      <rect x="4" y="4" width="6" height="6" />
+      <rect x="14" y="4" width="6" height="6" />
+      <rect x="4" y="14" width="6" height="6" />
+      <path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2" />
     </>
   ),
 }
 
-function MetricIcon({ kind }) {
-  const shape = METRIC_ICONS[kind]
+function ProductIcon({ kind }) {
+  const shape = PRODUCT_ICONS[kind]
   if (!shape) return null
   return (
     <svg className="v1-case-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -51,6 +84,13 @@ function MetricIcon({ kind }) {
       {shape}
     </svg>
   )
+}
+
+// Цифры в метрике выделяются цветом, слова остаются спокойными: взгляд сразу
+// цепляется за «1» и «12», а не за всю фразу целиком.
+const NUMBER = /([−-]?\d+(?:[\s\u00a0]\d{3})*%?)/
+function Metric({ text }) {
+  return text.split(NUMBER).map((part, i) => (i % 2 ? <em key={i}>{part}</em> : part))
 }
 
 function CaseMedia({ media, title }) {
@@ -80,13 +120,16 @@ export default function CaseCard({ c, compact = false }) {
 
         <div className="v1-case-text">
           {!compact && c.client && <span className="v1-case-client">&#9656; {c.client}</span>}
-          <h3 className="v1-case-title">{c.title}</h3>
+          <h3 className="v1-case-title">
+            {compact && <ProductIcon kind={c.icon} />}
+            <span>{c.title}</span>
+          </h3>
 
           {c.metric ? (
             <>
               <p className="v1-case-metric">
-                <MetricIcon kind={c.icon} />
-                <span>{c.metric}</span>
+                {!compact && <ProductIcon kind={c.icon} />}
+                <span><Metric text={c.metric} /></span>
               </p>
               <dl className="v1-case-ba">
                 <dt>{t.cases.labelBefore}</dt>

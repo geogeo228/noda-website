@@ -507,6 +507,7 @@ body {
   align-items: flex-start;
   gap: 12px;
 }
+.v1-case-metric em { font-style: normal; color: var(--m-green); }
 .v1-case-icon {
   flex: none;
   width: 0.78em;
@@ -886,76 +887,81 @@ body {
    ============================================ */
 .v1-case-visual { container-type: inline-size; }
 .cs-root {
+  --cs-bg: #0b110d; --cs-bar: #111915; --cs-surface: #121a15; --cs-side: #0e1511;
+  --cs-line: #1f2c24; --cs-dot: #2a3a30; --cs-frame: #1d2620;
+  --cs-ink: #dfe7e2; --cs-muted: #7d8c83;
+  --cs-accent: #4ade80; --cs-accent-soft: rgba(74, 222, 128, 0.09);
+  --cs-accent-line: rgba(74, 222, 128, 0.35); --cs-on-accent: #04120a;
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   background: radial-gradient(120% 90% at 50% 0%, #10261a 0%, #050806 70%);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 2.3cqw; line-height: 1.3; color: #14181f;
+  font-size: 2.3cqw; line-height: 1.3; color: var(--cs-ink);
   text-align: left; overflow: hidden;
 }
 .cs-root b { font-weight: 600; }
-.cs-root small { display: block; font-size: 0.82em; color: #667085; }
+.cs-root small { display: block; font-size: 0.82em; color: var(--cs-muted); }
 
 /* Окно браузера */
 .cs-browser {
   width: 86%; height: 84%;
   display: flex; flex-direction: column;
   border-radius: 1.4cqw; overflow: hidden;
-  background: #f6f7f9;
+  background: var(--cs-bg);
   box-shadow: 0 2cqw 6cqw rgba(0, 0, 0, 0.55);
 }
 .cs-browser-bar {
   flex: none; display: flex; align-items: center; gap: 0.9cqw;
   height: 5.4cqw; padding: 0 1.8cqw;
-  background: #e7eaee;
+  background: var(--cs-bar);
 }
-.cs-dot { width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: #c4c9d0; }
+.cs-dot { width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: var(--cs-dot); }
 .cs-url {
   margin-left: 1.6cqw; flex: 1;
   padding: 0.5cqw 1.6cqw; border-radius: 0.8cqw;
-  background: #f6f7f9; color: #667085; font-size: 0.8em;
+  background: var(--cs-bg); color: var(--cs-muted); font-size: 0.8em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .cs-browser-body { flex: 1; min-height: 0; padding: 2.4cqw 3cqw; overflow: hidden; }
 
 .cs-btn {
   display: inline-block; padding: 1.1cqw 2.6cqw; border-radius: 1cqw;
-  color: #fff; font-weight: 600; font-size: 0.92em;
+  color: var(--cs-on-accent); font-weight: 600; font-size: 0.92em;
 }
 
 /* Паспорта: форма участника */
 .cs-pasp { display: grid; gap: 1.4cqw; }
 .cs-pasp-group {
   padding: 1cqw 1.6cqw; border-radius: 0.9cqw;
-  background: #e5efe9; color: #1e5b3a; font-weight: 600; font-size: 0.9em;
+  background: var(--cs-accent-soft); color: var(--cs-accent); font-weight: 600; font-size: 0.9em;
 }
 .cs-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6cqw; }
 .cs-field {
   display: grid; gap: 0.3cqw;
   padding: 0.9cqw 1.4cqw; border-radius: 0.9cqw;
-  background: #fff; border: 1px solid #e7eaee;
+  background: var(--cs-surface); border: 1px solid var(--cs-line);
 }
-.cs-field span { font-size: 0.78em; color: #667085; }
+.cs-field span { font-size: 0.78em; color: var(--cs-muted); }
 .cs-file {
   display: flex; align-items: center; gap: 1cqw;
   padding: 1cqw 1.4cqw; border-radius: 0.9cqw;
-  border: 1px dashed #9cbfaa; color: #1e5b3a; font-size: 0.88em;
+  border: 1px dashed var(--cs-accent-line); color: var(--cs-accent); font-size: 0.88em;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .cs-file i {
   flex: none; font-style: normal; display: grid; place-items: center;
   width: 2.6cqw; height: 2.6cqw; border-radius: 50%;
-  background: #1e5b3a; color: #fff; font-size: 0.8em;
+  background: var(--cs-accent); color: var(--cs-on-accent); font-size: 0.8em;
 }
-.cs-pasp-btn { justify-self: start; background: #1e5b3a; }
+.cs-pasp-btn { justify-self: start; background: var(--cs-accent); }
 
 /* Телефон */
 .cs-phone-stage { height: 100%; display: flex; align-items: center; justify-content: center; }
 .cs-phone {
   height: 90%; aspect-ratio: 9 / 17.5;
   border-radius: 3.4cqw; overflow: hidden;
-  border: 0.9cqw solid #1c1f24;
-  background: #f6f7f9;
+  border: 0.9cqw solid var(--cs-frame);
+  background: var(--cs-bg);
   box-shadow: 0 2cqw 6cqw rgba(0, 0, 0, 0.55);
   font-size: 1.62cqw;
 }
@@ -966,18 +972,18 @@ body {
 .cs-del-head b { font-size: 1.2em; }
 .cs-del-card {
   padding: 1.2cqw 1.5cqw; border-radius: 1.3cqw;
-  background: #fff; border: 1px solid #e7eaee;
+  background: var(--cs-surface); border: 1px solid var(--cs-line);
 }
-.cs-del-mgr { border-color: #b9d3ea; background: #f2f7fc; }
+.cs-del-mgr { border-color: var(--cs-accent-line); background: var(--cs-accent-soft); }
 .cs-del-actions { display: flex; gap: 1cqw; margin-top: 0.8cqw; }
 .cs-del-actions span {
   flex: 1; text-align: center; padding: 0.7cqw 0; border-radius: 0.9cqw;
-  background: #1f4e79; color: #fff; font-size: 0.85em; font-weight: 600;
+  background: var(--cs-accent); color: var(--cs-on-accent); font-size: 0.85em; font-weight: 600;
 }
-.cs-del-actions span + span { background: #e3ecf5; color: #1f4e79; }
+.cs-del-actions span + span { background: var(--cs-accent-soft); color: var(--cs-accent); }
 .cs-del-next {
   margin-top: auto; padding: 1cqw 1.4cqw; border-radius: 1.1cqw;
-  background: #1f4e79; color: #fff; font-size: 0.9em; font-weight: 600;
+  background: var(--cs-accent); color: var(--cs-on-accent); font-size: 0.9em; font-weight: 600;
 }
 
 /* Подбор подрядчиков: разобранное ТЗ */
@@ -986,39 +992,39 @@ body {
 .cs-tz-doc {
   flex: none; display: grid; place-items: center;
   width: 4.4cqw; height: 5.2cqw; border-radius: 0.6cqw;
-  background: #d64545; color: #fff; font-size: 0.7em; font-weight: 700;
+  background: #b54848; color: var(--cs-on-accent); font-size: 0.7em; font-weight: 700;
 }
 .cs-tz-list {
   display: grid; border-radius: 1cqw; overflow: hidden;
-  background: #fff; border: 1px solid #e7eaee;
+  background: var(--cs-surface); border: 1px solid var(--cs-line);
 }
 .cs-tz-row {
   display: grid; grid-template-columns: 18% 1fr auto; gap: 1.4cqw; align-items: baseline;
   padding: 0.95cqw 1.6cqw; font-size: 0.9em;
 }
-.cs-tz-row + .cs-tz-row { border-top: 1px solid #eef0f3; }
-.cs-tz-row span { color: #667085; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cs-tz-row em { font-style: normal; color: #1f7a52; font-weight: 600; white-space: nowrap; }
-.cs-tz-btn { justify-self: start; background: #14181f; }
+.cs-tz-row + .cs-tz-row { border-top: 1px solid var(--cs-line); }
+.cs-tz-row span { color: var(--cs-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-tz-row em { font-style: normal; color: var(--cs-accent); font-weight: 600; white-space: nowrap; }
+.cs-tz-btn { justify-self: start; background: var(--cs-accent); }
 
 /* Рабочая среда агентства: доска проекта */
 .cs-ws { height: 100%; display: grid; grid-template-columns: 26% 1fr; gap: 2cqw; margin: -2.4cqw -3cqw; padding: 0; }
 .cs-ws-side {
   display: flex; flex-direction: column; gap: 0.9cqw;
-  padding: 2.4cqw 1.6cqw; background: #eef0f2; font-size: 0.88em;
+  padding: 2.4cqw 1.6cqw; background: var(--cs-side); font-size: 0.88em;
 }
 .cs-ws-side small { margin-bottom: 0.4cqw; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75em; }
-.cs-ws-side b { font-weight: 500; color: #4a5260; padding: 0.6cqw 0.9cqw; border-radius: 0.7cqw; }
-.cs-ws-side b.on { background: #fff; color: #14181f; font-weight: 600; }
+.cs-ws-side b { font-weight: 500; color: var(--cs-muted); padding: 0.6cqw 0.9cqw; border-radius: 0.7cqw; }
+.cs-ws-side b.on { background: var(--cs-surface); color: var(--cs-ink); font-weight: 600; }
 .cs-ws-main { padding: 2.4cqw 3cqw 2.4cqw 0; min-width: 0; }
 .cs-ws-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1cqw; margin-bottom: 1.8cqw; }
-.cs-ws-top span { font-size: 0.82em; color: #1f7a52; white-space: nowrap; }
+.cs-ws-top span { font-size: 0.82em; color: var(--cs-accent); white-space: nowrap; }
 .cs-ws-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2cqw; }
 .cs-ws-col { display: grid; gap: 0.8cqw; align-content: start; }
 .cs-ws-col small { margin-bottom: 0.2cqw; }
 .cs-ws-task {
   padding: 1cqw 1.1cqw; border-radius: 0.9cqw;
-  background: #fff; border: 1px solid #e7eaee; font-size: 0.85em;
+  background: var(--cs-surface); border: 1px solid var(--cs-line); font-size: 0.85em;
 }
 
 /* Брокер: чат в Telegram (тёмная тема) */
@@ -1053,10 +1059,29 @@ body {
 .home-results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 .home-results .v1-case { flex: none; display: flex; }
 .v1-case-compact .v1-case-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; width: 100%; }
-.v1-case-compact .v1-case-text { gap: 10px; }
-.v1-case-compact .v1-case-title { font-size: 1.05rem; margin: 0; }
-.v1-case-compact .v1-case-metric { font-size: clamp(1.3rem, 2.2vw, 1.7rem); }
-.v1-case-compact .v1-case-ba { margin-top: 8px; }
+.v1-case-compact .v1-case-text { gap: 0; }
+/* Название — тихая подпись со значком продукта. Главное в карточке — метрика,
+   поэтому название не спорит с ней ни размером, ни цветом. */
+.v1-case-compact .v1-case-title {
+  display: flex; align-items: center; gap: 10px; margin: 0;
+  font-family: var(--f-mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--m-text-dim);
+}
+.v1-case-compact .v1-case-title .v1-case-icon {
+  width: 16px; height: 16px; padding: 6px; border-radius: 8px; color: var(--m-green);
+}
+/* Метрика — шрифтом шапки сайта, белым; зелёным только цифры. */
+.v1-case-compact .v1-case-metric {
+  display: block; margin: 14px 0 0;
+  font-family: var(--f-body); font-weight: 600; color: var(--m-white);
+  font-size: clamp(1.45rem, 2.3vw, 1.95rem); line-height: 1.15; letter-spacing: -0.01em;
+}
+.v1-case-compact .v1-case-ba { margin-top: 16px; }
+.v1-case-compact .v1-case-visual { border: 0; }
+/* Видео — это запись экрана: показываем его целиком, с полями, а не обрезаем
+   под карточку, иначе по краям рвутся надписи. */
+.v1-case-compact .v1-case-visual video { object-fit: contain; }
+.v1-case-compact .v1-case-more { padding-top: 16px; }
 @media (max-width: 760px) { .home-results { grid-template-columns: 1fr; } }
 
 /* Услуги */
