@@ -601,6 +601,50 @@ body {
   .v1-cta-actions .m-btn { width: 100%; text-align: center; justify-content: center; }
 }
 
+/* Форма заявки. Подписи — Exo 2 обычным языком (читает собственник, не
+   технарь), мелкие пояснения — моно. */
+.lead-form { text-align: left; max-width: 640px; margin: 0 auto; display: grid; gap: 18px; }
+.lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.lead-field { display: grid; gap: 8px; }
+.lead-label { font-family: var(--f-body); font-size: 0.95rem; color: var(--m-text); }
+.lead-optional { white-space: nowrap; font-family: var(--f-mono); font-size: 11px; color: var(--m-text-faint); letter-spacing: 0.04em; }
+.lead-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--m-border);
+  border-radius: 0;
+  color: var(--m-white);
+  font-family: var(--f-body);
+  font-size: 1rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.lead-input::placeholder { color: var(--m-text-faint); }
+.lead-input:hover { border-color: rgba(255, 255, 255, 0.24); }
+.lead-input:focus { outline: none; border-color: var(--m-green); box-shadow: 0 0 0 3px var(--m-green-faint); }
+.has-error .lead-input { border-color: var(--m-danger); }
+.lead-error { font-family: var(--f-mono); font-size: 12px; color: var(--m-danger); }
+.lead-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 4px; }
+.lead-submit { justify-content: center; }
+.lead-submit:disabled { opacity: 0.55; cursor: default; }
+.lead-submit:disabled:hover { background: transparent; color: var(--m-green); }
+.lead-note { font-family: var(--f-mono); font-size: 11px; color: var(--m-text-faint); letter-spacing: 0.04em; line-height: 1.5; }
+.lead-fail { margin: 0; font-size: 0.95rem; color: var(--m-text); line-height: 1.6; }
+.lead-fail a { color: var(--m-green); }
+.lead-done { max-width: 640px; margin: 0 auto; padding: 28px 24px; border: 1px solid var(--m-green-deep); background: var(--m-green-ghost); }
+.lead-done-title { margin: 0 0 6px; font-size: 1.3rem; color: var(--m-green); font-weight: 600; }
+.lead-done-text { margin: 0; color: var(--m-text); }
+/* Ловушка для ботов: вне экрана, но не display:none — его боты распознают */
+.lead-hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.lead-alt { margin-top: 36px; padding-top: 28px; border-top: 1px dashed var(--m-border-faint); }
+.lead-alt-text { color: var(--m-text-dim); font-size: 0.95rem; }
+@media (max-width: 560px) {
+  .lead-row { grid-template-columns: 1fr; }
+  .lead-actions { flex-direction: column; align-items: stretch; }
+  .lead-submit { width: 100%; }
+  .lead-note { text-align: center; }
+}
+
 /* ============================================
    FOOTER
    ============================================ */
