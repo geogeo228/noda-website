@@ -1,34 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import ScrambleText from './ScrambleText'
-import useIntersectionObserver from '../hooks/useIntersectionObserver'
+import CountUp from './CountUp'
 import { t } from '../i18n'
-
-function CountUp({ to, suffix = '' }) {
-  const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2 })
-  const [value, setValue] = useState(0)
-  const animated = useRef(false)
-
-  useEffect(() => {
-    if (!isVisible || animated.current) return
-    animated.current = true
-    const duration = 1200
-    const start = performance.now()
-
-    function tick(t) {
-      const p = Math.min(1, (t - start) / duration)
-      const eased = 1 - Math.pow(1 - p, 3)
-      setValue(Math.floor(to * eased))
-      if (p < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
-  }, [isVisible, to])
-
-  return (
-    <span ref={ref} className="v1-stat-num">
-      {value.toLocaleString(t.locale)}{suffix}
-    </span>
-  )
-}
 
 export default function Hero() {
   const [typed, setTyped] = useState('')

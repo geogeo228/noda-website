@@ -117,6 +117,11 @@ export default {
     labelTask: 'task:',
     labelSolution: 'sol:',
     labelResult: 'res:',
+    // Английские кейсы пока идут в прежней раскладке (см. CaseCard), эти ключи
+    // заведены заранее, чтобы словари не разъезжались.
+    labelBefore: 'before',
+    labelAfter: 'after',
+    readFull: '→ How it was built',
   },
 
   why: {
