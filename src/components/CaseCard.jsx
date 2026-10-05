@@ -11,6 +11,47 @@ import { t } from '../i18n'
 // Прежняя (metric нет): task / sol / res списком. Нужна, потому что английская
 // версия живёт на своих данных и в этот заход не переписывается — cases.en.js
 // остаётся в старой структуре, и ломать его нельзя.
+// Значок типа метрики. Читается раньше текста и сразу говорит, про что цифра:
+// время, деньги, ноль потерь или охват. Рисуем инлайном, чтобы не тянуть
+// иконочный пакет ради четырёх картинок.
+const METRIC_ICONS = {
+  time: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </>
+  ),
+  money: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M10 17V7h3.5a2.5 2.5 0 0 1 0 5H9M9 14.5h5" />
+    </>
+  ),
+  zero: (
+    <>
+      <path d="M12 3l7 3v6c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6z" />
+      <path d="M9 12l2 2 4-4" />
+    </>
+  ),
+  reach: (
+    <>
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" />
+      <circle cx="12" cy="12" r="2.5" />
+    </>
+  ),
+}
+
+function MetricIcon({ kind }) {
+  const shape = METRIC_ICONS[kind]
+  if (!shape) return null
+  return (
+    <svg className="v1-case-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {shape}
+    </svg>
+  )
+}
+
 function CaseMedia({ media, title }) {
   return (
     <div className="v1-case-visual">
@@ -36,7 +77,10 @@ export default function CaseCard({ c }) {
 
           {c.metric ? (
             <>
-              <p className="v1-case-metric">{c.metric}</p>
+              <p className="v1-case-metric">
+                <MetricIcon kind={c.icon} />
+                <span>{c.metric}</span>
+              </p>
               <dl className="v1-case-ba">
                 <dt>{t.cases.labelBefore}</dt>
                 <dd className="was">{c.before}</dd>

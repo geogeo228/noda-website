@@ -474,7 +474,10 @@ body {
 }
 .v1-case { scroll-snap-align: center; flex: 0 0 min(980px, 88vw); }
 .v1-case-body { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; }
-.v1-case-visual { position: relative; border: 1px solid var(--m-border-faint); aspect-ratio: 16/10; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; }
+/* width + align-self обязательны: иначе грид растягивает блок по высоте строки,
+   aspect-ratio выводит из этой высоты ширину, и картинка вылезает поверх
+   текстовой колонки, как только текст становится выше картинки. */
+.v1-case-visual { position: relative; border: 1px solid var(--m-border-faint); aspect-ratio: 16/10; width: 100%; align-self: center; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; }
 .v1-case-visual video,
 .v1-case-visual img { width: 100%; height: 100%; object-fit: cover; }
 .v1-case-text { display: flex; flex-direction: column; gap: 14px; }
@@ -500,6 +503,20 @@ body {
   color: var(--m-green);
   font-variant-numeric: tabular-nums;
   text-wrap: balance;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.v1-case-icon {
+  flex: none;
+  width: 0.78em;
+  height: 0.78em;
+  margin-top: 0.02em;
+  padding: 0.22em;
+  box-sizing: content-box;
+  border: 1px solid var(--m-green-deep);
+  background: var(--m-green-faint);
+  border-radius: 10px;
 }
 .v1-case-ba {
   margin: 14px 0 0;
