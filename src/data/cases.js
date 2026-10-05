@@ -66,7 +66,6 @@ export const cases = [
     metric: 'Ответ клиенту за 2 секунды',
     before: 'с каждым вопросом — звонок менеджеру',
     after: 'рейс, трансфер и менеджер у делегата в телефоне',
-    article: 'festival-app-ai-calendar',
     media: { type: 'screen', name: 'delegates' },
   },
   {
@@ -101,7 +100,6 @@ export const cases = [
     metric: '1000+ фото за вечер',
     before: 'фотоотчёт через неделю',
     after: 'фото у гостя через минуту, пока он на празднике',
-    article: 'ai-photo-bot',
     media: { type: 'video', src: '/assets/Колдун_Бот_визуал.mp4', poster: '/assets/poster_koldun.jpg' },
   },
   {
