@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import LazyVideo from './LazyVideo'
+import CaseScreen from './CaseScreens'
 import { t } from '../i18n'
 
 // Карточка кейса умеет две раскладки.
@@ -55,7 +56,9 @@ function MetricIcon({ kind }) {
 function CaseMedia({ media, title }) {
   return (
     <div className="v1-case-visual">
-      {media.type === 'video' ? (
+      {media.type === 'screen' ? (
+        <CaseScreen name={media.name} title={title} />
+      ) : media.type === 'video' ? (
         <LazyVideo src={media.src} poster={media.poster} />
       ) : (
         <img src={media.src} alt={title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

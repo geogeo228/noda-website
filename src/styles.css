@@ -879,3 +879,167 @@ body {
   .cursor-blink { animation: none; }
   .matrix-rain { display: none; }
 }
+
+/* ============================================
+   Экраны продуктов в карточках кейсов (CaseScreens.jsx)
+   Все размеры в cqw от ширины .v1-case-visual: экран масштабируется целиком.
+   ============================================ */
+.v1-case-visual { container-type: inline-size; }
+.cs-root {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(120% 90% at 50% 0%, #10261a 0%, #050806 70%);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 2.3cqw; line-height: 1.3; color: #14181f;
+  text-align: left; overflow: hidden;
+}
+.cs-root b { font-weight: 600; }
+.cs-root small { display: block; font-size: 0.82em; color: #667085; }
+
+/* Окно браузера */
+.cs-browser {
+  width: 86%; height: 84%;
+  display: flex; flex-direction: column;
+  border-radius: 1.4cqw; overflow: hidden;
+  background: #f6f7f9;
+  box-shadow: 0 2cqw 6cqw rgba(0, 0, 0, 0.55);
+}
+.cs-browser-bar {
+  flex: none; display: flex; align-items: center; gap: 0.9cqw;
+  height: 5.4cqw; padding: 0 1.8cqw;
+  background: #e7eaee;
+}
+.cs-dot { width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: #c4c9d0; }
+.cs-url {
+  margin-left: 1.6cqw; flex: 1;
+  padding: 0.5cqw 1.6cqw; border-radius: 0.8cqw;
+  background: #f6f7f9; color: #667085; font-size: 0.8em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cs-browser-body { flex: 1; min-height: 0; padding: 2.4cqw 3cqw; overflow: hidden; }
+
+.cs-btn {
+  display: inline-block; padding: 1.1cqw 2.6cqw; border-radius: 1cqw;
+  color: #fff; font-weight: 600; font-size: 0.92em;
+}
+
+/* Паспорта: форма участника */
+.cs-pasp { display: grid; gap: 1.4cqw; }
+.cs-pasp-group {
+  padding: 1cqw 1.6cqw; border-radius: 0.9cqw;
+  background: #e5efe9; color: #1e5b3a; font-weight: 600; font-size: 0.9em;
+}
+.cs-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6cqw; }
+.cs-field {
+  display: grid; gap: 0.3cqw;
+  padding: 0.9cqw 1.4cqw; border-radius: 0.9cqw;
+  background: #fff; border: 1px solid #e7eaee;
+}
+.cs-field span { font-size: 0.78em; color: #667085; }
+.cs-file {
+  display: flex; align-items: center; gap: 1cqw;
+  padding: 1cqw 1.4cqw; border-radius: 0.9cqw;
+  border: 1px dashed #9cbfaa; color: #1e5b3a; font-size: 0.88em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cs-file i {
+  flex: none; font-style: normal; display: grid; place-items: center;
+  width: 2.6cqw; height: 2.6cqw; border-radius: 50%;
+  background: #1e5b3a; color: #fff; font-size: 0.8em;
+}
+.cs-pasp-btn { justify-self: start; background: #1e5b3a; }
+
+/* Телефон */
+.cs-phone-stage { height: 100%; display: flex; align-items: center; justify-content: center; }
+.cs-phone {
+  height: 90%; aspect-ratio: 9 / 17.5;
+  border-radius: 3.4cqw; overflow: hidden;
+  border: 0.9cqw solid #1c1f24;
+  background: #f6f7f9;
+  box-shadow: 0 2cqw 6cqw rgba(0, 0, 0, 0.55);
+  font-size: 1.62cqw;
+}
+
+/* Делегаты: персональный экран */
+.cs-del { height: 100%; display: flex; flex-direction: column; gap: 0.9cqw; padding: 1.8cqw 1.5cqw; }
+.cs-del-head { padding-bottom: 0.6cqw; }
+.cs-del-head b { font-size: 1.2em; }
+.cs-del-card {
+  padding: 1.2cqw 1.5cqw; border-radius: 1.3cqw;
+  background: #fff; border: 1px solid #e7eaee;
+}
+.cs-del-mgr { border-color: #b9d3ea; background: #f2f7fc; }
+.cs-del-actions { display: flex; gap: 1cqw; margin-top: 0.8cqw; }
+.cs-del-actions span {
+  flex: 1; text-align: center; padding: 0.7cqw 0; border-radius: 0.9cqw;
+  background: #1f4e79; color: #fff; font-size: 0.85em; font-weight: 600;
+}
+.cs-del-actions span + span { background: #e3ecf5; color: #1f4e79; }
+.cs-del-next {
+  margin-top: auto; padding: 1cqw 1.4cqw; border-radius: 1.1cqw;
+  background: #1f4e79; color: #fff; font-size: 0.9em; font-weight: 600;
+}
+
+/* Подбор подрядчиков: разобранное ТЗ */
+.cs-tz { display: grid; gap: 1.6cqw; }
+.cs-tz-file { display: flex; align-items: center; gap: 1.4cqw; }
+.cs-tz-doc {
+  flex: none; display: grid; place-items: center;
+  width: 4.4cqw; height: 5.2cqw; border-radius: 0.6cqw;
+  background: #d64545; color: #fff; font-size: 0.7em; font-weight: 700;
+}
+.cs-tz-list {
+  display: grid; border-radius: 1cqw; overflow: hidden;
+  background: #fff; border: 1px solid #e7eaee;
+}
+.cs-tz-row {
+  display: grid; grid-template-columns: 18% 1fr auto; gap: 1.4cqw; align-items: baseline;
+  padding: 0.95cqw 1.6cqw; font-size: 0.9em;
+}
+.cs-tz-row + .cs-tz-row { border-top: 1px solid #eef0f3; }
+.cs-tz-row span { color: #667085; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-tz-row em { font-style: normal; color: #1f7a52; font-weight: 600; white-space: nowrap; }
+.cs-tz-btn { justify-self: start; background: #14181f; }
+
+/* Рабочая среда агентства: доска проекта */
+.cs-ws { height: 100%; display: grid; grid-template-columns: 26% 1fr; gap: 2cqw; margin: -2.4cqw -3cqw; padding: 0; }
+.cs-ws-side {
+  display: flex; flex-direction: column; gap: 0.9cqw;
+  padding: 2.4cqw 1.6cqw; background: #eef0f2; font-size: 0.88em;
+}
+.cs-ws-side small { margin-bottom: 0.4cqw; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75em; }
+.cs-ws-side b { font-weight: 500; color: #4a5260; padding: 0.6cqw 0.9cqw; border-radius: 0.7cqw; }
+.cs-ws-side b.on { background: #fff; color: #14181f; font-weight: 600; }
+.cs-ws-main { padding: 2.4cqw 3cqw 2.4cqw 0; min-width: 0; }
+.cs-ws-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1cqw; margin-bottom: 1.8cqw; }
+.cs-ws-top span { font-size: 0.82em; color: #1f7a52; white-space: nowrap; }
+.cs-ws-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2cqw; }
+.cs-ws-col { display: grid; gap: 0.8cqw; align-content: start; }
+.cs-ws-col small { margin-bottom: 0.2cqw; }
+.cs-ws-task {
+  padding: 1cqw 1.1cqw; border-radius: 0.9cqw;
+  background: #fff; border: 1px solid #e7eaee; font-size: 0.85em;
+}
+
+/* Брокер: чат в Telegram (тёмная тема) */
+.cs-phone.cs-tg { background: #0e1621; color: #f5f5f5; }
+.cs-tg { height: 100%; display: flex; flex-direction: column; }
+.cs-tg-head { padding: 1.6cqw 1.8cqw 1.2cqw; background: #17212b; }
+.cs-tg-head small { color: #6c7883; }
+.cs-tg-msgs { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.9cqw; padding: 1.6cqw 1.4cqw; }
+.cs-msg {
+  position: relative; max-width: 86%;
+  padding: 0.9cqw 1.3cqw 1.9cqw; border-radius: 1.3cqw;
+  background: #182533; font-size: 0.95em;
+}
+.cs-msg.out { align-self: flex-end; background: #2b5278; }
+.cs-msg i { position: absolute; right: 1cqw; bottom: 0.45cqw; font-style: normal; font-size: 0.7em; color: #6c8197; }
+.cs-tg-file {
+  display: block; margin-top: 0.6cqw; padding: 0.7cqw 1cqw; border-radius: 0.9cqw;
+  background: #22364b; color: #6ab3f3; font-size: 0.85em;
+}
+.cs-tg-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6cqw; max-width: 86%; }
+.cs-tg-keys span {
+  text-align: center; padding: 0.7cqw 0; border-radius: 0.9cqw;
+  background: #22364b; color: #f5f5f5; font-size: 0.82em;
+}

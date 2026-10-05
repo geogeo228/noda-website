@@ -41,7 +41,7 @@ export const cases = [
     before: 'ответ через несколько часов, клиент уходил к соседям',
     after: 'ответ в момент обращения, круглосуточно',
     article: 'real-estate-lead-bot',
-    media: { type: 'image', src: '/assets/order-bot.webp' },
+    media: { type: 'screen', name: 'broker-chat' },
   },
   {
     id: 'pasporta-500',
@@ -52,7 +52,7 @@ export const cases = [
     metric: '2 дня вместо 21',
     before: '50 часов ручной работы',
     after: '1 час проверки',
-    media: { type: 'image', src: '/assets/wedding-ai.webp' },
+    media: { type: 'screen', name: 'passports' },
   },
   {
     id: 'podryadchiki-tz',
@@ -63,7 +63,7 @@ export const cases = [
     metric: '−96% времени на тендер',
     before: '4 часа на одно ТЗ',
     after: '10 минут',
-    media: { type: 'image', src: '/assets/order-bot.webp' },
+    media: { type: 'screen', name: 'contractor-search' },
   },
   {
     id: 'delegate-app',
@@ -75,7 +75,7 @@ export const cases = [
     before: 'с каждым вопросом — звонок менеджеру',
     after: 'рейс, трансфер и менеджер у делегата в телефоне',
     article: 'festival-app-ai-calendar',
-    media: { type: 'video', src: '/assets/festival.mp4' },
+    media: { type: 'screen', name: 'delegates' },
   },
   {
     id: 'agency-workspace',
@@ -87,7 +87,7 @@ export const cases = [
     before: 'статус проекта выясняли на созвоне',
     after: 'статус видно в системе, созваниваться незачем',
     article: 'event-agency-task-tracker',
-    media: { type: 'image', src: '/assets/anb-screen.webp' },
+    media: { type: 'screen', name: 'agency-workspace' },
   },
   {
     id: 'podryadchik-ankety',
