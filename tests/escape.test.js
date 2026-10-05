@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { escapeAttr, renderHead } from '../scripts/prerender.js'
+import { escapeAttr, renderHead, stripHoistedTags } from '../scripts/prerender.js'
 
 test('кавычки и скобки в атрибуте экранируются', () => {
   assert.equal(escapeAttr('Кейс "Колдун" & <b>'), 'Кейс &quot;Колдун&quot; &amp; &lt;b&gt;')
@@ -31,17 +31,39 @@ test('title с кавычками не рвёт разметку head', () => {
   assert.ok(contentValues[0].includes('&quot;кавычками&quot;'), 'кавычки описания не экранированы')
 })
 
-test('JSON-LD не может закрыть тег script', () => {
+test('JSON-LD остаётся в теле: его React считает частью дерева', () => {
+  const appHtml =
+    '<title>T</title><meta name="description" content="d"/>' +
+    '<link rel="canonical" href="https://noda-auto.com/"/>' +
+    '<script type="application/ld+json">{"@type":"Organization"}</script>' +
+    '<div class="v1-root">тело</div>'
+
+  const stripped = stripHoistedTags(appHtml)
+
+  assert.ok(
+    stripped.includes('application/ld+json'),
+    'JSON-LD вырезан — это ломает гидрацию на каждой странице, где он есть',
+  )
+  assert.ok(!stripped.includes('<title>'), 'title должен быть вырезан: его React поднимает в head')
+  assert.ok(!stripped.includes('<meta'), 'meta должен быть вырезан')
+  assert.ok(!stripped.includes('<link'), 'link должен быть вырезан')
+  assert.ok(stripped.includes('тело'), 'разметка страницы должна остаться')
+})
+
+test('head не дублирует JSON-LD, который уже есть в теле', () => {
   const head = renderHead(
     {
       path: '/',
-      title: 't',
+      title: 'T',
       description: 'd',
       ogDescription: 'o',
-      jsonLd: { name: '</script><script>alert(1)</script>' },
+      jsonLd: { '@type': 'Organization' },
     },
     'https://noda-auto.com',
   )
 
-  assert.ok(!head.includes('</script><script>'), 'JSON-LD вырвался из тега')
+  assert.ok(
+    !head.includes('application/ld+json'),
+    'два JSON-LD на странице: один из пререндера, другой из React',
+  )
 })

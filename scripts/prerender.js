@@ -49,28 +49,33 @@ export function renderHead(route, origin, options = {}) {
     }
   }
 
-  if (route.jsonLd) {
-    // Экранируем < внутри JSON, иначе строка вида </script> закрыла бы тег
-    // и всё, что за ней, стало бы разметкой страницы.
-    const json = JSON.stringify(route.jsonLd).replace(/</g, '\\u003c')
-    tags.push(`<script data-default-seo type="application/ld+json">${json}</script>`)
-  }
+  // JSON-LD здесь сознательно не добавляется: его рендерит в тело сам React
+  // через компонент Seo, и он попадает в статику оттуда. Дубль в head дал бы
+  // две разметки Organization на странице, а попытка убрать «лишний» из тела
+  // ломает гидрацию — см. комментарий к stripHoistedTags.
 
   return tags.join('\n    ')
 }
 
-// React 19 сам поднимает <title>, <meta>, <link> и JSON-LD из дерева
-// компонентов и при серверном рендере эмитит их в начало вывода. Нам они
-// не нужны: источник правды для head — src/routes.js, а два canonical
-// на странице мы уже один раз пережили. Вырезаем их из тела; на клиенте
-// React создаст их заново и поднимет в head, а статические теги оттуда
-// к тому моменту снимет src/seo-defaults.js.
-function stripHoistedTags(appHtml) {
+// React 19 поднимает <title>, <meta> и <link> из дерева компонентов в head
+// сам, а при серверном рендере эмитит их в начало вывода. Нам они не нужны:
+// источник правды для head — src/routes.js, а два canonical на странице мы
+// уже один раз пережили. Вырезаем их из тела; на клиенте React создаст их
+// заново и поднимет в head, а статические теги оттуда к тому моменту снимет
+// src/seo-defaults.js. Гидрации это не мешает: поднимаемые теги React ищет
+// в head, а не на месте в контейнере.
+//
+// JSON-LD — исключение, и важное. Его React поднимать не умеет: Helmet
+// отдаёт его детей внутрь дерева, и при гидрации React ищет этот <script>
+// ровно там, где отрендерил. Вырезанный JSON-LD давал ошибку #418 на каждой
+// странице, где он есть, и React перерисовывал страницу заново. Проверено
+// на проде дифференциально: единственной страницей без ошибки была /blog,
+// у которой jsonLd равен null.
+export function stripHoistedTags(appHtml) {
   return appHtml
     .replace(/<title[^>]*>[\s\S]*?<\/title>/g, '')
     .replace(/<meta\b[^>]*>/g, '')
     .replace(/<link\b[^>]*>/g, '')
-    .replace(/<script[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/g, '')
 }
 
 // Заголовок, который React поднял из src/components/Seo.jsx. Нужен, чтобы
