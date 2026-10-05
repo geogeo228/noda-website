@@ -4,6 +4,7 @@ node_modules/
 dist/
 dist-en/
 .wrangler/
+.dev.vars
 _archive/
 _docs/
 dist-ssr/

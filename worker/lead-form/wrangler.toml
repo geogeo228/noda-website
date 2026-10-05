@@ -1,0 +1,39 @@
+# Приёмник заявок с noda-auto.com → Telegram.
+# Токен бота и chat_id сюда НЕ писать — только `wrangler secret put`.
+#
+# Деплой (из этой папки, worker/lead-form):
+#   npx wrangler login
+#   npx wrangler secret put TELEGRAM_BOT_TOKEN   # токен бота от @BotFather
+#   npx wrangler secret put TELEGRAM_CHAT_ID     # id чата Георгия с этим ботом
+#   npx wrangler deploy
+# Боту надо один раз написать /start, иначе он не сможет прислать сообщение.
+# Проверка после деплоя: форма на noda-auto.com → сообщение в Telegram;
+# логи — npx wrangler tail.
+#
+# Локально: npx wrangler dev (секреты — в .dev.vars, он в .gitignore),
+# сайт — VITE_LEAD_ENDPOINT=http://localhost:8787 npm run dev, а в
+# ALLOWED_ORIGINS добавить http://localhost:5173.
+name = "noda-lead-form"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Отдельный поддомен: noda-auto.com в Cloudflare без прокси, маршрут воркера
+# на нём не сработает. DNS-запись для custom domain Cloudflare создаёт сам.
+workers_dev = false
+routes = [
+  { pattern = "lead.noda-auto.com", custom_domain = true }
+]
+
+[vars]
+ALLOWED_ORIGINS = "https://noda-auto.com"
+
+# 5 заявок в минуту с одного IP. Отдельного ресурса не требует.
+[[ratelimits]]
+name = "LEAD_LIMITER"
+namespace_id = "1001"
+  [ratelimits.simple]
+  limit = 5
+  period = 60
+
+[observability]
+enabled = true
