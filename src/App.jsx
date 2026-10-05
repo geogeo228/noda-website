@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { lang } from './i18n'
+import NotFound from './components/NotFound'
 
 // Новая главная пока только у русской версии: английская живёт на своих
 // данных и в этот заход не переписывалась.
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/giorgi" element={<Giorgi />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<Article />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   )

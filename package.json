@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run build:ssr && node scripts/prerender.js && node scripts/verify-prerender.js",
+    "build:ssr": "vite build --ssr src/entry-server.jsx",
+    "verify": "node scripts/verify-prerender.js",
     "preview": "vite preview",
     "dev:en": "VITE_LANG=en vite",
-    "build:en": "VITE_LANG=en vite build",
+    "build:en": "VITE_LANG=en npm run build",
     "preview:en": "VITE_LANG=en vite preview --outDir dist-en"
   },
   "dependencies": {
