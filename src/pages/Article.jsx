@@ -1,12 +1,18 @@
+import { useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
 import NotFound from '../components/NotFound'
+import { track } from '../analytics/track'
+import { EVENTS } from '../analytics/events'
+import { useReadToEnd } from '../analytics/useReadToEnd'
 
 export default function Article() {
   const { slug } = useParams()
   const article = articles.find((a) => a.slug === slug)
+  const endRef = useRef(null)
+  useReadToEnd(endRef, slug, () => track(EVENTS.blogArticleRead, { slug }))
 
   if (!article) return <NotFound />
 
@@ -62,11 +68,14 @@ export default function Article() {
             </section>
           ))}
         </div>
+        {/* Метка конца текста: попала в экран после прокрутки — статья дочитана */}
+        <div ref={endRef} className="article-end" aria-hidden="true"></div>
 
         <div className="article-cta tframe corners">
           <span className="cnr-tl"></span><span className="cnr-br"></span>
           <p>{t.article.ctaText}</p>
-          <a className="m-btn" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">{t.article.ctaButton}</a>
+          <a className="m-btn" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer"
+            onClick={() => track(EVENTS.blogArticleTelegram, { slug })}>{t.article.ctaButton}</a>
         </div>
 
         {related.length > 0 && (

@@ -111,7 +111,9 @@ function CaseMedia({ media, title }) {
 // текст под ним, и только главное — название, метрика, было/стало, ссылка на
 // статью. Клиент, контекст и мелкая строка там не показываются: Георгий их
 // вычеркнул как второстепенное.
-export default function CaseCard({ c, compact = false }) {
+// onArticleClick — для аналитики: событие задаёт тот, кто знает, на какой он
+// странице (карточка общая для главной и английского лендинга).
+export default function CaseCard({ c, compact = false, onArticleClick }) {
   return (
     <article className={`v1-case tframe corners${compact ? ' v1-case-compact' : ''}`}>
       <span className="cnr-tl"></span><span className="cnr-br"></span>
@@ -140,7 +142,7 @@ export default function CaseCard({ c, compact = false }) {
               {!compact && c.extra && <p className="v1-case-extra">{c.extra}</p>}
               {!compact && c.task && <p className="v1-case-task">{c.task}</p>}
               {c.article && (
-                <Link to={`/blog/${c.article}`} className="v1-case-more">
+                <Link to={`/blog/${c.article}`} className="v1-case-more" onClick={onArticleClick}>
                   {t.cases.readFull}
                 </Link>
               )}

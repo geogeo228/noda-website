@@ -1,4 +1,6 @@
 import { t } from '../../i18n'
+import { track } from '../../analytics/track'
+import { EVENTS } from '../../analytics/events'
 
 const TELEGRAM = 'https://t.me/BlueFaceBaby99'
 const MAX = 'https://max.ru/u/f9LHodD0cOKErTtCwHY7cZOc-FEHHvmgPYuAz8TkKYXkG1W2CFudhSPnnh8'
@@ -21,8 +23,10 @@ export default function Founder() {
             <p className="home-founder-role">{f.role}</p>
             <p className="home-founder-bio">{f.bio}</p>
             <div className="home-founder-links">
-              <a className="m-btn" href={TELEGRAM} target="_blank" rel="noopener noreferrer">Telegram</a>
-              <a className="m-btn ghost" href={MAX} target="_blank" rel="noopener noreferrer">MAX</a>
+              <a className="m-btn" href={TELEGRAM} target="_blank" rel="noopener noreferrer"
+                onClick={() => track(EVENTS.homeTelegram, { place: 'founder' })}>Telegram</a>
+              <a className="m-btn ghost" href={MAX} target="_blank" rel="noopener noreferrer"
+                onClick={() => track(EVENTS.homeMax, { place: 'founder' })}>MAX</a>
             </div>
           </div>
         </div>

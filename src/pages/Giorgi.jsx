@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
-
-function track(event) {
-  if (typeof window !== 'undefined' && window.umami) {
-    window.umami.track(event)
-  }
-}
+import { track } from '../analytics/track'
+import { EVENTS } from '../analytics/events'
 
 export default function Giorgi() {
   return (
@@ -37,7 +33,7 @@ export default function Giorgi() {
             href="https://t.me/giorgikuchava"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track('giorgi-telegram')}
+            onClick={() => track(EVENTS.giorgiTelegram)}
           >
             {t.giorgi.linkTelegram}
           </a>
@@ -46,7 +42,7 @@ export default function Giorgi() {
             href="https://t.me/giorgikuchava"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track('giorgi-write')}
+            onClick={() => track(EVENTS.giorgiWrite)}
           >
             {t.giorgi.linkWrite}
           </a>
@@ -55,12 +51,12 @@ export default function Giorgi() {
             href="https://t.me/giorgikuchava"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track('giorgi-consult')}
+            onClick={() => track(EVENTS.giorgiConsult)}
           >
             {t.giorgi.linkConsult}
           </a>
         </div>
-        <Link to="/" className="giorgi-back" onClick={() => track('giorgi-site')}>
+        <Link to="/" className="giorgi-back" onClick={() => track(EVENTS.giorgiSite)}>
           {t.giorgi.back}
         </Link>
       </div>
