@@ -22,5 +22,7 @@ export const EVENTS = {
 
   // Статьи блога
   blogArticleRead: 'blog-article-read', // { slug }
-  blogArticleTelegram: 'blog-article-telegram', // { slug }
+  blogArticleTelegram: 'blog-article-telegram', // { slug, place?: 'form-error' }
+  blogLeadSubmit: 'blog-lead-submit', // { slug } — форма в конце статьи
+  blogLeadError: 'blog-lead-error', // { slug, reason }
 }

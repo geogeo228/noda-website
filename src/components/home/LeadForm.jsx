@@ -1,21 +1,28 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { t } from '../../i18n'
 import { normalizeLead, validateLead, LIMITS } from '../../lib/lead'
 import { LEAD_ENDPOINT } from '../../lib/lead-endpoint'
 import { track } from '../../analytics/track'
-import { EVENTS } from '../../analytics/events'
+import { leadTracking } from '../../analytics/leadTracking'
 
 export const TELEGRAM = 'https://t.me/BlueFaceBaby99'
 
-// Заявка в три поля для собственника бизнеса: имя, как связаться, что болит.
-// Уходит в воркер worker/lead-form, оттуда Георгию в Telegram.
+const EMPTY = { name: '', contact: '', task: '', consent: false }
+
+// Заявка в три поля для собственника бизнеса: имя, как связаться, что болит,
+// плюс согласие на обработку персональных данных (152-ФЗ). Уходит в воркер
+// worker/lead-form, оттуда Георгию в Telegram.
+//
+// Галочка согласия по умолчанию снята: предзаполненная согласием не считается.
 //
 // Пререндер: на сервере форма рисуется целиком, но с неактивной кнопкой.
 // До гидрации отправка нативным GET унесла бы имя и телефон в адрес страницы
 // (и в аналитику), а неактивная кнопка отключает и отправку по Enter.
-export default function LeadForm() {
+export default function LeadForm({ where = 'home', slug }) {
   const l = t.home.lead
-  const [values, setValues] = useState({ name: '', contact: '', task: '' })
+  const ev = leadTracking(where, slug)
+  const uid = useId()
+  const [values, setValues] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | done | failed
   const [ready, setReady] = useState(false)
@@ -27,13 +34,10 @@ export default function LeadForm() {
     setReady(true)
   }, [])
 
-  function update(field) {
-    return (e) => {
-      const value = e.target.value
-      setValues((v) => ({ ...v, [field]: value }))
-      // Ошибка исчезает, как только поле поправили, а не при следующей отправке
-      if (errors[field]) setErrors(({ [field]: _, ...rest }) => rest)
-    }
+  function set(field, value) {
+    setValues((v) => ({ ...v, [field]: value }))
+    // Ошибка исчезает, как только поле поправили, а не при следующей отправке
+    if (errors[field]) setErrors(({ [field]: _, ...rest }) => rest)
   }
 
   async function submit(e) {
@@ -63,18 +67,18 @@ export default function LeadForm() {
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.ok) {
         setStatus('done')
-        track(EVENTS.homeLeadSubmit)
+        track(ev.submit, Object.keys(ev.data).length ? ev.data : undefined)
       } else if (res.status === 400 && data.errors) {
         setErrors(data.errors)
         setStatus('idle')
-        track(EVENTS.homeLeadError, { reason: 'invalid' })
+        track(ev.error, { ...ev.data, reason: 'invalid' })
       } else {
         setStatus('failed')
-        track(EVENTS.homeLeadError, { reason: 'server' })
+        track(ev.error, { ...ev.data, reason: 'server' })
       }
     } catch {
       setStatus('failed')
-      track(EVENTS.homeLeadError, { reason: 'network' })
+      track(ev.error, { ...ev.data, reason: 'network' })
     }
   }
 
@@ -87,29 +91,35 @@ export default function LeadForm() {
     )
   }
 
+  const errorText = (name) => errors[name] && l.errors[name]?.[errors[name]]
+
   const field = (name, { label, placeholder, optional, ...input }) => {
-    const error = errors[name] && l.errors[name]?.[errors[name]]
+    const error = errorText(name)
     return (
       <label className={`lead-field lead-field-${name}${error ? ' has-error' : ''}`}>
         <span className="lead-label">
           {label}
           {optional && <span className="lead-optional"> · {l.optional}</span>}
         </span>
+        {/* ym-hide-content / ym-disable-keys: Вебвизор Яндекс.Метрики не
+            записывает то, что вводят в поле, — так обещает /privacy */}
         <input
-          className="lead-input"
+          className="lead-input ym-hide-content ym-disable-keys"
           name={name}
           value={values[name]}
-          onChange={update(name)}
+          onChange={(e) => set(name, e.target.value)}
           placeholder={placeholder}
           maxLength={LIMITS[name]}
           aria-invalid={error ? 'true' : undefined}
-          aria-describedby={error ? `lead-err-${name}` : undefined}
+          aria-describedby={error ? `${uid}-err-${name}` : undefined}
           {...input}
         />
-        {error && <span className="lead-error" id={`lead-err-${name}`}>{error}</span>}
+        {error && <span className="lead-error" id={`${uid}-err-${name}`}>{error}</span>}
       </label>
     )
   }
+
+  const consentError = errorText('consent')
 
   return (
     <form className="lead-form" onSubmit={submit} noValidate>
@@ -118,6 +128,23 @@ export default function LeadForm() {
         {field('contact', { label: l.contact, placeholder: l.contactPh, autoComplete: 'tel' })}
       </div>
       {field('task', { label: l.task, placeholder: l.taskPh, optional: true, autoComplete: 'off' })}
+
+      <div className={`lead-consent${consentError ? ' has-error' : ''}`}>
+        <input
+          type="checkbox"
+          id={`${uid}-consent`}
+          name="consent"
+          checked={values.consent}
+          onChange={(e) => set('consent', e.target.checked)}
+          aria-invalid={consentError ? 'true' : undefined}
+          aria-describedby={consentError ? `${uid}-err-consent` : undefined}
+        />
+        <label htmlFor={`${uid}-consent`}>
+          {l.consentBefore}
+          <a href="/privacy" target="_blank" rel="noopener">{l.consentLink}</a>
+        </label>
+        {consentError && <span className="lead-error" id={`${uid}-err-consent`}>{consentError}</span>}
+      </div>
 
       {/* Ловушка для ботов: человек это поле не видит и не попадает в него с клавиатуры */}
       <div className="lead-hp" aria-hidden="true">
@@ -138,7 +165,7 @@ export default function LeadForm() {
         <p className="lead-fail" role="alert">
           {l.failText}{' '}
           <a href={TELEGRAM} target="_blank" rel="noopener noreferrer"
-            onClick={() => track(EVENTS.homeTelegram, { place: 'form-error' })}>@BlueFaceBaby99</a>
+            onClick={() => track(ev.telegram, { ...ev.data, place: 'form-error' })}>@BlueFaceBaby99</a>
         </p>
       )}
     </form>

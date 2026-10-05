@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { EVENTS } from '../src/analytics/events.js'
 import { track } from '../src/analytics/track.js'
+import { leadTracking } from '../src/analytics/leadTracking.js'
 
 // Umami молча обрезает имя события длиннее 50 символов: цель перестаёт
 // совпадать, и конверсии тихо пропадают из отчёта.
@@ -46,4 +47,14 @@ test('события /giorgi не переименованы', () => {
   assert.equal(EVENTS.giorgiWrite, 'giorgi-write')
   assert.equal(EVENTS.giorgiConsult, 'giorgi-consult')
   assert.equal(EVENTS.giorgiSite, 'giorgi-site')
+})
+
+test('форма на главной и в статье шлёт разные события, статья — со slug', () => {
+  const home = leadTracking('home')
+  const article = leadTracking('article', 'ai-photo-bot')
+  assert.equal(home.submit, 'home-lead-submit')
+  assert.equal(article.submit, 'blog-lead-submit')
+  assert.equal(article.error, 'blog-lead-error')
+  assert.deepEqual(article.data, { slug: 'ai-photo-bot' })
+  assert.deepEqual(home.data, {})
 })

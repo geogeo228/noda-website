@@ -1,9 +1,10 @@
 import { useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data'
-import { t } from '../i18n'
+import { t, lang } from '../i18n'
 import Seo from '../components/Seo'
 import NotFound from '../components/NotFound'
+import LeadForm, { TELEGRAM } from '../components/home/LeadForm'
 import { track } from '../analytics/track'
 import { EVENTS } from '../analytics/events'
 import { useReadToEnd } from '../analytics/useReadToEnd'
@@ -71,12 +72,28 @@ export default function Article() {
         {/* Метка конца текста: попала в экран после прокрутки — статья дочитана */}
         <div ref={endRef} className="article-end" aria-hidden="true"></div>
 
-        <div className="article-cta tframe corners">
-          <span className="cnr-tl"></span><span className="cnr-br"></span>
-          <p>{t.article.ctaText}</p>
-          <a className="m-btn" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer"
-            onClick={() => track(EVENTS.blogArticleTelegram, { slug })}>{t.article.ctaButton}</a>
-        </div>
+        {/* Русская версия — форма заявки, Telegram вторым путём. У английской
+            формы нет (воркер, политика и тексты только русские) — там прежняя
+            кнопка. key сбрасывает «заявка отправлена» при переходе к другой статье. */}
+        {lang === 'ru' ? (
+          <div className="article-lead tframe corners">
+            <span className="cnr-tl"></span><span className="cnr-br"></span>
+            <p className="article-lead-title">{t.article.ctaText}</p>
+            <LeadForm key={slug} where="article" slug={slug} />
+            <div className="lead-alt">
+              <span className="lead-alt-text">{t.home.cta.orTelegram}</span>
+              <a className="m-btn ghost" href={TELEGRAM} target="_blank" rel="noopener noreferrer"
+                onClick={() => track(EVENTS.blogArticleTelegram, { slug })}>@BlueFaceBaby99</a>
+            </div>
+          </div>
+        ) : (
+          <div className="article-cta tframe corners">
+            <span className="cnr-tl"></span><span className="cnr-br"></span>
+            <p>{t.article.ctaText}</p>
+            <a className="m-btn" href={TELEGRAM} target="_blank" rel="noopener noreferrer"
+              onClick={() => track(EVENTS.blogArticleTelegram, { slug })}>{t.article.ctaButton}</a>
+          </div>
+        )}
 
         {related.length > 0 && (
           <div className="article-related">
