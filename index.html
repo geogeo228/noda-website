@@ -38,6 +38,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+    <!-- Аналитика: Umami, self-hosted на Railway. Скрипт отдаётся с нашего
+         поддомена analytics.noda-auto.com, а не с чужого домена аналитики —
+         так его режет заметно меньше блокировщиков, и ссылка не ломается,
+         если railway-домен сервиса сменится. Без кук, персональные данные
+         не собираются. -->
+    <script defer src="https://analytics.noda-auto.com/script.js" data-website-id="37ad3e20-e916-4fd6-bb35-1572b12a238c"></script>
+
   </head>
   <body>
     <div id="root"></div>
