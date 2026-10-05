@@ -1,5 +1,5 @@
 import Seo from '../components/Seo'
-import { t, origins } from '../i18n'
+import { t, origin } from '../i18n'
 import MatrixRain from '../components/MatrixRain'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeHero from '../components/home/HomeHero'
@@ -26,7 +26,7 @@ export default function Home() {
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'NODA',
-          url: origins.ru,
+          url: origin,
           description: t.meta.orgDesc,
           contactPoint: { '@type': 'ContactPoint', url: 'https://t.me/BlueFaceBaby99', contactType: 'customer service' },
         }}
