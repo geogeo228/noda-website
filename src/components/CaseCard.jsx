@@ -67,15 +67,19 @@ function CaseMedia({ media, title }) {
   )
 }
 
-export default function CaseCard({ c }) {
+// compact — карточка для сетки результатов на новой главной: экран сверху,
+// текст под ним, и только главное — название, метрика, было/стало, ссылка на
+// статью. Клиент, контекст и мелкая строка там не показываются: Георгий их
+// вычеркнул как второстепенное.
+export default function CaseCard({ c, compact = false }) {
   return (
-    <article className="v1-case tframe corners">
+    <article className={`v1-case tframe corners${compact ? ' v1-case-compact' : ''}`}>
       <span className="cnr-tl"></span><span className="cnr-br"></span>
       <div className="v1-case-body">
         <CaseMedia media={c.media} title={c.title} />
 
         <div className="v1-case-text">
-          {c.client && <span className="v1-case-client">&#9656; {c.client}</span>}
+          {!compact && c.client && <span className="v1-case-client">&#9656; {c.client}</span>}
           <h3 className="v1-case-title">{c.title}</h3>
 
           {c.metric ? (
@@ -90,8 +94,8 @@ export default function CaseCard({ c }) {
                 <dt>{t.cases.labelAfter}</dt>
                 <dd className="now">{c.after}</dd>
               </dl>
-              {c.extra && <p className="v1-case-extra">{c.extra}</p>}
-              {c.task && <p className="v1-case-task">{c.task}</p>}
+              {!compact && c.extra && <p className="v1-case-extra">{c.extra}</p>}
+              {!compact && c.task && <p className="v1-case-task">{c.task}</p>}
               {c.article && (
                 <Link to={`/blog/${c.article}`} className="v1-case-more">
                   {t.cases.readFull}

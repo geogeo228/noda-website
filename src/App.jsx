@@ -1,7 +1,10 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { lang } from './i18n'
 
-const Landing = lazy(() => import('./pages/Landing'))
+// Новая главная пока только у русской версии: английская живёт на своих
+// данных и в этот заход не переписывалась.
+const Landing = lazy(() => (lang === 'en' ? import('./pages/Landing') : import('./pages/Home')))
 const Giorgi = lazy(() => import('./pages/Giorgi'))
 const Blog = lazy(() => import('./pages/Blog'))
 const Article = lazy(() => import('./pages/Article'))
