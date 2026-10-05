@@ -81,5 +81,20 @@ export function getRoutes(lang) {
     },
   }))
 
-  return [landing, blog, ...articleRoutes, giorgi]
+  // Политика обработки персональных данных — только у русской версии:
+  // форма заявки и оператор (ООО «ЭНТОРИ») есть только на noda-auto.com.
+  // langPair: false — у страницы нет английской пары, hreflang ей не ставится
+  // даже при поднятой en (иначе он вёл бы на несуществующую страницу).
+  const privacy = {
+    path: '/privacy',
+    changefreq: 'yearly',
+    priority: '0.3',
+    langPair: false,
+    title: t.meta.privacyTitle,
+    description: t.meta.privacyDesc,
+    ogDescription: t.meta.privacyDesc,
+    jsonLd: null,
+  }
+
+  return [landing, blog, ...articleRoutes, giorgi, ...(lang === 'ru' ? [privacy] : [])]
 }

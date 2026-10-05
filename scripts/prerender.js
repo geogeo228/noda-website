@@ -37,7 +37,8 @@ export function renderHead(route, origin, options = {}) {
     `<meta data-default-seo property="og:url" content="${escapeAttr(url)}" />`,
   ]
 
-  if (isEnLive) {
+  // langPair: false — страница есть только в одной версии (например /privacy)
+  if (isEnLive && route.langPair !== false) {
     for (const [hreflang, target] of [
       ['ru', origins.ru],
       ['en', origins.en],

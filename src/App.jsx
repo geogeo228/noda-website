@@ -10,6 +10,7 @@ const Landing = lazy(() => (lang === 'en' ? import('./pages/Landing') : import('
 const Giorgi = lazy(() => import('./pages/Giorgi'))
 const Blog = lazy(() => import('./pages/Blog'))
 const Article = lazy(() => import('./pages/Article'))
+const Privacy = lazy(() => import('./pages/Privacy'))
 
 export default function App() {
   return (
@@ -20,6 +21,8 @@ export default function App() {
         <Route path="/giorgi" element={<Giorgi />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<Article />} />
+        {/* Политика только у русской версии — см. routes.js */}
+        {lang === 'ru' && <Route path="/privacy" element={<Privacy />} />}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
