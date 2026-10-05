@@ -84,6 +84,19 @@ for (const route of routes) {
     fail(route.path, `в body ${length} символов текста, минимум ${MIN_BODY_TEXT}`)
   }
 
+  // 3b. JSON-LD на месте и ровно один. Защита от повторения бага с гидрацией:
+  // пререндер однажды вырезал этот <script> из тела как «лишний метатег»,
+  // и каждая страница с разметкой Organization или Article перерисовывалась
+  // на клиенте заново. Два экземпляра — тоже находка: значит кто-то снова
+  // начал добавлять его в head поверх того, что рендерит React.
+  const jsonLdCount = [...html.matchAll(/type="application\/ld\+json"/g)].length
+  if (route.jsonLd && jsonLdCount === 0) {
+    fail(route.path, 'в routes.js объявлен JSON-LD, но в документе его нет — гидрация сломается')
+  }
+  if (jsonLdCount > 1) {
+    fail(route.path, `JSON-LD продублирован (${jsonLdCount} штук): один из них лишний`)
+  }
+
   // 4. hreflang стоит тогда и только тогда, когда английская версия поднята
   const hreflangs = [...html.matchAll(/hreflang="([^"]*)"/g)].map((m) => m[1])
   if (enIsLive) {
