@@ -21,7 +21,7 @@ export default function Founder() {
             <p className="home-founder-role">{f.role}</p>
             <p className="home-founder-bio">{f.bio}</p>
             <div className="home-founder-links">
-              <a className="m-btn" href={TELEGRAM} target="_blank" rel="noopener noreferrer">Telegram</a>
+              <a className="m-btn primary" href={TELEGRAM} target="_blank" rel="noopener noreferrer">Telegram</a>
               <a className="m-btn ghost" href={MAX} target="_blank" rel="noopener noreferrer">MAX</a>
             </div>
           </div>

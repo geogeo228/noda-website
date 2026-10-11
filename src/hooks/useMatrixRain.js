@@ -7,6 +7,10 @@ export default function useMatrixRain(canvasRef) {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    // «Уменьшить движение»: канвас скрыт стилями, так что и рисовать не нужно —
+    // иначе дождь зря грузит процессор и батарею.
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+
     const ctx = canvas.getContext('2d')
     const chars = 'ｦｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let cols = 0

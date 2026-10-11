@@ -34,7 +34,7 @@ export default function Giorgi() {
         <p className="giorgi-bio">{t.giorgi.bio}</p>
         <div className="giorgi-links">
           <a
-            className="m-btn giorgi-btn"
+            className="m-btn primary giorgi-btn"
             href="https://t.me/giorgikuchava"
             target="_blank"
             rel="noopener noreferrer"

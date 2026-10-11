@@ -10,6 +10,7 @@ import Founder from '../components/home/Founder'
 import WhyNoda from '../components/home/WhyNoda'
 import HomeCTA from '../components/home/HomeCTA'
 import HomeFooter from '../components/home/HomeFooter'
+import StickyCta from '../components/home/StickyCta'
 
 // Главная русской версии. Порядок блоков — по разбору презентации от
 // 02.07.2026 (вариант A из превью): сначала результаты клиентов, потом что мы
@@ -17,7 +18,7 @@ import HomeFooter from '../components/home/HomeFooter'
 // прежней Landing.jsx.
 export default function Home() {
   return (
-    <div className="v1-root">
+    <div className="v1-root v1-ru">
       <Seo
         path="/"
         title={t.meta.siteTitle}
@@ -44,6 +45,7 @@ export default function Home() {
         <HomeCTA />
       </main>
       <HomeFooter />
+      <StickyCta />
     </div>
   )
 }

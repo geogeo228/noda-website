@@ -12,6 +12,11 @@ export default function CountUp({ to, prefix = '', suffix = '' }) {
   useEffect(() => {
     if (!isVisible || animated.current) return
     animated.current = true
+    // Тем, кто отключил анимацию в системе, сразу показываем итог.
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setValue(to)
+      return
+    }
     const duration = 1200
     const start = performance.now()
 

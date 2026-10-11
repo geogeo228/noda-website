@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { t } from '../../i18n'
+import { scrollBehavior } from './scroll'
 
 const LINKS = [
   ['#results', 'results'],
@@ -22,8 +23,18 @@ export default function HomeHeader() {
   const handleNav = useCallback((e, hash) => {
     e.preventDefault()
     toggle(false)
-    document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
+    document.querySelector(hash)?.scrollIntoView({ behavior: scrollBehavior() })
   }, [toggle])
+
+  // Esc закрывает меню; если шапка исчезла при открытом меню, возвращаем
+  // странице прокрутку.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => { if (e.key === 'Escape') toggle(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open, toggle])
+  useEffect(() => () => { document.body.style.overflow = '' }, [])
 
   return (
     <>
@@ -40,14 +51,20 @@ export default function HomeHeader() {
             ))}
             <Link to="/blog" className="v1-nav-blog">{nav.blog}</Link>
           </nav>
-          <a className="m-btn v1-header-cta" href="#cta" onClick={(e) => handleNav(e, '#cta')}>{nav.cta}</a>
-          <button className={`v1-burger${open ? ' on' : ''}`} onClick={() => toggle()} aria-label={t.nav.openMenu}>
+          <a className="m-btn primary v1-header-cta" href="#cta" onClick={(e) => handleNav(e, '#cta')}>{nav.cta}</a>
+          <button
+            className={`v1-burger${open ? ' on' : ''}`}
+            onClick={() => toggle()}
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
+            aria-expanded={open}
+            aria-controls="v1-drawer"
+          >
             <span></span><span></span><span></span>
           </button>
         </div>
       </header>
 
-      <div className={`v1-drawer${open ? ' is-open' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) toggle(false) }}>
+      <div id="v1-drawer" className={`v1-drawer${open ? ' is-open' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) toggle(false) }}>
         <div className="v1-drawer-panel">
           <div className="v1-drawer-head">
             <span className="v1-logo-text">NODA</span>
@@ -59,7 +76,7 @@ export default function HomeHeader() {
             ))}
             <Link to="/blog" onClick={() => toggle(false)}>{nav.blog}</Link>
           </nav>
-          <a className="m-btn" href="#cta" onClick={(e) => handleNav(e, '#cta')}>{nav.cta}</a>
+          <a className="m-btn primary" href="#cta" onClick={(e) => handleNav(e, '#cta')}>{nav.cta}</a>
         </div>
       </div>
     </>
