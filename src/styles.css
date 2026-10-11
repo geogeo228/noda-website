@@ -962,7 +962,7 @@ footer .legal-line a:hover, .legal-line a:hover { color: var(--m-white); }
   font-size: clamp(1.45rem, 2.3vw, 1.95rem); line-height: 1.15; letter-spacing: -0.01em;
 }
 .v1-case-compact .v1-case-ba { margin-top: 16px; }
-.v1-case-compact .v1-case-visual { border: 0; }
+.v1-case-compact .v1-case-visual { border: 0; background: transparent; }
 /* Видео — это запись экрана: показываем его целиком, с полями, а не обрезаем
    под карточку, иначе по краям рвутся надписи. */
 .v1-case-compact .v1-case-visual video { object-fit: contain; }
