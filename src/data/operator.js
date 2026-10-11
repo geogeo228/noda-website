@@ -7,7 +7,7 @@ export const OPERATOR = {
   inn: '7814645258',
   ogrn: '1167847149007',
   address: '194100, г. Санкт-Петербург, пр-кт Лесной, д. 63, литера А, помещ. 1-Н, оф. 418',
-  email: '[EMAIL]',
+  email: 'privacy@noda-auto.com',
   telegram: '@BlueFaceBaby99',
   telegramUrl: 'https://t.me/BlueFaceBaby99',
 }
