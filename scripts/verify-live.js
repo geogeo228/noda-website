@@ -8,6 +8,27 @@
 import { getRoutes } from '../src/routes.js'
 import { origins } from '../src/i18n/config.js'
 
+// Политика обработки данных — документ оператора, а не маркетинговый текст.
+// Пока счётчика Метрики нет, политика говорит «не подключена»; в день, когда
+// в конфиг впишут номер, она станет ложной, и заметить это глазами некому:
+// правка номера — одна строка, тесты от неё не краснеют, сборка проходит.
+//
+// Поэтому расхождение ловится здесь, на живом сайте: если счётчик в разметке
+// есть, а политика утверждает обратное — это находка.
+export function gradePolicyMatchesCounters(pageHtml, privacyHtml) {
+  const counterOnSite = /ym\(\s*\d+/.test(pageHtml) || /mc\.yandex\.ru/.test(pageHtml)
+  const policyDeniesIt = /Метрика[^.]*не подключена/i.test(privacyHtml)
+
+  if (counterOnSite && policyDeniesIt) {
+    return [
+      'счётчик Метрики стоит на сайте, а политика утверждает, что он не подключён — ' +
+        'политику и дату её редакции надо обновить тем же релизом',
+    ]
+  }
+
+  return []
+}
+
 // Доступ роботов проверяется отдельно от robots.txt: разрешающий robots
 // ничего не гарантирует, потому что блокировка живёт уровнем выше — в nginx
 // или у Cloudflare. На 5 октября 2026 GPTBot, ClaudeBot, PerplexityBot
@@ -126,26 +147,47 @@ async function main() {
     hasNoindex: /<meta[^>]+name="robots"[^>]+content="[^"]*noindex/.test(notFoundPage),
   }
 
-  // Четыре робота на двух путях: главная и статья. Одного пути мало —
-  // блокировку настраивают по шаблону, и главная часто остаётся открытой.
+  // Роботы проверяются на четырёх путях: главная, статья, robots.txt
+  // и sitemap.xml. Одного пути мало — блокировку настраивают по шаблону,
+  // и главная часто остаётся открытой, когда статьи уже закрыты. Браузерная
+  // строка в списке не для красоты: без неё «робот получил 200» не с чем
+  // сравнить, и тест на различие робота с браузером был бы пустым.
+  //
+  // Чего эта проверка НЕ видит: блокировку по IP или по проверенным ботам
+  // у Cloudflare. Мы приходим со своего адреса и только подменяем строку
+  // браузера, так что в nginx блокировка по этой строке поймается, а по
+  // адресу — нет.
   const crawlerUAs = ['GPTBot/1.2', 'ClaudeBot/1.0', 'PerplexityBot/1.0', 'YandexBot/3.0']
-  const crawlerPaths = ['/', routes.find((r) => r.path.startsWith('/blog/'))?.path || '/blog']
+  const browserUA =
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131.0 Safari/537.36'
+  const article = routes.find((r) => r.path.startsWith('/blog/'))?.path || '/blog'
+  const crawlerPaths = ['/', article, '/robots.txt', '/sitemap.xml']
   const samples = []
 
-  for (const ua of crawlerUAs) {
+  for (const ua of [...crawlerUAs, browserUA]) {
     for (const path of crawlerPaths) {
       const res = await fetch(origin + path, {
         headers: { 'user-agent': ua },
         redirect: 'manual',
+        signal: AbortSignal.timeout(15000),
       }).catch(() => ({ status: 0 }))
       samples.push({ ua: ua.split('/')[0], path, status: res.status })
     }
   }
 
-  const problems = [...gradeLive(pages, { notFound }), ...gradeCrawlerAccess(samples)]
+  // Политика — на живом сайте, а не в сборке: её выпускает соседняя ветка,
+  // и расхождение возникает именно между выкаченным кодом и выкаченным текстом.
+  const privacy = await fetchPage(`${origin}/privacy`)
+  const homeHtml = (await fetchPage(origin + '/')).html
+
+  const problems = [
+    ...gradeLive(pages, { notFound }),
+    ...gradeCrawlerAccess(samples),
+    ...gradePolicyMatchesCounters(homeHtml, privacy.html),
+  ]
 
   if (problems.length === 0) {
-    console.log(`✓ Живой сайт в порядке: ${routes.length} страниц отдаются с кодом 200 и своими заголовками, несуществующий URL — 404 с noindex, ${crawlerUAs.length} робота получают страницы наравне с браузером`)
+    console.log(`✓ Живой сайт в порядке: ${routes.length} страниц отдаются с кодом 200 и своими заголовками, несуществующий URL — 404 с noindex, ${crawlerUAs.length} робота отвечают кодом 200 там же, где браузер, политика не расходится со счётчиками`)
     return
   }
 

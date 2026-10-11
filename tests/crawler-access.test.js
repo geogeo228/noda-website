@@ -39,15 +39,30 @@ test('блокировка только на вложенном пути тож�
   assert.match(found[0], /\/blog\/wedding-chatbot/)
 })
 
-test('различие между роботом и обычным браузером — находка', () => {
-  // Самый частый случай: человек видит сайт, робот получает заглушку.
+test('робот получает заглушку там, где браузер получает страницу', () => {
+  // Самый частый случай: человек видит сайт, робот — заглушку. Браузерная
+  // строка реально запрашивается в проверке живого сайта, поэтому сравнение
+  // здесь не выдуманное: в выборке есть и браузер, и роботы.
   const found = gradeCrawlerAccess([
     { ua: 'Mozilla', path: '/', status: 200 },
     { ua: 'GPTBot', path: '/', status: 503 },
   ])
 
-  assert.equal(found.length, 1)
+  assert.equal(found.length, 1, 'браузер в порядке, робот — нет')
   assert.match(found[0], /GPTBot/)
+  assert.ok(!found[0].includes('Mozilla'), 'на браузер жаловаться не на что')
+})
+
+test('robots.txt и sitemap.xml проверяются наравне со страницами', () => {
+  // Закрыть роботам sitemap — тихий способ выбить сайт из индекса:
+  // страницы открыты, а карта, по которой их находят, нет.
+  const found = gradeCrawlerAccess([
+    { ua: 'YandexBot', path: '/robots.txt', status: 200 },
+    { ua: 'YandexBot', path: '/sitemap.xml', status: 403 },
+  ])
+
+  assert.equal(found.length, 1)
+  assert.match(found[0], /sitemap\.xml/)
 })
 
 test('переадресация роботу — тоже находка, а не норма', () => {

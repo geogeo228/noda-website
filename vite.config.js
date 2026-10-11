@@ -15,10 +15,11 @@ const ogLocales = {
 // Теги счётчиков собираются отдельной функцией, а не внутри плагина: плагин
 // тянет за собой весь конфиг Vite, и проверить его тестом нельзя.
 //
-// Порядок возврата зафиксирован в order и проверяется тестом. Umami идёт
-// первым: Метрика грузится дольше и на блокировщиках не грузится совсем,
-// а встань она выше — задержала бы инициализацию window.umami, и события
-// на /giorgi молча перестали бы считаться.
+// Счётчики друг другу не мешают: Umami определяет window.umami, Метрика —
+// window.ym, пересечения имён нет. Порядок в разметке тоже ни на что не
+// влияет: Umami подключён с defer и выполняется после разбора документа,
+// а инлайн-вызов Метрики — во время разбора, то есть раньше при любом
+// порядке. Поэтому порядок здесь — вопрос чтения, а не работы.
 //
 // Номера счётчиков принимаются параметром, чтобы тест мог проверить вид тега
 // с подключённым счётчиком, пока настоящего номера ещё нет.
@@ -30,9 +31,11 @@ export function buildCounterScripts(lang, metrikaIds = metrikaCounterIds) {
     ? `<script defer src="${umamiHost}/script.js" data-website-id="${websiteId}"></script>`
     : '<!-- Umami: для этой языковой версии сайт ещё не создан -->'
 
-  // trackForms: false — Вебвизор по умолчанию записывает ввод в поля, то есть
-  // складывает персональные данные в записи сессий. Форма заявки на сайте
-  // есть, значит запись полей надо выключить явно.
+  // Запись содержимого полей здесь не настраивается, и параметра для этого
+  // у Метрики нет: раньше тут стоял параметр, которого в справке Яндекса
+  // не существует — Метрика молча его игнорировала. Запись полей выключается
+  // классом ym-disable-keys на самом поле плюс настройкой «Записывать все
+  // поля» в кабинете. Поля проверяет тест в tests/counters.test.js.
   const metrika = counterId
     ? `<script>
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -42,11 +45,11 @@ export function buildCounterScripts(lang, metrikaIds = metrikaCounterIds) {
       a.parentNode.insertBefore(k,a)})
       (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
       ym(${counterId}, "init", { clickmap: true, trackLinks: true,
-        accurateTrackBounce: true, webvisor: true, trackForms: false });
+        accurateTrackBounce: true, webvisor: true });
     </script>`
     : '<!-- Метрика: счётчик для этой языковой версии не подключён -->'
 
-  return { umami, metrika, order: ['umami', 'metrika'] }
+  return { umami, metrika }
 }
 
 // Подставляет языковые значения в index.html. Дефолтные SEO-теги там нужны
