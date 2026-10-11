@@ -601,6 +601,12 @@ body {
   .v1-cta-actions .m-btn { width: 100%; text-align: center; justify-content: center; }
 }
 
+/* Подвал главной и страница политики */
+.v1-foot-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.privacy .article-section p a { color: var(--m-green-dim); }
+.privacy .article-section p a:hover { color: var(--m-green); }
+.privacy strong { color: var(--m-white); font-weight: 600; }
+
 /* ============================================
    FOOTER
    ============================================ */
