@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import ru from './src/i18n/ru.js'
 import en from './src/i18n/en.js'
-import { origins, enIsLive, umamiWebsiteIds, umamiHost } from './src/i18n/config.js'
+import { origins, enIsLive, umamiWebsiteIds, umamiHost, metrikaCounterIds } from './src/i18n/config.js'
 import { getRoutes } from './src/routes.js'
 
 const dictionaries = { ru, en }
@@ -12,19 +12,54 @@ const ogLocales = {
   en: 'en_US',
 }
 
+// Теги счётчиков собираются отдельной функцией, а не внутри плагина: плагин
+// тянет за собой весь конфиг Vite, и проверить его тестом нельзя.
+//
+// Порядок возврата зафиксирован в order и проверяется тестом. Umami идёт
+// первым: Метрика грузится дольше и на блокировщиках не грузится совсем,
+// а встань она выше — задержала бы инициализацию window.umami, и события
+// на /giorgi молча перестали бы считаться.
+//
+// Номера счётчиков принимаются параметром, чтобы тест мог проверить вид тега
+// с подключённым счётчиком, пока настоящего номера ещё нет.
+export function buildCounterScripts(lang, metrikaIds = metrikaCounterIds) {
+  const websiteId = umamiWebsiteIds[lang]
+  const counterId = metrikaIds[lang]
+
+  const umami = websiteId
+    ? `<script defer src="${umamiHost}/script.js" data-website-id="${websiteId}"></script>`
+    : '<!-- Umami: для этой языковой версии сайт ещё не создан -->'
+
+  // trackForms: false — Вебвизор по умолчанию записывает ввод в поля, то есть
+  // складывает персональные данные в записи сессий. Форма заявки на сайте
+  // есть, значит запись полей надо выключить явно.
+  const metrika = counterId
+    ? `<script>
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,
+      a.parentNode.insertBefore(k,a)})
+      (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+      ym(${counterId}, "init", { clickmap: true, trackLinks: true,
+        accurateTrackBounce: true, webvisor: true, trackForms: false });
+    </script>`
+    : '<!-- Метрика: счётчик для этой языковой версии не подключён -->'
+
+  return { umami, metrika, order: ['umami', 'metrika'] }
+}
+
 // Подставляет языковые значения в index.html. Дефолтные SEO-теги там нужны
 // краулерам, которые не выполняют JS (превью ссылок в мессенджерах), поэтому
 // они должны быть на языке сборки, а не всегда на русском.
 function htmlLocalePlugin(lang) {
   const t = dictionaries[lang]
-  const websiteId = umamiWebsiteIds[lang]
-  const umamiScript = websiteId
-    ? `<script defer src="${umamiHost}/script.js" data-website-id="${websiteId}"></script>`
-    : '<!-- Umami: для этой языковой версии сайт ещё не создан -->'
+  const counters = buildCounterScripts(lang)
 
   const values = {
     '%%HTML_LANG%%': t.htmlLang,
-    '%%UMAMI_SCRIPT%%': umamiScript,
+    '%%UMAMI_SCRIPT%%': counters.umami,
+    '%%METRIKA_SCRIPT%%': counters.metrika,
     '%%SITE_TITLE%%': t.meta.siteTitle,
     '%%SITE_DESC%%': t.meta.siteDesc,
     '%%OG_DESC%%': t.meta.ogDesc,

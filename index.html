@@ -40,10 +40,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Аналитика: Umami, self-hosted. Тег целиком подставляет
-         htmlLocalePlugin из vite.config.js: у русской и английской версий
-         разные ID сайтов, а если ID нет — тега не будет вовсе. -->
+    <!-- Аналитика: Umami (self-hosted) и Яндекс.Метрика. Теги целиком
+         подставляет htmlLocalePlugin из vite.config.js: у русской и английской
+         версий разные счётчики, а если номера нет — тега не будет вовсе.
+         Порядок не менять, причина — в buildCounterScripts. -->
     %%UMAMI_SCRIPT%%
+    %%METRIKA_SCRIPT%%
 
   </head>
   <body>
