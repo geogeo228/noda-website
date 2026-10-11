@@ -1,5 +1,6 @@
 import Seo from '../components/Seo'
 import { t, origin } from '../i18n'
+import { OPERATOR_JSONLD } from '../data/operator'
 import MatrixRain from '../components/MatrixRain'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeHero from '../components/home/HomeHero'
@@ -29,6 +30,7 @@ export default function Home() {
           url: origin,
           description: t.meta.orgDesc,
           contactPoint: { '@type': 'ContactPoint', url: 'https://t.me/BlueFaceBaby99', contactType: 'customer service' },
+          ...OPERATOR_JSONLD,
         }}
       />
       <MatrixRain />

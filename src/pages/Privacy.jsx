@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
+import LegalLine from '../components/LegalLine'
 import { OPERATOR, PRIVACY_UPDATED } from '../data/operator'
 
 // Политика обработки персональных данных (152-ФЗ). Только русская версия:
@@ -53,8 +54,8 @@ export default function Privacy() {
           </p>
           <p>
             По всем вопросам о ваших данных: Telegram{' '}
-            <a href={O.telegramUrl} target="_blank" rel="noopener noreferrer">{O.telegram}</a>{' '}
-            или почта {O.email}.
+            <a href={O.telegramUrl} target="_blank" rel="noopener noreferrer">{O.telegram}</a>,
+            телефон {O.phone} или почта {O.email}.
           </p>
         </section>
 
@@ -194,6 +195,7 @@ export default function Privacy() {
 
       <footer className="blog-footer">
         <Link to="/">{t.blog.backHome}</Link>
+        <LegalLine />
       </footer>
     </div>
   )

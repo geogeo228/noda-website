@@ -13,6 +13,7 @@ import en from './i18n/en.js'
 import articlesRu from './data/articles.js'
 import articlesEn from './data/articles.en.js'
 import { origins } from './i18n/config.js'
+import { OPERATOR_JSONLD } from './data/operator.js'
 
 const dictionaries = { ru, en }
 const articlesByLang = { ru: articlesRu, en: articlesEn }
@@ -40,6 +41,9 @@ export function getRoutes(lang) {
         url: 'https://t.me/BlueFaceBaby99',
         contactType: 'customer service',
       },
+      // Юрлицо — только у русской версии: оператор ООО «ЭНТОРИ» работает
+      // на noda-auto.com. Значения из operator.js, как на странице /company.
+      ...(lang === 'ru' && OPERATOR_JSONLD),
     },
   }
 
@@ -96,5 +100,17 @@ export function getRoutes(lang) {
     jsonLd: null,
   }
 
-  return [landing, blog, ...articleRoutes, giorgi, ...(lang === 'ru' ? [privacy] : [])]
+  // «О компании» — реквизиты оператора, тоже только у русской версии.
+  const company = {
+    path: '/company',
+    changefreq: 'monthly',
+    priority: '0.6',
+    langPair: false,
+    title: t.meta.companyTitle,
+    description: t.meta.companyDesc,
+    ogDescription: t.meta.companyDesc,
+    jsonLd: null,
+  }
+
+  return [landing, blog, ...articleRoutes, giorgi, ...(lang === 'ru' ? [privacy, company] : [])]
 }

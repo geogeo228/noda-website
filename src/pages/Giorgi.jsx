@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
+import LegalLine from '../components/LegalLine'
 
 function track(event) {
   if (typeof window !== 'undefined' && window.umami) {
@@ -63,6 +64,7 @@ export default function Giorgi() {
         <Link to="/" className="giorgi-back" onClick={() => track('giorgi-site')}>
           {t.giorgi.back}
         </Link>
+        <LegalLine />
       </div>
     </div>
   )

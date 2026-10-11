@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data'
 import { t } from '../i18n'
 import Seo from '../components/Seo'
+import LegalLine from '../components/LegalLine'
 import NotFound from '../components/NotFound'
 
 export default function Article() {
@@ -92,6 +93,7 @@ export default function Article() {
 
       <footer className="blog-footer">
         <Link to="/">{t.blog.backHome}</Link>
+        <LegalLine />
       </footer>
     </div>
   )

@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
 import { removeDefaultSeoTags } from './seo-defaults'
+import './fonts.js'
 import './styles.css'
 
 removeDefaultSeoTags()
