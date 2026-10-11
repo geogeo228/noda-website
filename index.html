@@ -35,10 +35,12 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23000' width='100' height='100' rx='20'/><text y='.9em' x='50%' text-anchor='middle' font-size='70'>⚡</text></svg>" />
 
-    <!-- Аналитика: Umami, self-hosted. Тег целиком подставляет
-         htmlLocalePlugin из vite.config.js: у русской и английской версий
-         разные ID сайтов, а если ID нет — тега не будет вовсе. -->
+    <!-- Аналитика: Umami (self-hosted) и Яндекс.Метрика. Теги целиком
+         подставляет htmlLocalePlugin из vite.config.js: у русской и английской
+         версий разные счётчики, а если номера нет — тега не будет вовсе.
+         Порядок не менять, причина — в buildCounterScripts. -->
     %%UMAMI_SCRIPT%%
+    %%METRIKA_SCRIPT%%
 
   </head>
   <body>
