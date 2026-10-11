@@ -98,8 +98,13 @@ for (const route of routes) {
   }
 
   // 4. hreflang стоит тогда и только тогда, когда английская версия поднята
+  // и у страницы есть языковая пара (langPair: false — например /privacy)
   const hreflangs = [...html.matchAll(/hreflang="([^"]*)"/g)].map((m) => m[1])
-  if (enIsLive) {
+  if (route.langPair === false) {
+    if (hreflangs.length > 0) {
+      fail(route.path, `у страницы нет языковой пары, но проставлен hreflang: ${hreflangs.join(', ')}`)
+    }
+  } else if (enIsLive) {
     for (const expected of ['ru', 'en', 'x-default']) {
       if (!hreflangs.includes(expected)) {
         fail(route.path, `enIsLive=true, но нет hreflang="${expected}"`)

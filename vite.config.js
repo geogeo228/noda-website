@@ -54,8 +54,8 @@ function sitemapPlugin(lang) {
   // и проверка сборки, и добавленная страница должна попасть во все три.
   const routes = getRoutes(lang)
 
-  function alternates(path) {
-    if (!enIsLive) return ''
+  function alternates(path, langPair) {
+    if (!enIsLive || langPair === false) return ''
     return (
       `\n    <xhtml:link rel="alternate" hreflang="ru" href="${origins.ru}${path}" />` +
       `\n    <xhtml:link rel="alternate" hreflang="en" href="${origins.en}${path}" />` +
@@ -73,7 +73,7 @@ function sitemapPlugin(lang) {
     routes
       .map(
         (r) =>
-          `  <url>\n    <loc>${origin}${r.path}</loc>${alternates(r.path)}\n` +
+          `  <url>\n    <loc>${origin}${r.path}</loc>${alternates(r.path, r.langPair)}\n` +
           `    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`,
       )
       .join('\n') +
