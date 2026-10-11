@@ -8,6 +8,26 @@
 import { getRoutes } from '../src/routes.js'
 import { origins } from '../src/i18n/config.js'
 
+// Доступ роботов проверяется отдельно от robots.txt: разрешающий robots
+// ничего не гарантирует, потому что блокировка живёт уровнем выше — в nginx
+// или у Cloudflare. На 5 октября 2026 GPTBot, ClaudeBot, PerplexityBot
+// и YandexBot получали 200, и эта проверка фиксирует состояние, чтобы его
+// молча не потеряли при следующей правке конфига.
+//
+// Любой код кроме 200 — находка, включая переадресацию: 302 на заглушку
+// выглядит как успех, а содержимое роботу подменено.
+export function gradeCrawlerAccess(samples) {
+  const found = []
+
+  for (const { ua, path, status } of samples) {
+    if (status !== 200) {
+      found.push(`робот ${ua} получил ${status} на ${path} — страница ему недоступна`)
+    }
+  }
+
+  return found
+}
+
 // Чистая функция: принимает уже собранные ответы и выносит приговор.
 // Отделена от сети, чтобы её можно было проверить тестами без прода.
 export function gradeLive(pages, extras) {
@@ -106,10 +126,26 @@ async function main() {
     hasNoindex: /<meta[^>]+name="robots"[^>]+content="[^"]*noindex/.test(notFoundPage),
   }
 
-  const problems = gradeLive(pages, { notFound })
+  // Четыре робота на двух путях: главная и статья. Одного пути мало —
+  // блокировку настраивают по шаблону, и главная часто остаётся открытой.
+  const crawlerUAs = ['GPTBot/1.2', 'ClaudeBot/1.0', 'PerplexityBot/1.0', 'YandexBot/3.0']
+  const crawlerPaths = ['/', routes.find((r) => r.path.startsWith('/blog/'))?.path || '/blog']
+  const samples = []
+
+  for (const ua of crawlerUAs) {
+    for (const path of crawlerPaths) {
+      const res = await fetch(origin + path, {
+        headers: { 'user-agent': ua },
+        redirect: 'manual',
+      }).catch(() => ({ status: 0 }))
+      samples.push({ ua: ua.split('/')[0], path, status: res.status })
+    }
+  }
+
+  const problems = [...gradeLive(pages, { notFound }), ...gradeCrawlerAccess(samples)]
 
   if (problems.length === 0) {
-    console.log(`✓ Живой сайт в порядке: ${routes.length} страниц отдаются с кодом 200 и своими заголовками, несуществующий URL — 404 с noindex`)
+    console.log(`✓ Живой сайт в порядке: ${routes.length} страниц отдаются с кодом 200 и своими заголовками, несуществующий URL — 404 с noindex, ${crawlerUAs.length} робота получают страницы наравне с браузером`)
     return
   }
 
