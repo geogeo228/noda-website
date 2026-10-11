@@ -238,6 +238,7 @@ export default {
       successText: 'Георгий ответит сегодня.',
       consentBefore: 'Согласен на ',
       consentLink: 'обработку персональных данных',
+      consentAfter: ', в том числе на их передачу за рубеж (Cloudflare, Telegram)',
       failText: 'Не получилось отправить. Напишите напрямую в Telegram:',
       errors: {
         name: { required: 'Как к вам обращаться?', long: 'Хватит имени — без подробностей' },

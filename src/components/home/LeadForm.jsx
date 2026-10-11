@@ -142,6 +142,7 @@ export default function LeadForm({ where = 'home', slug }) {
         <label htmlFor={`${uid}-consent`}>
           {l.consentBefore}
           <a href="/privacy" target="_blank" rel="noopener">{l.consentLink}</a>
+          {l.consentAfter}
         </label>
         {consentError && <span className="lead-error" id={`${uid}-err-consent`}>{consentError}</span>}
       </div>
