@@ -8,6 +8,7 @@ import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { getRoutes } from '../src/routes.js'
 import { origins, enIsLive } from '../src/i18n/config.js'
+import { gradeOrphans } from './grade-linking.js'
 
 const lang = process.env.VITE_LANG === 'en' ? 'en' : 'ru'
 const outDir = lang === 'en' ? 'dist-en' : 'dist'
@@ -138,6 +139,20 @@ for (const route of routes) {
       fail(route.path, `SEO-тег без data-default-seo, после гидрации станет дублем: ${tag}`)
     }
   }
+}
+
+// 7. До каждой страницы доходит хотя бы одна ссылка с другой страницы.
+// Карта сайта перечисляет адреса, но вес поисковик считает по входящим
+// ссылкам: страница без них индексируется неохотно. Проверяем по готовому
+// HTML, а не по коду — ссылка внутри блока, который не отрендерился,
+// существует в исходниках и не существует для робота.
+const pages = []
+for (const route of routes) {
+  const file = fileFor(route.path)
+  if (existsSync(file)) pages.push({ path: route.path, html: readFileSync(file, 'utf8') })
+}
+for (const problem of gradeOrphans(pages)) {
+  fail('перелинковка', problem)
 }
 
 // 5. Число страниц совпадает с sitemap
