@@ -10,8 +10,8 @@ import articles from '../src/data/articles.js'
 const before = JSON.parse(readFileSync(new URL('./fixtures/articles-before.json', import.meta.url), 'utf8'))
 const numbers = (s) => (s.match(/\d+(?:[\s ]\d{3})*(?:[.,]\d+)?/g) || []).map((n) => n.replace(/[\s ]/g, '')).sort()
 
-test('статей столько же и в том же порядке', () => {
-  assert.deepEqual(articles.map((a) => a.slug), before.map((a) => a.slug))
+test('старые статьи на месте и в том же порядке (новые — только в конец)', () => {
+  assert.deepEqual(articles.slice(0, before.length).map((a) => a.slug), before.map((a) => a.slug))
 })
 
 for (const old of before) {
