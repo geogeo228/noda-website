@@ -9,6 +9,7 @@ import { join } from 'node:path'
 import { getRoutes } from '../src/routes.js'
 import { origins, enIsLive } from '../src/i18n/config.js'
 import { gradeOrphans, gradeHomepageReach } from './grade-linking.js'
+import { gradeBreadcrumbs } from './grade-breadcrumbs.js'
 
 const lang = process.env.VITE_LANG === 'en' ? 'en' : 'ru'
 const outDir = lang === 'en' ? 'dist-en' : 'dist'
@@ -170,6 +171,15 @@ if (lang === 'ru') {
       fail('перелинковка', problem)
     }
   }
+}
+
+// Хлебные крошки на странице статьи блога. Без них поисковик индексирует
+// статью как самостоятельную страницу и не понимает, что она внутри
+// раздела «Кейсы». Языковой версии выбирать отдельно не нужно: одна и та
+// же страница обслуживает обе сборки, и крошки обязаны быть в обеих.
+const articlePages = pages.filter((p) => p.path.startsWith('/blog/'))
+for (const problem of gradeBreadcrumbs(articlePages)) {
+  fail('хлебные крошки', problem)
 }
 
 // 5. Число страниц совпадает с sitemap

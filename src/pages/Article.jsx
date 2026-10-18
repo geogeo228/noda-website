@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { articles } from '../data'
-import { t } from '../i18n'
+import { t, origin } from '../i18n'
 import Seo from '../components/Seo'
 import LegalLine from '../components/LegalLine'
 import NotFound from '../components/NotFound'
@@ -28,6 +28,19 @@ export default function Article() {
           description: article.desc,
           author: { '@type': 'Organization', name: 'NODA' },
           publisher: { '@type': 'Organization', name: 'NODA' },
+          // BreadcrumbList — свойство Article в схеме: кладём внутрь того же
+          // объекта разметки, что и остальное. Отдельный <script
+          // type="application/ld+json"> сюда добавлять нельзя — verify-prerender
+          // следит, чтобы блок JSON-LD на странице был ровно один, и второй
+          // блок ради крошек ломал сборку и стоил нам индекса.
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: t.article.crumbs.home, item: origin },
+              { '@type': 'ListItem', position: 2, name: t.article.crumbs.blog, item: `${origin}/blog` },
+              { '@type': 'ListItem', position: 3, name: article.title },
+            ],
+          },
         }}
       />
 
@@ -40,7 +53,13 @@ export default function Article() {
       </header>
 
       <main className="article-main">
-        <Link to="/blog" className="article-back">{t.article.backToBlog}</Link>
+        <nav className="article-crumbs" aria-label={t.article.crumbs.label}>
+          <Link to="/">{t.article.crumbs.home}</Link>
+          <span className="article-crumbs-sep">/</span>
+          <Link to="/blog">{t.article.crumbs.blog}</Link>
+          <span className="article-crumbs-sep">/</span>
+          <span className="article-crumbs-current">{article.title}</span>
+        </nav>
 
         <div className="article-tags">
           {article.tags.map((tag) => (

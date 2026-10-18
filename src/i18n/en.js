@@ -165,6 +165,7 @@ export default {
     related: 'Related cases',
     read: '→ Read',
     home: 'Home',
+    crumbs: { label: 'Breadcrumbs', home: 'Home', blog: 'Cases' },
   },
 
   giorgi: {

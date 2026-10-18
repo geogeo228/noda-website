@@ -241,6 +241,7 @@ export default {
     related: 'Похожие кейсы',
     read: '→ Читать',
     home: 'На главную',
+    crumbs: { label: 'Хлебные крошки', home: 'Главная', blog: 'Кейсы' },
   },
 
   giorgi: {

@@ -855,6 +855,14 @@ footer .legal-line a:hover, .legal-line a:hover { color: var(--m-white); }
   margin-bottom: 2rem;
 }
 .article-back:hover { color: var(--m-green); }
+/* Раскладка строки крошек над заголовком статьи. Цвета, шрифты и размеры
+   не задаём — крошки наследуют оформление страницы, как и просили в задаче. */
+.article-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
 .article-tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .article-title {
   font-family: var(--f-mono);
