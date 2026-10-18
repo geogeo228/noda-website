@@ -40,11 +40,11 @@ export default function Home() {
       <main className="v1-main">
         <HomeHero />
         <Results />
-        <Analyses />
         <Services />
         <Founder />
         <WhyNoda />
         <HomeCTA />
+        <Analyses />
       </main>
       <HomeFooter />
       <StickyCta />
