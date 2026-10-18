@@ -34,7 +34,7 @@ export default function StickyCta() {
   const on = past && !near
   return (
     <div className={`v1-sticky${on ? ' is-on' : ''}`}>
-      <a className="m-btn primary" href={TELEGRAM} target="_blank" rel="noopener noreferrer">
+      <a className="m-btn primary" href={TELEGRAM} data-umami-event="home-sticky-telegram" target="_blank" rel="noopener noreferrer">
         {t.home.cta.button}
       </a>
     </div>

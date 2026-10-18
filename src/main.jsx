@@ -4,10 +4,19 @@ import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
 import { removeDefaultSeoTags } from './seo-defaults'
+import { applyNoTrack } from './analytics/notrack.js'
 import './fonts.js'
 import './styles.css'
 
 removeDefaultSeoTags()
+
+// ?notrack=1 в адресе отключает учёт этого браузера в Umami (свои заходы).
+// В приватном режиме браузер бросает на доступ к window.localStorage — ловим.
+let storage
+try {
+  storage = window.localStorage
+} catch {}
+applyNoTrack(window.location.search, storage)
 
 const container = document.getElementById('root')
 
