@@ -1138,6 +1138,12 @@ footer .legal-line a:hover, .legal-line a:hover { color: var(--m-white); }
 .v1-case-compact .v1-case-more { padding-top: 16px; }
 @media (max-width: 760px) { .home-results { grid-template-columns: 1fr; } }
 
+/* Разборы кейсов: сетка ссылок на каждую статью блога. Только раскладка,
+   цвета и шрифты наследуются от страницы (это сознательно — ссылки должны
+   выглядеть как часть окружения, а не как отдельный компонент). */
+.home-analyses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 24px; }
+@media (max-width: 760px) { .home-analyses { grid-template-columns: 1fr; } }
+
 /* Услуги */
 .home-services { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .home-svc { padding: 32px; display: flex; flex-direction: column; gap: 14px; }

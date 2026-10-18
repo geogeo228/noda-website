@@ -9,7 +9,7 @@ export default function LegalLine() {
   return (
     <div className="legal-line">
       {OPERATOR.shortName} · ИНН {OPERATOR.inn} · ОГРН {OPERATOR.ogrn} ·{' '}
-      <Link to="/company">О компании</Link> · <Link to="/privacy">Политика конфиденциальности</Link>
+      <Link to="/company">О компании</Link> · <Link to="/giorgi">Основатель</Link> · <Link to="/privacy">Политика конфиденциальности</Link>
     </div>
   )
 }

@@ -185,6 +185,9 @@ export default {
     results: {
       title: 'Результаты клиентов',
     },
+    analyses: {
+      title: 'Разборы кейсов',
+    },
     services: {
       title: 'Чем поможем',
       dev: {

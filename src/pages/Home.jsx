@@ -5,6 +5,7 @@ import MatrixRain from '../components/MatrixRain'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeHero from '../components/home/HomeHero'
 import Results from '../components/home/Results'
+import Analyses from '../components/home/Analyses'
 import Services from '../components/home/Services'
 import Founder from '../components/home/Founder'
 import WhyNoda from '../components/home/WhyNoda'
@@ -39,6 +40,7 @@ export default function Home() {
       <main className="v1-main">
         <HomeHero />
         <Results />
+        <Analyses />
         <Services />
         <Founder />
         <WhyNoda />

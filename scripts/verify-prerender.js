@@ -8,7 +8,7 @@ import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { getRoutes } from '../src/routes.js'
 import { origins, enIsLive } from '../src/i18n/config.js'
-import { gradeOrphans } from './grade-linking.js'
+import { gradeOrphans, gradeHomepageReach } from './grade-linking.js'
 
 const lang = process.env.VITE_LANG === 'en' ? 'en' : 'ru'
 const outDir = lang === 'en' ? 'dist-en' : 'dist'
@@ -153,6 +153,23 @@ for (const route of routes) {
 }
 for (const problem of gradeOrphans(pages)) {
   fail('перелинковка', problem)
+}
+
+// Главная русской версии обязана вести на каждую статью блога отдельной
+// ссылкой. У английской версии блока разборов нет и не будет, пока не
+// поднят поддомен en.noda-auto.com (см. enIsLive в src/i18n/config.js);
+// безусловный вызов сделает красной сборку npm run build:en, которая
+// сейчас зелёная.
+if (lang === 'ru') {
+  const home = pages.find((p) => p.path === '/')
+  if (home) {
+    const articlePaths = routes
+      .filter((r) => r.path.startsWith('/blog/'))
+      .map((r) => r.path)
+    for (const problem of gradeHomepageReach(home.html, articlePaths)) {
+      fail('перелинковка', problem)
+    }
+  }
 }
 
 // 5. Число страниц совпадает с sitemap
