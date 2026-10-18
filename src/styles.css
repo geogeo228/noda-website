@@ -855,6 +855,26 @@ footer .legal-line a:hover, .legal-line a:hover { color: var(--m-white); }
   margin-bottom: 2rem;
 }
 .article-back:hover { color: var(--m-green); }
+/* Строка крошек над заголовком статьи. Оформлена как бывшая ссылка «назад»,
+   которую она заменила: тот же моноширинный шрифт и тот же приглушённый
+   зелёный. Цвет ссылкам задаём явно — наследовать им в этом месте нечего,
+   и браузер рисовал их своим синим по чёрному фону. */
+.article-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--f-mono);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+.article-crumbs a {
+  color: var(--m-green-dim);
+  text-decoration: none;
+}
+.article-crumbs a:hover { color: var(--m-green); }
+.article-crumbs-sep { color: var(--m-green-deep); }
+.article-crumbs-current { color: var(--m-text-dim); }
 .article-tags { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .article-title {
   font-family: var(--f-mono);
