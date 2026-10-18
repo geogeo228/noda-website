@@ -972,8 +972,23 @@ footer .legal-line a:hover, .legal-line a:hover { color: var(--m-white); }
 /* Разборы кейсов: сетка ссылок на каждую статью блога. Только раскладка,
    цвета и шрифты наследуются от страницы (это сознательно — ссылки должны
    выглядеть как часть окружения, а не как отдельный компонент). */
-.home-analyses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 24px; }
-@media (max-width: 760px) { .home-analyses { grid-template-columns: 1fr; } }
+.home-analyses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.home-analyses a {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 56px; padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.55); border: 1px solid var(--m-border-faint);
+  color: var(--m-white); text-decoration: none;
+  font-family: var(--f-body); font-size: 16px; line-height: 1.35;
+  transition: border-color .2s, color .2s;
+}
+.home-analyses a::after { content: '→'; flex: none; font-family: var(--f-mono); color: var(--m-green-dim); transition: transform .2s, color .2s; }
+@media (hover: hover) {
+  .home-analyses a:hover { border-color: var(--m-green-dim); }
+  .home-analyses a:hover::after { color: var(--m-green); transform: translateX(4px); }
+}
+.home-analyses a:focus-visible { outline: 1px solid var(--m-green); outline-offset: 2px; }
+@media (max-width: 760px) { .home-analyses { grid-template-columns: 1fr; } .home-analyses a { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { .home-analyses a, .home-analyses a::after { transition: none; } }
 
 /* Услуги */
 .home-services { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
