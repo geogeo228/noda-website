@@ -10,7 +10,6 @@ const CLUSTER = [
   'ai-photobooth-likeness',
   'ai-photobooth-1000-guests',
   'ai-photobooth-characters',
-  'ai-photobooth-sponsor-logo',
   'ai-photobooth-link-sharing',
   'ai-photobooth-promo',
 ]
