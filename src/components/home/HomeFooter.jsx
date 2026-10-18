@@ -6,7 +6,7 @@ export default function HomeFooter() {
     <footer className="v1-footer">
       <div>{t.home.footer.copy}</div>
       <div className="v1-foot-links">
-        <a className="v1-foot-link" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">{t.home.footer.telegram}</a>
+        <a className="v1-foot-link" href="https://t.me/BlueFaceBaby99" data-umami-event="home-footer-telegram" target="_blank" rel="noopener noreferrer">{t.home.footer.telegram}</a>
       </div>
       <LegalLine />
     </footer>

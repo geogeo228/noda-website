@@ -26,7 +26,7 @@ export default function HomeHero() {
           <span className="v1-hero-title-dim">{t.hero.titleDimPrefix}<ScrambleText text={t.hero.titleScramble} />.</span>
         </h1>
         <div className="v1-hero-actions home-hero-actions">
-          <a className="m-btn primary" href={TELEGRAM} target="_blank" rel="noopener noreferrer">{t.hero.ctaPrimary}</a>
+          <a className="m-btn primary" href={TELEGRAM} data-umami-event="home-hero-telegram" target="_blank" rel="noopener noreferrer">{t.hero.ctaPrimary}</a>
           <a className="m-btn ghost" href="#results" onClick={(e) => goTo(e, '#results')}>{t.home.hero.ctaSecondary}</a>
         </div>
         <div className="v1-hero-stats">

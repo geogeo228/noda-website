@@ -86,7 +86,7 @@ export default function Article() {
         <div className="article-cta tframe corners">
           <span className="cnr-tl"></span><span className="cnr-br"></span>
           <p>{t.article.ctaText}</p>
-          <a className="m-btn primary" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">{t.article.ctaButton}</a>
+          <a className="m-btn primary" href="https://t.me/BlueFaceBaby99" data-umami-event="article-cta-telegram" target="_blank" rel="noopener noreferrer">{t.article.ctaButton}</a>
         </div>
 
         {related.length > 0 && (

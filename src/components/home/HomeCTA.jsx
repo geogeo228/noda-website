@@ -10,7 +10,7 @@ export default function HomeCTA() {
           <h2 className="v1-cta-title">{c.titleLine1} <br /><span className="v1-cta-title-alt">{c.titleLine2}</span></h2>
           <p className="v1-cta-sub">{c.sub}</p>
           <div className="v1-cta-actions">
-            <a className="m-btn primary" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">{c.button}</a>
+            <a className="m-btn primary" href="https://t.me/BlueFaceBaby99" data-umami-event="home-cta-telegram" target="_blank" rel="noopener noreferrer">{c.button}</a>
             <span className="v1-cta-handle">@BlueFaceBaby99</span>
           </div>
         </div>
