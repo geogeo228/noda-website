@@ -44,7 +44,7 @@ export const cases = [
     metric: '2 дня вместо 21',
     before: '50 часов ручной работы',
     after: '1 час проверки',
-    media: { type: 'screen', name: 'passports' },
+    media: { type: 'image', src: '/assets/cases/case-passports.webp', alt: 'Форма сбора паспортных данных на телефоне: поля анкеты участника' },
   },
   {
     id: 'podryadchiki-tz',
@@ -55,7 +55,7 @@ export const cases = [
     metric: '−96% времени на тендер',
     before: '4 часа на одно ТЗ',
     after: '10 минут',
-    media: { type: 'screen', name: 'contractor-search' },
+    media: { type: 'image', src: '/assets/cases/case-contractors.webp', alt: 'Результат подбора подрядчиков под тендерное ТЗ: отели и площадки со степенью совпадения' },
   },
   {
     id: 'delegate-app',
@@ -66,7 +66,7 @@ export const cases = [
     metric: 'Ответ клиенту за 2 секунды',
     before: 'с каждым вопросом — звонок менеджеру',
     after: 'рейс, трансфер и менеджер у делегата в телефоне',
-    media: { type: 'screen', name: 'delegates' },
+    media: { type: 'image', src: '/assets/cases/case-delegates.webp', alt: 'Приложение делегата на телефоне: кураторы и логистика поездки' },
   },
   {
     id: 'agency-workspace',
@@ -78,7 +78,7 @@ export const cases = [
     before: 'статус проекта выясняли на созвоне',
     after: 'статус видно в системе, созваниваться незачем',
     article: 'event-agency-task-tracker',
-    media: { type: 'screen', name: 'agency-workspace' },
+    media: { type: 'image', src: '/assets/cases/case-workspace.webp', alt: 'Рабочая среда агентства: задачи по проектам и статусам в матрице' },
   },
   {
     id: 'podryadchik-ankety',
