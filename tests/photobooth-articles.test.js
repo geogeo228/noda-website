@@ -22,7 +22,7 @@ for (const slug of CLUSTER) {
   test(`${slug}: статья есть и собрана по правилам`, () => {
     const a = articles.find((x) => x.slug === slug)
     assert.ok(a, 'статьи нет в src/data/articles.js')
-    assert.ok((a.title + ' — Green Pill').length <= 60, `заголовок длинный: ${a.title.length}`)
+    assert.ok(a.title.length <= 60, `заголовок длинный: ${a.title.length}`)
     assert.ok(a.desc.length >= 80 && a.desc.length <= 160, `desc ${a.desc.length} символов, нужно 80–160`)
     assert.ok(a.sections.length >= 3 && a.sections.length <= 6, 'разделов от 3 до 6')
     assert.ok(a.related.includes('ai-photobooth-cost'), 'related должен вести на ai-photobooth-cost')

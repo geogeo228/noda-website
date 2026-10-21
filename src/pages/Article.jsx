@@ -19,7 +19,7 @@ export default function Article() {
     <div className="blog-root">
       <Seo
         path={`/blog/${article.slug}`}
-        title={`${article.title} — Green Pill`}
+        title={article.title}
         description={article.desc}
         jsonLd={{
           '@context': 'https://schema.org',

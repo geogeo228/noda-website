@@ -71,7 +71,7 @@ export function getRoutes(lang) {
     path: `/blog/${a.slug}`,
     changefreq: 'monthly',
     priority: '0.8',
-    title: `${a.title} — Green Pill`,
+    title: a.title,
     description: a.desc,
     ogDescription: a.desc,
     jsonLd: {
