@@ -8,8 +8,8 @@ import { hoistedTitleOf, assertNoTitleDrift } from '../scripts/prerender.js'
 // источников: заголовка, который React поднял из Seo.jsx, с заголовком из routes.js.
 
 test('заголовок, поднятый React из компонента, достаётся из SSR-вывода', () => {
-  const appHtml = '<title>Кейсы — NODA</title><meta name="description" content="x"/><div>тело</div>'
-  assert.equal(hoistedTitleOf(appHtml), 'Кейсы — NODA')
+  const appHtml = '<title>Кейсы — Green Pill</title><meta name="description" content="x"/><div>тело</div>'
+  assert.equal(hoistedTitleOf(appHtml), 'Кейсы — Green Pill')
 })
 
 test('расхождение Seo.jsx и routes.js валит сборку', () => {
@@ -22,8 +22,8 @@ test('расхождение Seo.jsx и routes.js валит сборку', () =
 })
 
 test('совпадение заголовков проходит молча', () => {
-  const appHtml = '<title>Кейсы — NODA</title><div>тело</div>'
-  assert.doesNotThrow(() => assertNoTitleDrift(appHtml, 'Кейсы — NODA', '/blog'))
+  const appHtml = '<title>Кейсы — Green Pill</title><div>тело</div>'
+  assert.doesNotThrow(() => assertNoTitleDrift(appHtml, 'Кейсы — Green Pill', '/blog'))
 })
 
 test('страница без поднятого заголовка не валит сборку', () => {

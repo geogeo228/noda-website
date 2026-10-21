@@ -42,7 +42,7 @@ export default function HomeHeader() {
         <div className="v1-header-inner">
           <a href="#top" className="v1-logo" onClick={(e) => handleNav(e, '#top')}>
             <span className="v1-logo-bracket">[</span>
-            <span className="v1-logo-text">NODA</span>
+            <span className="v1-logo-text">GREEN PILL</span>
             <span className="v1-logo-bracket">]</span>
           </a>
           <nav className="v1-nav">
@@ -67,7 +67,7 @@ export default function HomeHeader() {
       <div id="v1-drawer" className={`v1-drawer${open ? ' is-open' : ''}`} onClick={(e) => { if (e.target === e.currentTarget) toggle(false) }}>
         <div className="v1-drawer-panel">
           <div className="v1-drawer-head">
-            <span className="v1-logo-text">NODA</span>
+            <span className="v1-logo-text">GREEN PILL</span>
             <button className="v1-drawer-close" onClick={() => toggle(false)} aria-label={t.nav.closeMenu}>&times;</button>
           </div>
           <nav className="v1-drawer-nav">

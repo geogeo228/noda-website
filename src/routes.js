@@ -33,7 +33,7 @@ export function getRoutes(lang) {
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'NODA',
+      name: 'Green Pill',
       url: origin,
       description: t.meta.orgDesc,
       contactPoint: {
@@ -71,7 +71,7 @@ export function getRoutes(lang) {
     path: `/blog/${a.slug}`,
     changefreq: 'monthly',
     priority: '0.8',
-    title: `${a.title} — NODA`,
+    title: `${a.title} — Green Pill`,
     description: a.desc,
     ogDescription: a.desc,
     jsonLd: {
@@ -80,8 +80,8 @@ export function getRoutes(lang) {
       url: `${origin}/blog/${a.slug}`,
       headline: a.title,
       description: a.desc,
-      author: { '@type': 'Organization', name: 'NODA' },
-      publisher: { '@type': 'Organization', name: 'NODA' },
+      author: { '@type': 'Organization', name: 'Green Pill' },
+      publisher: { '@type': 'Organization', name: 'Green Pill' },
     },
   }))
 

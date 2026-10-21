@@ -132,7 +132,7 @@ async function main() {
   // нет и в sitemap он не попадает — от него требуется только noindex.
   const notFoundHtml = await render('/__not_found__')
   const notFoundHead =
-    '<title data-default-seo>404 — NODA</title>\n    ' +
+    '<title data-default-seo>404 — Green Pill</title>\n    ' +
     '<meta data-default-seo name="robots" content="noindex" />'
   writeFileSync(join(outDir, '404.html'), buildPage(template, notFoundHtml, notFoundHead))
 

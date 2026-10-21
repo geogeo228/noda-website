@@ -9,7 +9,7 @@ import { gradeLive } from '../scripts/verify-live.js'
 
 test('страница, отдающая 200 без редиректа, проблем не даёт', () => {
   const problems = gradeLive([
-    { path: '/blog', status: 200, redirect: '', title: 'Кейсы — NODA', expectedTitle: 'Кейсы — NODA' },
+    { path: '/blog', status: 200, redirect: '', title: 'Кейсы — Green Pill', expectedTitle: 'Кейсы — Green Pill' },
   ], { notFound: { status: 404, hasNoindex: true } })
 
   assert.deepEqual(problems, [])
@@ -22,7 +22,7 @@ test('301 на каноническом URL — проблема, даже ес�
       status: 301,
       redirect: 'https://noda-auto.com/blog/x/',
       title: '',
-      expectedTitle: 'Статья — NODA',
+      expectedTitle: 'Статья — Green Pill',
     },
   ], { notFound: { status: 404, hasNoindex: true } })
 
@@ -54,7 +54,7 @@ test('заголовок на живом сайте расходится с rout
 
 test('пустой заголовок на живом сайте — проблема', () => {
   const problems = gradeLive([
-    { path: '/', status: 200, redirect: '', title: '', expectedTitle: 'NODA' },
+    { path: '/', status: 200, redirect: '', title: '', expectedTitle: 'Green Pill' },
   ], { notFound: { status: 404, hasNoindex: true } })
 
   assert.equal(problems.length, 1)

@@ -19,15 +19,15 @@ export default function Article() {
     <div className="blog-root">
       <Seo
         path={`/blog/${article.slug}`}
-        title={`${article.title} — NODA`}
+        title={`${article.title} — Green Pill`}
         description={article.desc}
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Article',
           headline: article.title,
           description: article.desc,
-          author: { '@type': 'Organization', name: 'NODA' },
-          publisher: { '@type': 'Organization', name: 'NODA' },
+          author: { '@type': 'Organization', name: 'Green Pill' },
+          publisher: { '@type': 'Organization', name: 'Green Pill' },
           // BreadcrumbList — свойство Article в схеме: кладём внутрь того же
           // объекта разметки, что и остальное. Отдельный <script
           // type="application/ld+json"> сюда добавлять нельзя — verify-prerender
@@ -47,7 +47,7 @@ export default function Article() {
       <header className="blog-header">
         <Link to="/" className="blog-logo">
           <span className="v1-logo-bracket">[</span>
-          <span className="v1-logo-text">NODA</span>
+          <span className="v1-logo-text">GREEN PILL</span>
           <span className="v1-logo-bracket">]</span>
         </Link>
       </header>

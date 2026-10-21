@@ -3,14 +3,14 @@ export default {
   locale: 'en-US',
 
   meta: {
-    siteTitle: 'NODA — IT and AI solutions for business',
+    siteTitle: 'Green Pill — IT and AI solutions for business',
     siteDesc: 'IT and AI solutions for business. Koldun-Bot for events, chat monitoring, custom automation.',
     ogDesc: 'IT and AI solutions. Koldun-Bot, chat monitoring, custom automation.',
-    blogTitle: 'Case studies — NODA',
-    blogDesc: 'Case studies from NODA projects: AI solutions, Telegram bots, web apps, business automation.',
-    blogOgDesc: 'Case studies from NODA projects: AI solutions, Telegram bots, web apps.',
-    giorgiTitle: 'Georgi Kuchava — Founder of NODA',
-    giorgiDesc: 'Georgi Kuchava, founder of NODA. Business automation with AI, Telegram bots, consulting.',
+    blogTitle: 'Case studies — Green Pill',
+    blogDesc: 'Case studies from Green Pill projects: AI solutions, Telegram bots, web apps, business automation.',
+    blogOgDesc: 'Case studies from Green Pill projects: AI solutions, Telegram bots, web apps.',
+    giorgiTitle: 'Georgi Kuchava — Founder of Green Pill',
+    giorgiDesc: 'Georgi Kuchava, founder of Green Pill. Business automation with AI, Telegram bots, consulting.',
     giorgiOgDesc: 'Business automation with AI, Telegram bots, consulting.',
     orgDesc: 'IT and AI solutions for business',
   },
@@ -49,7 +49,7 @@ export default {
 
   about: {
     tag: '// 01 · about',
-    title: 'Who runs NODA',
+    title: 'Who runs Green Pill',
     name: 'Georgi Andreev',
     role: 'Founder',
     bio: 'I automate businesses with AI. I build Telegram bots, make processes smarter, and explain complicated things in plain language.',
@@ -170,12 +170,12 @@ export default {
 
   giorgi: {
     name: 'Georgi Kuchava',
-    role: 'Founder of NODA',
+    role: 'Founder of Green Pill',
     bio: 'I automate businesses with AI. I build Telegram bots, make processes smarter, and explain complicated things in plain language.',
     linkTelegram: 'Telegram',
     linkWrite: 'Message me',
     linkConsult: 'Book a consultation',
-    back: '← NODA website',
-    jobTitle: 'Founder of NODA',
+    back: '← Green Pill website',
+    jobTitle: 'Founder of Green Pill',
   },
 }

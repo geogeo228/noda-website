@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <div className="blog-root">
       <Helmet>
-        <title>404 — NODA</title>
+        <title>404 — Green Pill</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 

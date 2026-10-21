@@ -5,7 +5,7 @@ import Seo from '../components/Seo'
 import LegalLine from '../components/LegalLine'
 import { OPERATOR } from '../data/operator'
 
-// Страница «О компании»: кто стоит за брендом NODA. Только русская версия,
+// Страница «О компании»: кто стоит за брендом Green Pill. Только русская версия,
 // маршрут в routes.js с langPair: false. Все значения — из operator.js.
 const O = OPERATOR
 
@@ -35,7 +35,7 @@ export default function Company() {
       <header className="blog-header">
         <Link to="/" className="blog-logo">
           <span className="v1-logo-bracket">[</span>
-          <span className="v1-logo-text">NODA</span>
+          <span className="v1-logo-text">GREEN PILL</span>
           <span className="v1-logo-bracket">]</span>
         </Link>
       </header>
@@ -43,7 +43,7 @@ export default function Company() {
       <main className="article-main privacy company">
         <h1 className="article-title">О компании</h1>
         <p className="article-desc">
-          NODA — бренд, под которым {O.shortName} делает проекты по автоматизации бизнеса
+          Green Pill — бренд, под которым {O.shortName} делает проекты по автоматизации бизнеса
           с помощью ИИ: боты, веб-приложения, аудит процессов и сопровождение внедрения.
         </p>
 

@@ -15,7 +15,7 @@ export default function Footer() {
 
   return (
     <footer className="v1-footer">
-      <div>[NODA] &copy; 2025 &mdash; <span className="v1-foot-dim">{t.footer.sessionActive}</span></div>
+      <div>[GREEN PILL] &copy; 2025 &mdash; <span className="v1-foot-dim">{t.footer.sessionActive}</span></div>
       <div className="v1-foot-dim">{t.footer.uptime} {time} UTC</div>
       <a className="v1-foot-link" href="https://t.me/BlueFaceBaby99" target="_blank" rel="noopener noreferrer">{t.footer.telegram}</a>
     </footer>

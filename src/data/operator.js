@@ -37,4 +37,4 @@ export const OPERATOR_JSONLD = {
 }
 
 // Дата редакции политики — менять при каждой правке текста.
-export const PRIVACY_UPDATED = '11 октября 2026 года'
+export const PRIVACY_UPDATED = '21 октября 2026 года'

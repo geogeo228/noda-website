@@ -34,7 +34,7 @@ export default function Process() {
           ))}
         </div>
         <div className="v1-proc-foot">
-          <span className="v1-proc-foot-prompt">noda@matrix:~$</span>
+          <span className="v1-proc-foot-prompt">greenpill@matrix:~$</span>
           <span className="v1-proc-foot-cmd">{t.process.footCmd}</span>
           <span className="v1-proc-foot-out">{t.process.footOut}</span>
         </div>

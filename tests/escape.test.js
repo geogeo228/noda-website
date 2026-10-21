@@ -10,7 +10,7 @@ test('title с кавычками не рвёт разметку head', () => {
   const head = renderHead(
     {
       path: '/blog/x',
-      title: 'Бот "Колдун" — NODA',
+      title: 'Бот "Колдун" — Green Pill',
       description: 'Описание с "кавычками" и <тегом>',
       ogDescription: 'og',
       jsonLd: null,
@@ -18,7 +18,7 @@ test('title с кавычками не рвёт разметку head', () => {
     'https://noda-auto.com',
   )
 
-  assert.ok(head.includes('<title data-default-seo>Бот &quot;Колдун&quot; — NODA</title>'))
+  assert.ok(head.includes('<title data-default-seo>Бот &quot;Колдун&quot; — Green Pill</title>'))
 
   // Значение каждого атрибута content не должно содержать сырых кавычек:
   // одна такая обрывает атрибут, и остаток описания становится разметкой.

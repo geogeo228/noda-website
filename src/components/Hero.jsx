@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <section className="v1-hero" id="top">
       <div className="v1-hero-meta">
-        <span className="v1-hero-prompt">noda@matrix:~$</span>
+        <span className="v1-hero-prompt">greenpill@matrix:~$</span>
         <span>{typed}{showCursor && <span className="cursor-blink"></span>}</span>
       </div>
       <div>

@@ -31,7 +31,7 @@ export default function Privacy() {
       <header className="blog-header">
         <Link to="/" className="blog-logo">
           <span className="v1-logo-bracket">[</span>
-          <span className="v1-logo-text">NODA</span>
+          <span className="v1-logo-text">GREEN PILL</span>
           <span className="v1-logo-bracket">]</span>
         </Link>
       </header>
@@ -49,7 +49,7 @@ export default function Privacy() {
           <h2 className="article-h2">1. Кто обрабатывает данные</h2>
           <p>
             Оператор персональных данных — {O.fullName} ({O.shortName}), ИНН {O.inn},
-            ОГРН {O.ogrn}, адрес: {O.address}. NODA — бренд, под которым ООО «ЭНТОРИ»
+            ОГРН {O.ogrn}, адрес: {O.address}. Green Pill — бренд, под которым ООО «ЭНТОРИ»
             делает проекты по автоматизации.
           </p>
           <p>
@@ -83,7 +83,7 @@ export default function Privacy() {
           </p>
           <p>
             <strong>Где будет храниться:</strong> заявка пройдёт через сервер-пересыльщик (Cloudflare
-            Workers) и придёт сообщением в Telegram Георгия Андреева, основателя NODA. Пересыльщик
+            Workers) и придёт сообщением в Telegram Георгия Андреева, основателя Green Pill. Пересыльщик
             ничего не сохранит. Отдельной базы заявок не будет — сообщение в Telegram станет
             единственной копией. Оба сервиса — иностранные, подробнее в разделе 3.
           </p>

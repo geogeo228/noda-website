@@ -17,7 +17,7 @@ export default function Blog() {
       <header className="blog-header">
         <Link to="/" className="blog-logo">
           <span className="v1-logo-bracket">[</span>
-          <span className="v1-logo-text">NODA</span>
+          <span className="v1-logo-text">GREEN PILL</span>
           <span className="v1-logo-bracket">]</span>
         </Link>
       </header>

@@ -23,7 +23,7 @@ export default function Landing() {
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'NODA',
+          name: 'Green Pill',
           url: origins.ru,
           description: t.meta.orgDesc,
           contactPoint: { '@type': 'ContactPoint', url: 'https://t.me/BlueFaceBaby99', contactType: 'customer service' },
