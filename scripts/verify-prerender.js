@@ -6,7 +6,7 @@
 // и двух canonical, из-за которых 13 из 18 страниц выпали из индекса.
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { getRoutes } from '../src/routes.js'
+import { getRoutes, getHiddenRoutes } from '../src/routes.js'
 import { origins, enIsLive } from '../src/i18n/config.js'
 import { gradeOrphans, gradeHomepageReach } from './grade-linking.js'
 import { gradeBreadcrumbs } from './grade-breadcrumbs.js'
@@ -190,6 +190,28 @@ if (!existsSync(sitemapPath)) {
   const locs = [...readFileSync(sitemapPath, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1])
   if (locs.length !== routes.length) {
     fail('sitemap.xml', `${locs.length} URL против ${routes.length} маршрутов`)
+  }
+}
+
+// Скрытые страницы (презентации): готовый HTML есть, noindex стоит, canonical
+// нет, в sitemap их нет. Любое из четырёх нарушений либо отдаёт 404 на
+// прод, либо пускает черновик в поиск.
+{
+  const sitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, 'utf8') : ''
+  for (const route of getHiddenRoutes(lang)) {
+    const file = fileFor(route.path)
+    if (!existsSync(file)) {
+      fail(route.path, `скрытая страница не сгенерирована: ${file}`)
+      continue
+    }
+    const html = readFileSync(file, 'utf8')
+    const head = html.slice(0, html.indexOf('</head>'))
+    if (!/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/.test(head)) {
+      fail(route.path, 'в head нет <meta name="robots" content="noindex">')
+    }
+    if (/rel="canonical"/.test(head)) fail(route.path, 'у скрытой страницы не должно быть canonical')
+    if (textLength(html) < MIN_BODY_TEXT) fail(route.path, 'в body слишком мало текста')
+    if (sitemap.includes(`<loc>${origin}${route.path}</loc>`)) fail(route.path, 'скрытая страница попала в sitemap')
   }
 }
 

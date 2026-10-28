@@ -7,7 +7,7 @@
 // оказалось бы два <title>.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
-import { getRoutes } from '../src/routes.js'
+import { getRoutes, getHiddenRoutes } from '../src/routes.js'
 import { origins, enIsLive } from '../src/i18n/config.js'
 
 const lang = process.env.VITE_LANG === 'en' ? 'en' : 'ru'
@@ -21,6 +21,16 @@ export function escapeAttr(value) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
+}
+
+// Head скрытой страницы: title, description, noindex. Без canonical и hreflang:
+// страница не должна попадать в индекс, а значит, и объявлять себя каноничной.
+export function renderHiddenHead(route) {
+  return [
+    `<title data-default-seo>${escapeAttr(route.title)}</title>`,
+    `<meta data-default-seo name="description" content="${escapeAttr(route.description)}" />`,
+    `<meta data-default-seo name="robots" content="${escapeAttr(route.robots)}" />`,
+  ].join('\n    ')
 }
 
 export function renderHead(route, origin, options = {}) {
@@ -128,6 +138,15 @@ async function main() {
     writeFileSync(file, page)
   }
 
+  for (const route of getHiddenRoutes(lang)) {
+    const appHtml = await render(route.path)
+    assertNoTitleDrift(appHtml, route.title, route.path)
+    const page = buildPage(template, appHtml, renderHiddenHead(route))
+    const file = join(outDir, route.path.slice(1), 'index.html')
+    mkdirSync(dirname(file), { recursive: true })
+    writeFileSync(file, page)
+  }
+
   // 404 отдаётся nginx на любой несуществующий путь. Своего маршрута у него
   // нет и в sitemap он не попадает — от него требуется только noindex.
   const notFoundHtml = await render('/__not_found__')
@@ -136,7 +155,7 @@ async function main() {
     '<meta data-default-seo name="robots" content="noindex" />'
   writeFileSync(join(outDir, '404.html'), buildPage(template, notFoundHtml, notFoundHead))
 
-  console.log(`✓ Пререндер: ${routes.length} страниц и 404.html в ${outDir}/`)
+  console.log(`✓ Пререндер: ${routes.length} страниц, ${getHiddenRoutes(lang).length} скрытых и 404.html в ${outDir}/`)
 }
 
 // Модуль импортируется тестами ради escapeAttr и renderHead, поэтому

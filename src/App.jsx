@@ -11,6 +11,9 @@ const Blog = lazy(() => import('./pages/Blog'))
 const Article = lazy(() => import('./pages/Article'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Company = lazy(() => import('./pages/Company'))
+// Презентации Green Pill: закрыты от индексации, в меню и sitemap не входят.
+const Deck = lazy(() => import('./pages/Deck'))
+const Intro = lazy(() => import('./pages/Intro'))
 
 export default function App() {
   return (
@@ -23,6 +26,8 @@ export default function App() {
         {/* Политика и «О компании» только у русской версии — см. routes.js */}
         {lang === 'ru' && <Route path="/privacy" element={<Privacy />} />}
         {lang === 'ru' && <Route path="/company" element={<Company />} />}
+        {lang === 'ru' && <Route path="/deck" element={<Deck />} />}
+        {lang === 'ru' && <Route path="/intro" element={<Intro />} />}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

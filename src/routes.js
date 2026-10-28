@@ -114,3 +114,26 @@ export function getRoutes(lang) {
 
   return [landing, blog, ...articleRoutes, giorgi, ...(lang === 'ru' ? [privacy, company] : [])]
 }
+
+// Страницы, которые собираются и отдаются, но закрыты от поисковиков: в
+// sitemap и verify по списку getRoutes их нет. Нужны пререндеру: nginx без
+// SPA-fallback отдаст 404 на путь, у которого нет готового index.html.
+// Презентации Green Pill: ссылку отправляет Георгий вручную.
+// noindex ставится и здесь (в head статики), и в самой странице через Helmet.
+export function getHiddenRoutes(lang) {
+  if (lang !== 'ru') return []
+  return [
+    {
+      path: '/deck',
+      title: 'Green Pill: презентация',
+      description: 'Комплексные ИИ и ИТ решения для бизнеса.',
+      robots: 'noindex, nofollow',
+    },
+    {
+      path: '/intro',
+      title: 'Green Pill: визитка',
+      description: 'Комплексные ИИ и ИТ решения для бизнеса.',
+      robots: 'noindex, nofollow',
+    },
+  ]
+}
