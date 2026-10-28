@@ -330,7 +330,10 @@
   background: linear-gradient(#040805, #09110c);
   border-bottom: 1px solid var(--m-border);
 }
-.dk-scene-video video, .dk-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dk-still { background: #0e1621; }
+.dk-still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
+.dk-slide[data-active="true"] .dk-still img { animation: dk-kb 12s ease-in-out infinite alternate; }
+@keyframes dk-kb { from { transform: scale(1); } to { transform: scale(1.08); } }
 .dk-scan {
   position: absolute;
   left: 0;
@@ -519,7 +522,7 @@
 @media (prefers-reduced-motion: reduce) {
   .dk-reveal { opacity: 1; transform: none; animation: none !important; }
   .dk-slide { transition: opacity 0.01s; transform: none; }
-  .dk-scan, .dk-wave i, .dk-feed, .dk-det, .dk-task u, .dk-trow s { animation: none !important; }
+  .dk-still img, .dk-scan, .dk-wave i, .dk-feed, .dk-det, .dk-task u, .dk-trow s { animation: none !important; }
   .dk-det { opacity: 1; }
 }
 

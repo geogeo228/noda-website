@@ -93,7 +93,7 @@ test('картинки презентаций существуют и нет с�
   for (const m of code.matchAll(/\$\{A\}\/([\w-]+\.\w+)/g)) {
     assert.ok(existsSync(join(dir, m[1])), `нет файла public/assets/deck/${m[1]}`)
   }
-  for (const m of code.matchAll(/'(\/assets\/[^']+)'/g)) {
+  for (const m of code.matchAll(/['"](\/assets\/[^'"]+)['"]/g)) {
     const file = new URL(`../public${m[1]}`, import.meta.url)
     assert.ok(existsSync(decodeURIComponent(file.pathname)), `нет файла public${m[1]}`)
   }

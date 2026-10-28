@@ -1,7 +1,5 @@
-import { TileVideo } from './parts'
-
-// Живые сцены для плиток «Что умеет ИИ». Это иллюстрации на CSS без текста и
-// цифр: показывают, что происходит, не выдавая себя за реальный экран.
+// Живые сцены для плиток «Что умеет ИИ»: CSS-иллюстрации без текста и цифр
+// и два кадра чата ботов.
 // Анимации запускаются, когда слайд становится активным ([data-active=true]).
 
 const range = (n) => Array.from({ length: n }, (_, i) => i)
@@ -87,6 +85,17 @@ function Collects() {
   )
 }
 
+// Кадр чата без курсора, живой за счёт медленного наезда и бегущей линии.
+// Раньше здесь играли видео, но в них был виден курсор мыши и зум обрезал текст.
+function Still({ src, origin = '0% 0%' }) {
+  return (
+    <div className="dk-scene dk-still" aria-hidden="true">
+      <img src={src} alt="" style={{ transformOrigin: origin }} />
+      <i className="dk-scan" />
+    </div>
+  )
+}
+
 export function Scene({ kind, active, label }) {
   switch (kind) {
     case 'sees':
@@ -98,17 +107,9 @@ export function Scene({ kind, active, label }) {
     case 'collects':
       return <Collects />
     case 'draws':
-      return (
-        <div className="dk-scene dk-scene-video">
-          <TileVideo src="/assets/Колдун_Бот_визуал.mp4" poster="/assets/poster_koldun.jpg" active={active} label={label} />
-        </div>
-      )
+      return <Still src="/assets/deck/tile-draws.webp" origin="0% 100%" />
     case 'answers':
-      return (
-        <div className="dk-scene dk-scene-video">
-          <TileVideo src="/assets/Podryadchik_bot.mp4" poster="/assets/poster_podryadchik.jpg" active={active} label={label} />
-        </div>
-      )
+      return <Still src="/assets/deck/tile-answers.webp" />
     default:
       return null
   }

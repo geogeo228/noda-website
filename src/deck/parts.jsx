@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { useDeck } from './ctx'
 
 // Рамка с уголками, как на сайте (классы .tframe и .corners из styles.css).
@@ -61,33 +60,5 @@ export function Browser({ src, alt = '', url, className = '', ...rest }) {
       </div>
       <img src={src} alt={alt} loading="eager" decoding="async" />
     </div>
-  )
-}
-
-// Видео живой плитки: играет, только пока слайд на экране, и стоит на постере.
-export function TileVideo({ src, poster, active, label }) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const v = ref.current
-    if (!v) return
-    if (active) {
-      const p = v.play()
-      if (p && p.catch) p.catch(() => {})
-    } else {
-      v.pause()
-    }
-  }, [active])
-  return (
-    <video
-      ref={ref}
-      className="dk-video"
-      src={encodeURI(src)}
-      poster={poster}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      aria-label={label}
-    />
   )
 }
