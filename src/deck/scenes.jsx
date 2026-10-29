@@ -2,6 +2,8 @@
 // и два кадра чата ботов.
 // Анимации запускаются, когда слайд становится активным ([data-active=true]).
 
+import { useEffect, useRef } from 'react'
+
 const range = (n) => Array.from({ length: n }, (_, i) => i)
 
 function Sees() {
@@ -96,6 +98,29 @@ function Still({ src, origin = '0% 0%' }) {
   )
 }
 
+// Ролик плитки: mp4 играет, пока слайд активен, иначе ставится на паузу.
+// Ролики квадратные, поэтому в плитке вписываются по object-fit: cover.
+function Clip({ src, poster, active }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const v = ref.current
+    if (!v) return
+    if (active) {
+      // play() отклоняется, если вкладка не в фокусе — это не ошибка.
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+    }
+  }, [active])
+
+  return (
+    <div className="dk-scene dk-clip" aria-hidden="true">
+      <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" />
+    </div>
+  )
+}
+
 export function Scene({ kind, active, label }) {
   switch (kind) {
     case 'sees':
@@ -107,7 +132,7 @@ export function Scene({ kind, active, label }) {
     case 'collects':
       return <Collects />
     case 'draws':
-      return <Still src="/assets/deck/tile-draws.webp" origin="0% 100%" />
+      return <Clip src="/assets/deck/tile-draws.mp4" poster="/assets/deck/tile-draws.webp" active={active} />
     case 'answers':
       return <Still src="/assets/deck/tile-answers.webp" />
     default:

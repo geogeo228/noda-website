@@ -335,6 +335,10 @@
 .dk-still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
 .dk-slide[data-active="true"] .dk-still img { animation: dk-kb 12s ease-in-out infinite alternate; }
 @keyframes dk-kb { from { transform: scale(1); } to { transform: scale(1.08); } }
+/* Ролик плитки: квадратный mp4, а плитка шире. Ролик заполняет плитку
+   целиком (cover), кадр смещён вверх — иначе срезается верх картинки. */
+.dk-clip { background: #040805; }
+.dk-clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block; }
 .dk-scan {
   position: absolute;
   left: 0;
