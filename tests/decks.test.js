@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { getRoutes, getHiddenRoutes } from '../src/routes.js'
 import { renderHiddenHead } from '../scripts/prerender.js'
 import ru from '../src/deck/content/ru.js'
@@ -85,7 +86,9 @@ test('язык берётся из ?lang=', () => {
 })
 
 test('картинки презентаций существуют и нет сирот', () => {
-  const dir = new URL('../public/assets/deck/', import.meta.url).pathname
+  // fileURLToPath, а не .pathname: путь к репозиторию может содержать
+  // пробелы, и .pathname отдаёт их закодированными (%20).
+  const dir = fileURLToPath(new URL('../public/assets/deck/', import.meta.url))
   const code = ['slides.jsx', 'scenes.jsx', 'parts.jsx']
     .map((f) => readFileSync(new URL(`../src/deck/${f}`, import.meta.url), 'utf8'))
     .join('\n')
@@ -95,7 +98,7 @@ test('картинки презентаций существуют и нет с�
   }
   for (const m of code.matchAll(/['"](\/assets\/[^'"]+)['"]/g)) {
     const file = new URL(`../public${m[1]}`, import.meta.url)
-    assert.ok(existsSync(decodeURIComponent(file.pathname)), `нет файла public${m[1]}`)
+    assert.ok(existsSync(fileURLToPath(file)), `нет файла public${m[1]}`)
   }
   for (const f of readdirSync(dir)) {
     const stem = f.replace(/\.\w+$/, '')

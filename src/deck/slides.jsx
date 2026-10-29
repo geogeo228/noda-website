@@ -75,10 +75,12 @@ export function CasePassports({ c }) {
     <CaseLayout
       c={c}
       visual={
-        <div className="dk-phones">
-          <Phone src={`${A}/phone-passports.webp`} alt="" className="dk-phone-a" />
-          <Phone src={`${A}/phone-delegates.webp`} alt="" className="dk-phone-b" />
-        </div>
+        <Browser
+          className="dk-browser-lg"
+          url="админка участников"
+          src={`${A}/rita-admin.webp`}
+          alt="Админка сбора данных: 521 участник, выгрузка в Excel, сканы в архиве"
+        />
       }
     />
   )
@@ -129,7 +131,13 @@ export function CaseSales({ c }) {
       className="dk-case-sales"
       visual={
         <div className="dk-sales">
-          <Browser className="dk-browser-sm" url="rbkont.ru" src={`${A}/shot-rbkont.webp`} alt="rbkont.ru" />
+          <Browser className="dk-browser-sm" url="rbkont.ru" src={`${A}/rbkont-catalog.webp`} alt="Каталог контейнеров на rbkont.ru" />
+          <Browser
+            className="dk-browser-shot"
+            url="rbkont.ru"
+            src={`${A}/rbkont-listing.webp`}
+            alt="Карточка объявления на rbkont.ru"
+          />
           <Phone className="dk-phone-lead">
             <div className="dk-tg">
               <div className="dk-tg-head"><b>{l.chatName}</b></div>

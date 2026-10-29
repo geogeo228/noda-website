@@ -117,7 +117,13 @@ function sitemapPlugin(lang) {
       .join('\n') +
     '\n</urlset>\n'
 
-  const robots = `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`
+  // Презентации (/deck, /intro) и их файлы (/deck.pdf, /intro.pdf) закрыты
+  // от индексации: страницы отдают noindex в head, а файлы robots.txt
+  // запрещает отдельно — у PDF нет head, где можно было бы поставить meta.
+  const robots =
+    'User-agent: *\nAllow: /\n' +
+    'Disallow: /deck\nDisallow: /intro\nDisallow: /deck.pdf\nDisallow: /intro.pdf\n' +
+    `\nSitemap: ${origin}/sitemap.xml\n`
 
   return {
     name: 'noda-sitemap',

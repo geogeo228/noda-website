@@ -273,6 +273,7 @@
 /* 06 продажи */
 .dk-sales { position: relative; width: 830px; height: 740px; }
 .dk-sales .dk-browser-sm { position: absolute; left: 0; top: 30px; }
+.dk-browser-shot { position: absolute; left: 40px; top: 300px; width: 560px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75); }
 .dk-phone-lead { position: absolute; right: 0; bottom: 0; width: 330px; height: 610px; }
 .dk-phone-lead .dk-phone-screen { background: #0e1621; }
 .dk-tg { height: 100%; padding-top: 52px; display: flex; flex-direction: column; background: #0e1621; }
@@ -599,6 +600,7 @@
 
   .dk-sales { width: 100%; height: auto; display: flex; flex-direction: column; gap: 20px; align-items: center; }
   .dk-sales .dk-browser-sm { position: static; }
+  .dk-browser-shot { position: static; width: 100%; }
   .dk-phone-lead { position: static; width: 62vw; max-width: 260px; height: auto; aspect-ratio: 0.62; }
   .dk-tg { padding-top: 28px; }
   .dk-tg-head { font-size: 12px; padding: 6px 12px; }
