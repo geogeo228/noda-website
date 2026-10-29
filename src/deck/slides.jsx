@@ -22,6 +22,34 @@ export function Cover({ c }) {
   )
 }
 
+// Иконки плиток «с кем работаем» — контурные, в стиле остальной вёрстки.
+const NICHE_ICONS = [
+  // Мероприятия и HR — микрофон.
+  <svg key="hr" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="25" y="8" width="14" height="26" rx="7" />
+    <path d="M17 29a15 15 0 0 0 30 0" />
+    <path d="M32 44v9M23 53h18" />
+  </svg>,
+  // Фарма и медицина — капсула-крест.
+  <svg key="pharma" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="8" y="20" width="48" height="24" rx="12" transform="rotate(-45 32 32)" />
+    <path d="M26 26l12 12" />
+    <path d="M32 25v6M29 28h6" />
+  </svg>,
+  // B2B, логистика, производство — коробка.
+  <svg key="b2b" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M32 8l22 11v26L32 56 10 45V19L32 8z" />
+    <path d="M10 19l22 11 22-11M32 30v26" />
+  </svg>,
+  // Розница, магазины, туризм — тележка.
+  <svg key="retail" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M8 12h7l7 28h24" />
+    <path d="M20 20h34l-4 13H23" />
+    <circle cx="26" cy="50" r="3.5" />
+    <circle cx="43" cy="50" r="3.5" />
+  </svg>,
+]
+
 export function Niches({ c }) {
   return (
     <div className="dk-col-fill">
@@ -33,6 +61,7 @@ export function Niches({ c }) {
           return (
             <Frame className="dk-niche dk-reveal" style={{ '--i': i + 1 }} key={tile}>
               <span className="dk-niche-n">{String(i + 1).padStart(2, '0')}</span>
+              <span className="dk-niche-i">{NICHE_ICONS[i]}</span>
               <span className="dk-niche-body">
                 <span className="dk-niche-t">{head}</span>
                 {rest.length > 0 && <span className="dk-niche-s">{rest.join(': ')}</span>}

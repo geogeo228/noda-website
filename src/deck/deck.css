@@ -37,6 +37,9 @@
   z-index: 0;
 }
 
+/* Обложка дека без тега — правка Георгия 29.10.2026. На визитке тег остаётся. */
+.dk-root[data-kind="deck"] .dk-slide[data-id="s01"] .dk-tag { display: none; }
+
 /* ---------- холст и слайды ---------- */
 .dk-canvas {
   position: absolute;
@@ -174,9 +177,13 @@
 
 /* ---------- 02 ниши ---------- */
 .dk-niches { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 30px; min-height: 0; }
-.dk-niche { display: flex; flex-direction: column; justify-content: space-between; padding: 44px 40px; }
+/* Выравнивание по верху: заголовки всех плиток на одной линии, независимо
+   от того, есть ли подзаголовок (по правке Георгия 29.10.2026). */
+.dk-niche { display: flex; flex-direction: column; padding: 44px 40px; }
 .dk-niche-n { font-family: var(--f-mono); font-size: 30px; color: var(--m-green); }
-.dk-niche-body { display: flex; flex-direction: column; }
+.dk-niche-i { color: var(--m-green); margin-top: 30px; }
+.dk-niche-i svg { width: 76px; height: 76px; display: block; }
+.dk-niche-body { margin-top: 34px; }
 .dk-niche-t { font-size: 50px; line-height: 1.1; font-weight: 600; color: var(--m-white); letter-spacing: -0.01em; }
 .dk-niche-s { font-size: 28px; line-height: 1.4; color: var(--m-text-dim); margin-top: 18px; display: block; }
 
@@ -186,6 +193,9 @@
 .dk-case .dk-title { font-size: 66px; margin-bottom: 28px; }
 .dk-case .dk-text { font-size: 31px; }
 .dk-case .dk-figure { margin-top: 32px; padding: 22px 38px; font-size: 46px; }
+/* Длинные подписи-бейджи — уменьшенный кегль, как у s06. */
+.dk-slide[data-id="s04"] .dk-case .dk-figure,
+.dk-slide[data-id="s05"] .dk-case .dk-figure,
 .dk-slide[data-id="s06"] .dk-case .dk-figure { font-size: 34px; }
 .dk-case .dk-also-list li { font-size: 20px; padding: 7px 13px; }
 .dk-case-visual { display: flex; align-items: center; justify-content: center; min-width: 0; }
@@ -491,6 +501,9 @@
   .dk-niches { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
   .dk-niche { padding: 18px 16px; min-height: 150px; }
   .dk-niche-n { font-size: 14px; }
+  .dk-niche-i { margin-top: 12px; }
+  .dk-niche-i svg { width: 34px; height: 34px; }
+  .dk-niche-body { margin-top: 14px; }
   .dk-niche-t { font-size: 20px; }
   .dk-niche-s { font-size: 13px; margin-top: 8px; }
 
