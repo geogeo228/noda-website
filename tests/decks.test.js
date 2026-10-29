@@ -100,9 +100,25 @@ test('картинки презентаций существуют и нет с�
     const file = new URL(`../public${m[1]}`, import.meta.url)
     assert.ok(existsSync(fileURLToPath(file)), `нет файла public${m[1]}`)
   }
+  // Ролики плиток собираются по шаблону `tile-${clip}.mp4`, поэтому имя
+  // файла в коде не встречается целиком — ищем по имени ролика.
+  for (const m of code.matchAll(/'(\d\d-[a-z]+)'/g)) {
+    for (const ext of ['mp4', 'webp']) {
+      const f = `tile-${m[1]}.${ext}`
+      assert.ok(existsSync(join(dir, f)), `нет файла public/assets/deck/${f}`)
+    }
+  }
   for (const f of readdirSync(dir)) {
     const stem = f.replace(/\.\w+$/, '')
     const style = stem.startsWith('style-') ? stem.slice(6) : null
-    assert.ok(code.includes(stem) || (style && code.includes(`'${style}'`)), `сирота: public/assets/deck/${f}`)
+    // Ролики плиток: в коде имя ролика ('01-sees'), а файл называется
+    // tile-01-sees.mp4 — сверяем по части после префикса.
+    const tile = stem.startsWith('tile-') ? stem.slice(5) : null
+    assert.ok(
+      code.includes(stem) ||
+        (style && code.includes(`'${style}'`)) ||
+        (tile && code.includes(`'${tile}'`)),
+      `сирота: public/assets/deck/${f}`
+    )
   }
 })

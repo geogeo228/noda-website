@@ -331,96 +331,10 @@
   background: linear-gradient(#040805, #09110c);
   border-bottom: 1px solid var(--m-border);
 }
-.dk-still { background: #0e1621; }
-.dk-still img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
-.dk-slide[data-active="true"] .dk-still img { animation: dk-kb 12s ease-in-out infinite alternate; }
-@keyframes dk-kb { from { transform: scale(1); } to { transform: scale(1.08); } }
 /* Ролик плитки: квадратный mp4, а плитка шире. Ролик заполняет плитку
    целиком (cover), кадр смещён вверх — иначе срезается верх картинки. */
 .dk-clip { background: #040805; }
 .dk-clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block; }
-.dk-scan {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 3px;
-  background: var(--m-green);
-  box-shadow: 0 0 24px 6px rgba(74, 222, 128, 0.45);
-  opacity: 0;
-}
-.dk-slide[data-active="true"] .dk-scan { opacity: 1; animation: dk-sweep 3.4s linear infinite; }
-@keyframes dk-sweep { from { top: 0; } to { top: calc(100% - 3px); } }
-
-/* видит */
-.dk-sees { padding: 30px; display: flex; flex-direction: column; gap: 22px; }
-.dk-shelf { flex: 1; display: flex; align-items: flex-end; gap: 14px; border-bottom: 3px solid #1d2a22; }
-.dk-item { flex: 1; position: relative; border-radius: 4px; background: linear-gradient(#2a3a30, #18221c); }
-.dk-det { position: absolute; inset: -6px; border: 2px solid var(--m-green); border-radius: 6px; opacity: 0; box-shadow: 0 0 14px rgba(74, 222, 128, 0.5); }
-.dk-slide[data-active="true"] .dk-det { animation: dk-det 0.5s ease-out var(--d) both; }
-@keyframes dk-det { from { opacity: 0; transform: scale(1.35); } to { opacity: 1; transform: none; } }
-
-/* слышит */
-.dk-hears { padding: 26px 30px; display: flex; flex-direction: column; gap: 20px; }
-.dk-wave { height: 46%; display: flex; align-items: center; gap: 5px; }
-.dk-wave i { flex: 1; height: var(--h); background: var(--m-green-dim); border-radius: 3px; display: block; transform: scaleY(0.5); }
-.dk-slide[data-active="true"] .dk-wave i { animation: dk-pulse 0.9s ease-in-out var(--d) infinite alternate; }
-@keyframes dk-pulse { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
-.dk-tasks { display: flex; flex-direction: column; gap: 16px; }
-.dk-task { display: flex; align-items: center; gap: 16px; }
-.dk-task u { position: relative; width: 26px; height: 26px; border: 2px solid #3a4a40; border-radius: 4px; flex-shrink: 0; text-decoration: none; }
-.dk-task u::after {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 1px;
-  width: 7px;
-  height: 14px;
-  border: solid #000;
-  border-width: 0 3px 3px 0;
-  transform: rotate(45deg);
-  opacity: 0;
-}
-.dk-task span { height: 14px; border-radius: 4px; background: #1f2b24; display: block; }
-.dk-slide[data-active="true"] .dk-task u { animation: dk-check 0.4s ease-out var(--d) both; }
-.dk-slide[data-active="true"] .dk-task u::after { animation: dk-tick 0.1s linear var(--d) both; }
-@keyframes dk-check { to { background: var(--m-green); border-color: var(--m-green); } }
-@keyframes dk-tick { to { opacity: 1; } }
-
-/* читает */
-.dk-reads { padding: 34px 30px; display: flex; align-items: center; gap: 22px; }
-.dk-doc { position: relative; width: 38%; padding: 18px; background: #111a14; border: 1px solid #25342b; overflow: hidden; }
-.dk-doc-photo { width: 44%; aspect-ratio: 1; background: #26332b; margin-bottom: 18px; border-radius: 3px; }
-.dk-doc span { display: block; height: 12px; margin-top: 14px; background: #26332b; border-radius: 3px; }
-.dk-arrow { font-family: var(--f-mono); font-size: 44px; color: var(--m-green); }
-.dk-table { flex: 1; display: flex; flex-direction: column; gap: 12px; }
-.dk-trow { display: flex; gap: 8px; }
-.dk-trow s { flex: 1; height: 34px; background: #17231c; border-radius: 3px; display: block; }
-.dk-slide[data-active="true"] .dk-trow s { animation: dk-cell 0.5s ease-out var(--d) both; }
-@keyframes dk-cell { to { background: rgba(74, 222, 128, 0.55); } }
-
-/* собирает */
-.dk-collects { padding: 0 30px; }
-.dk-collects::before, .dk-collects::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 60px;
-  z-index: 2;
-  pointer-events: none;
-}
-.dk-collects::before { top: 0; background: linear-gradient(#040805, transparent); }
-.dk-collects::after { bottom: 0; background: linear-gradient(transparent, #09110c); }
-.dk-feed { position: absolute; left: 30px; right: 30px; top: 0; }
-.dk-slide[data-active="true"] .dk-feed { animation: dk-scroll 16s linear infinite; }
-@keyframes dk-scroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-.dk-msg { height: 52px; display: flex; align-items: center; gap: 16px; }
-.dk-msg u { width: 28px; height: 28px; border-radius: 50%; background: #26332b; flex-shrink: 0; text-decoration: none; }
-.dk-msg span { height: 14px; border-radius: 4px; background: #1f2b24; display: block; }
-.dk-msg.hit u { background: var(--m-green); box-shadow: 0 0 14px rgba(74, 222, 128, 0.6); }
-.dk-msg.hit span { background: rgba(74, 222, 128, 0.5); }
-
 /* ---------- 10 услуги ---------- */
 .dk-services { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: auto 0; min-height: 0; max-height: 480px; }
 .dk-service { padding: 64px 64px; display: flex; flex-direction: column; gap: 22px; background: rgba(0, 10, 3, 0.82); }
@@ -527,8 +441,6 @@
 @media (prefers-reduced-motion: reduce) {
   .dk-reveal { opacity: 1; transform: none; animation: none !important; }
   .dk-slide { transition: opacity 0.01s; transform: none; }
-  .dk-still img, .dk-scan, .dk-wave i, .dk-feed, .dk-det, .dk-task u, .dk-trow s { animation: none !important; }
-  .dk-det { opacity: 1; }
 }
 
 /* ============================================
@@ -624,8 +536,6 @@
   .dk-tile-name { font-size: 20px; }
   .dk-tile-text { font-size: 15px; }
   .dk-big { font-size: 20px; margin-top: 24px; padding-left: 16px; }
-  .dk-sees, .dk-hears, .dk-reads { padding: 16px; }
-  .dk-trow s { height: 22px; }
 
   .dk-services { display: flex; flex-direction: column; gap: 16px; max-height: none; margin-top: 8px; }
   .dk-service { padding: 22px 18px; gap: 10px; }
