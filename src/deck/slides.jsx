@@ -90,11 +90,11 @@ function CaseLayout({ c, visual, figure = true, className = '' }) {
   )
 }
 
-export function CaseContractors({ c }) {
+export function CaseWorkspace({ c }) {
   return (
     <CaseLayout
       c={c}
-      visual={<Browser className="dk-browser-lg" src={`${A}/shot-contractors.webp`} alt={c.title} />}
+      visual={<Browser className="dk-browser-lg" src="/assets/cases/case-workspace.webp" alt="Рабочая среда агентства: задачи и статусы в матрице" />}
     />
   )
 }

@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import SlideDeck from '../deck/SlideDeck'
 import { getDict } from '../deck/content'
 import {
-  Cover, Niches, CaseContractors, CasePassports, CasePhotobooth, CaseSales, CaseContent,
+  Cover, Niches, CaseWorkspace, CasePassports, CasePhotobooth, CaseSales, CaseContent,
   Capabilities, Services, Why, Founder, Contact,
 } from '../deck/slides'
 
@@ -12,7 +12,7 @@ import {
 const slides = [
   { id: 's01', node: (c) => <Cover c={c} /> },
   { id: 's02', node: (c) => <Niches c={c} /> },
-  { id: 's03', node: (c) => <CaseContractors c={c} /> },
+  { id: 's03', node: (c) => <CaseWorkspace c={c} /> },
   { id: 's04', node: (c) => <CasePassports c={c} /> },
   { id: 's05', node: (c) => <CasePhotobooth c={c} /> },
   { id: 's06', node: (c) => <CaseSales c={c} /> },
