@@ -9,3 +9,13 @@ _docs/
 dist-ssr/
 dist-ssr-en/
 work/
+
+# Secrets & dumps (T-3.3)
+.env
+.env.*
+!.env.example
+*.sql
+*.dump
+*.zip
+*.tar.gz
+
